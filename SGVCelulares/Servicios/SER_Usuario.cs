@@ -2,7 +2,6 @@
 {
     public class SER_Usuario
     {
-
         public string Dni { get; set; }
         public string Nombre { get; set; }
         public string Apellido { get; set; }
@@ -33,8 +32,6 @@
             NombreUsuario = nombreUsuario;
             Password = password;
         }
-       
-
         public SER_Usuario(string dni, string nombre, string apellido, string correo, string nombreUsuario, string password, bool bloqueo, bool activo)
         {
             Dni = dni;

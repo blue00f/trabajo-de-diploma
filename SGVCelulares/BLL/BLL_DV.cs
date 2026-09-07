@@ -174,7 +174,7 @@ namespace BLL
             if (cantidadDVH > registros.Count)
             {
                 inconsistencias.Add(new SER_Inconsistencia(nombreTabla, "-",
-                    $"La tabla '{nombreTabla}' tiene más entradas en DVH ({cantidadDVH}) que registros reales ({registros.Count}). Posible eliminación directa en BD."));
+                    $"La tabla '{nombreTabla}' tiene más entradas en DVH ({cantidadDVH}) que registros reales ({registros.Count}). Ocurrió una ELIMINACIÓN directa en BD."));
                 return;
             }
 
@@ -189,7 +189,7 @@ namespace BLL
                 if (dvh == null)
                 {
                     inconsistencias.Add(new SER_Inconsistencia(nombreTabla, getId(reg),
-                        $"No se encontró el DVH para el registro con Datos(POSIBLE INSERCIÓN):{Environment.NewLine}{MostrarDatos(reg, nombreTabla)}"));
+                        $"No se encontró el DVH para el registro con Datos (INSERCIÓN):{Environment.NewLine}{MostrarDatos(reg, nombreTabla)}"));
                     huboErrorRegistro = true;
                     continue;
                 }
@@ -197,7 +197,7 @@ namespace BLL
                 if (dvhCalc != dvh.Valor)
                 {
                     inconsistencias.Add(new SER_Inconsistencia(nombreTabla, getId(reg),
-                        $"No coincide El DVH para el registro con Datos(POSIBLE MODIFICACIÓN):{Environment.NewLine}{MostrarDatos(reg, nombreTabla)}."));
+                        $"No coincide El DVH para el registro con Datos (MODIFICACIÓN):{Environment.NewLine}{MostrarDatos(reg, nombreTabla)}."));
                     huboErrorRegistro = true;
                     continue;
                 }

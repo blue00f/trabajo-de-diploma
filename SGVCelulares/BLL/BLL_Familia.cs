@@ -1,6 +1,4 @@
-﻿using DAL;
-using MAP;
-using Microsoft.VisualBasic;
+﻿using MAP;
 using Servicio;
 
 namespace BLL
