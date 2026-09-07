@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <None Include="DAO_Usuario.cs" />
-    <None Include="IABMC.cs" />
   </ItemGroup>
 
   <ItemGroup>

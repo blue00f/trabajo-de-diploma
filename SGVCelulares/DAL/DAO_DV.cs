@@ -1,179 +1,113 @@
-﻿using Microsoft.Data.SqlClient;
-using System.Data;
+﻿using System.Data;
 
 namespace DAL
 {
-    public class DAO_DV : Conexion
+    public class DAO_DV
     {
-        SqlCommand cm;
-        //FALTA ACTUALIZAR EL SCRIPT INCLUYENDO LA TABLA DVH => NombreTabla,IdRegistro,Valor       DVV => NombreTabla,Valor
-        public DAO_DV() : base()
+        ComandoBD com;
+        public DAO_DV() => com = new();
+        public void AgregarDVH(string nombreTabla, string idRegistro, string valor)
         {
-            cm = new SqlCommand("select * from dvh", con);
+            var parametros = new List<ParametroBD>
+            {
+                new("@nombreTabla", SqlDbType.VarChar, nombreTabla),
+                new("@idRegistro", SqlDbType.VarChar, idRegistro),
+                new("@valor", SqlDbType.VarChar, valor)
+            };
+            com.Ejecutar("insert into dvh (nombreTabla,idRegistro,valor) values (@nombreTabla,@idRegistro,@valor)", parametros);
         }
-        public void AgregarDVH(params object[] T)
+        public void BorrarDVH(string nombreTabla, string idRegistro)
         {
-            cm.Parameters.Clear();
-            cm.Parameters.Add("@NombreTabla", SqlDbType.VarChar).Value = T[0];
-            cm.Parameters.Add("@IdRegistro", SqlDbType.VarChar).Value = T[1];
-            cm.Parameters.Add("@Valor", SqlDbType.VarChar).Value = T[2];
-
-            cm.CommandText = @"INSERT INTO dvh
-                           (NombreTabla, IdRegistro, Valor)
-                           VALUES
-                           (@NombreTabla, @IdRegistro, @Valor)";
-            con.Open();
-            cm.ExecuteNonQuery();
-            con.Close();
-        }
-        public void BorrarDVH(params object[] T)
-        {
-            cm.Parameters.Clear();
-            cm.Parameters.Add("@NombreTabla", SqlDbType.VarChar).Value = T[0];
-            cm.Parameters.Add("@IdRegistro", SqlDbType.VarChar).Value = T[1];
-                cm.CommandText = @"DELETE FROM dvh
-                           WHERE NombreTabla=@NombreTabla
-                           AND IdRegistro=@IdRegistro";
-            con.Open();
-            cm.ExecuteNonQuery();
-            con.Close();
+            var parametros = new List<ParametroBD>
+            {
+                new("@nombreTabla", SqlDbType.VarChar, nombreTabla),
+                new("@idRegistro", SqlDbType.VarChar, idRegistro),
+            };
+            com.Ejecutar("DELETE FROM dvh WHERE NombreTabla=@nombreTabla AND IdRegistro=@idRegistro", parametros);
         }
 
-        public void ModificarDVH(params object[] T)
+        public void ModificarDVH(string nombreTabla, string idRegistro, string valor)
         {
-            cm.Parameters.Clear();
-            cm.Parameters.Add("@NombreTabla", SqlDbType.VarChar).Value = T[0];
-            cm.Parameters.Add("@IdRegistro", SqlDbType.VarChar).Value = T[1];
-            cm.Parameters.Add("@Valor", SqlDbType.VarChar).Value = T[2];
-
-            cm.CommandText = @"UPDATE dvh
-                           SET Valor=@Valor
-                           WHERE NombreTabla=@NombreTabla
-                           AND IdRegistro=@IdRegistro";
-            con.Open();
-            cm.ExecuteNonQuery();
-            con.Close();
+            var parametros = new List<ParametroBD>
+            {
+                new("@nombreTabla", SqlDbType.VarChar, nombreTabla),
+                new("@idRegistro", SqlDbType.VarChar, idRegistro),
+                new("@valor", SqlDbType.VarChar, valor)
+            };
+            com.Ejecutar("UPDATE dvh SET Valor=@Valor WHERE NombreTabla=@nombreTabla AND IdRegistro=@idRegistro", parametros);
         }
 
-        public void AgregarDVV(params object[] T)
+        public void AgregarDVV(string nombreTabla, string valor)
         {
-            cm.Parameters.Clear();
-            cm.Parameters.Add("@NombreTabla", SqlDbType.VarChar).Value = T[0];
-            cm.Parameters.Add("@Valor", SqlDbType.VarChar).Value = T[1];
-            cm.CommandText = @"INSERT INTO dvv
-                           (NombreTabla, Valor)
-                           VALUES
-                           (@NombreTabla, @Valor)";
-
-            con.Open();
-            cm.ExecuteNonQuery();
-            con.Close();
+            var parametros = new List<ParametroBD>
+            {
+                new("@nombreTabla", SqlDbType.VarChar, nombreTabla),
+                new("@valor", SqlDbType.VarChar, valor)
+            };
+            com.Ejecutar("INSERT INTO dvv (NombreTabla, Valor) VALUES (@nombreTabla, @valor)", parametros);
         }
-        public void BorrarDVV(params object[] T)
+        public void BorrarDVV(string nombreTabla)
         {
-            cm.Parameters.Clear();
-            cm.Parameters.Add("@NombreTabla", SqlDbType.VarChar).Value = T[0];
-            cm.CommandText = @"DELETE FROM dvv
-                           WHERE NombreTabla=@NombreTabla";
-            con.Open();
-            cm.ExecuteNonQuery();
-            con.Close();
+            var parametros = new List<ParametroBD> { new("@nombreTabla", SqlDbType.VarChar, nombreTabla) };
+            com.Ejecutar("DELETE FROM dvv WHERE NombreTabla=@nombreTabla", parametros);
         }
-        public void ModificarDVV(params object[] T)
+        public void ModificarDVV(string nombreTabla, string valor)
         {
-            cm.Parameters.Clear();
-            cm.Parameters.Add("@NombreTabla", SqlDbType.VarChar).Value = T[0];
-            cm.Parameters.Add("@Valor", SqlDbType.VarChar).Value = T[1];
-            cm.CommandText = @"UPDATE dvv
-                           SET Valor=@Valor
-                           WHERE NombreTabla=@NombreTabla";        
-            con.Open();
-            cm.ExecuteNonQuery();
-            con.Close();
+            var parametros = new List<ParametroBD>
+            {
+                new("@nombreTabla", SqlDbType.VarChar, nombreTabla),
+                new("@valor", SqlDbType.VarChar, valor)
+            };
+            com.Ejecutar("UPDATE dvv SET Valor=@valor WHERE NombreTabla=@nombreTabla", parametros);
         }
 
         public bool ExisteDVH(string nombreTabla, string idRegistro)
         {
-            cm.Parameters.Clear();
-            cm.Parameters.Add("@NombreTabla", SqlDbType.VarChar).Value = nombreTabla;
-            cm.Parameters.Add("@IdRegistro", SqlDbType.VarChar).Value = idRegistro;
-            cm.CommandText = @"SELECT COUNT(*) 
-                       FROM dvh 
-                       WHERE NombreTabla = @NombreTabla 
-                         AND IdRegistro = @IdRegistro";
-            con.Open();
-
-            int cantidad = (int)cm.ExecuteScalar();
-
-            con.Close();
-
-            return cantidad > 0;
+            var parametros = new List<ParametroBD>
+            {
+                new("@nombreTabla", SqlDbType.VarChar, nombreTabla),
+                new("@idRegistro", SqlDbType.VarChar, idRegistro)
+            };
+            object? res = com.Escalar("SELECT COUNT(*) FROM dvh WHERE NombreTabla=@nombreTabla AND IdRegistro=@idRegistro", parametros);
+            return Convert.ToInt32(res) > 0;
         }
         public bool ExisteDVV(string nombreTabla)
         {
-            cm.Parameters.Clear();
-            cm.Parameters.Add("@NombreTabla", SqlDbType.VarChar).Value = nombreTabla;
-            cm.CommandText = @"SELECT COUNT(*) 
-                       FROM dvv 
-                       WHERE NombreTabla = @NombreTabla";
-            con.Open();
-            int cantidad = (int)cm.ExecuteScalar();
-            con.Close();
-            return cantidad > 0;
+            var parametros = new List<ParametroBD> { new("@nombreTabla", SqlDbType.VarChar, nombreTabla) };
+            object? res = com.Escalar("SELECT COUNT(*) FROM dvv WHERE NombreTabla=@nombreTabla", parametros);
+            return Convert.ToInt32(res) > 0;
         }
-        public SqlDataReader ObtenerDVH(string nombreTabla, string idRegistro)
+        public DataTable ObtenerDVH(string nombreTabla, string idRegistro)
         {
-            cm.Parameters.Clear();
-            cm.Parameters.AddWithValue("@NombreTabla", nombreTabla);
-            cm.Parameters.AddWithValue("@IdRegistro", idRegistro);
-            cm.CommandText =(@"SELECT NombreTabla, IdRegistro, Valor
-                              FROM dvh
-                              WHERE NombreTabla = @NombreTabla
-                              AND IdRegistro = @IdRegistro");
-            con.Open();
-            return cm.ExecuteReader(CommandBehavior.CloseConnection);
+            var parametros = new List<ParametroBD>
+            {
+                new("@nombreTabla", SqlDbType.VarChar, nombreTabla),
+                new("@idRegistro", SqlDbType.VarChar, idRegistro)
+            };
+            return com.Consultar("SELECT NombreTabla, IdRegistro, Valor FROM dvh WHERE NombreTabla=@nombreTabla AND IdRegistro=@idRegistro", parametros);
         }
-        public SqlDataReader ObtenerDVV(string nombreTabla)
+        public DataTable ObtenerDVV(string nombreTabla)
         {
-            cm.Parameters.Clear();
-            cm.Parameters.AddWithValue("@NombreTabla", nombreTabla);
-            cm.CommandText = (@"SELECT NombreTabla, Valor
-                                FROM dvv
-                                WHERE NombreTabla = @NombreTabla");
-            con.Open();
-            return cm.ExecuteReader(CommandBehavior.CloseConnection);
+            var parametros = new List<ParametroBD> { new("@nombreTabla", SqlDbType.VarChar, nombreTabla) };
+            return com.Consultar("SELECT NombreTabla, Valor FROM dvv WHERE NombreTabla = @nombreTabla", parametros);
         }
-        public SqlDataReader ConsultarDVH(string nombreTabla)
+        public DataTable ConsultarDVH(string nombreTabla)
         {
-            cm.Parameters.Clear();
-            cm.Parameters.Add("@NombreTabla", SqlDbType.VarChar).Value = nombreTabla;
-
+            DataTable tabla = null;
+            var parametros = new List<ParametroBD> { new("@nombreTabla", SqlDbType.VarChar, nombreTabla) };
             if (nombreTabla == "rol" || nombreTabla == "familia")
             {
-                cm.CommandText = @"SELECT *
-               FROM dvh
-               WHERE NombreTabla = @NombreTabla
-               ORDER BY CAST(IdRegistro AS INT)";
+                tabla = com.Consultar("SELECT * FROM dvh WHERE NombreTabla=@nombreTabla ORDER BY CAST(IdRegistro AS INT)", parametros);
             }
             else if (nombreTabla == "usuario")
             {
-                cm.CommandText = @"SELECT *
-               FROM dvh
-               WHERE NombreTabla = @NombreTabla
-               ORDER BY IdRegistro";
+                tabla = com.Consultar("SELECT * FROM dvh WHERE NombreTabla=@nombreTabla ORDER BY IdRegistro", parametros);
             }
             else // tablas intermedias: rol_familia, rol_permiso, familia_familia, permiso_familia, etc.
             {
-                cm.CommandText = @"SELECT *
-               FROM dvh
-               WHERE NombreTabla = @NombreTabla
-               ORDER BY CAST(SUBSTRING(IdRegistro, 1, CHARINDEX('-', IdRegistro) - 1) AS INT),
-                        CAST(SUBSTRING(IdRegistro, CHARINDEX('-', IdRegistro) + 1, LEN(IdRegistro)) AS INT)";
+                tabla = com.Consultar("SELECT * FROM dvh WHERE NombreTabla=@nombreTabla ORDER BY CAST(SUBSTRING(IdRegistro, 1, CHARINDEX('-', IdRegistro) - 1) AS INT), CAST(SUBSTRING(IdRegistro, CHARINDEX('-', IdRegistro) + 1, LEN(IdRegistro)) AS INT)", parametros);
             }
-
-            con.Open();
-            SqlDataReader reader = cm.ExecuteReader(CommandBehavior.CloseConnection);
-            return reader;
+            return tabla;
         }
     }
 }

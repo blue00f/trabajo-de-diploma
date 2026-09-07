@@ -1,22 +1,11 @@
-﻿using Microsoft.Data.SqlClient;
-using System.Data;
+﻿using System.Data;
 
 namespace DAL
 {
-    public class DAO_Permiso : Conexion
+    public class DAO_Permiso
     {
-        SqlCommand cm;
-        public DAO_Permiso() : base()
-        {
-            cm = new SqlCommand("select * from permiso", con);
-        }
-
-        public SqlDataReader Consultar()
-        {
-            cm.Parameters.Clear();
-            cm.CommandText = "SELECT * FROM permiso";
-            con.Open();
-            return cm.ExecuteReader(CommandBehavior.CloseConnection);
-        }
+        ComandoBD com;
+        public DAO_Permiso() => com = new();
+        public DataTable Consultar() => com.Consultar("SELECT * FROM permiso");
     }
 }

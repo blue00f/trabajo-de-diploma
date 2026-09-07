@@ -1,39 +1,26 @@
 ﻿using DAL;
-using Microsoft.Data.SqlClient;
 using Servicio;
+using System.Data;
 
 namespace MAP
 {
     public class MAP_Familia : IABMC<SER_Familia>
     {
         DAO_Familia dao_familia;
-        public MAP_Familia()
-        {
-            dao_familia = new DAO_Familia();
-        }
-        public void Agregar(SER_Familia familia)
-        {
-            dao_familia.Agregar(familia.Nombre);
-        }
+        public MAP_Familia() => dao_familia = new();
+        public void Agregar(SER_Familia familia) => dao_familia.Agregar(familia.Nombre);
         public void Borrar(SER_Familia familia) => dao_familia.Borrar(familia.Id);
-
         public bool EstaEnUso(SER_Familia familia) => dao_familia.EstaEnUso(familia.Id);
 
         public List<SER_Familia> Consultar()
         {
-            List<SER_Familia> listaAux = new List<SER_Familia>();
-            List<SER_Familia> lista = new List<SER_Familia>();
-
-            SqlDataReader dr = dao_familia.Consultar();
-
-            while (dr.Read())
+            var listaAux = new List<SER_Familia>();
+            var lista = new List<SER_Familia>();
+            DataTable tabla = dao_familia.Consultar();
+            foreach (DataRow fila in tabla.Rows)
             {
-                object[] datos = new object[dr.FieldCount];
-                dr.GetValues(datos);
-                listaAux.Add(new SER_Familia(datos));
+                listaAux.Add(new SER_Familia(fila.ItemArray));
             }
-            dr.Close();
-
             foreach (SER_Familia familia in listaAux)
             {
                 lista.Add(ObtenerArbol(familia.Id));
@@ -42,44 +29,28 @@ namespace MAP
         }
         public List<object[]> ConsultarFamiliaFamilia()
         {
-            List<object[]> listaAux = new List<object[]>();
-            SqlDataReader dr = dao_familia.ConsultarFamiliaFamilia();
-            while (dr.Read())
+            var lista = new List<object[]>();
+            DataTable tabla = dao_familia.ConsultarFamiliaFamilia();
+            foreach (DataRow fila in tabla.Rows)
             {
-                object[] datos = new object[dr.FieldCount];
-                dr.GetValues(datos);
-                listaAux.Add(datos); // datos[0] = IdFamilia, datos[1] = IdFamilia
+                lista.Add(fila.ItemArray); // datos[0] = IdFamilia, datos[1] = IdFamilia
             }
-            dr.Close();
-            return listaAux;
+            return lista;
         }
         public List<object[]> ConsultarFamiliaPermiso()
         {
-            List<object[]> listaAux = new List<object[]>();
-            SqlDataReader dr = dao_familia.ConsultarFamiliaPermiso();
-            while (dr.Read())
+            var lista = new List<object[]>();
+            DataTable tabla = dao_familia.ConsultarFamiliaPermiso();
+            foreach (DataRow fila in tabla.Rows)
             {
-                object[] datos = new object[dr.FieldCount];
-                dr.GetValues(datos);
-                listaAux.Add(datos); // datos[0] = IdFamilia, datos[1] = IdPermiso
+                lista.Add(fila.ItemArray); // datos[0] = IdFamilia, datos[1] = IdPermiso
             }
-            dr.Close();
-            return listaAux;
+            return lista;
         }
+        public SER_Familia ConsultarPorId(SER_Familia familia) => throw new NotImplementedException();
 
-        public SER_Familia ConsultarPorId(SER_Familia familia)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Modificar(SER_Familia familia)
-        {
-            throw new NotImplementedException();
-        }
-        public bool ExisteFamilia(SER_Familia familia)
-        {
-            return dao_familia.ExisteFamilia(familia.Nombre);
-        }
+        public void Modificar(SER_Familia familia) => throw new NotImplementedException();
+        public bool ExisteFamilia(SER_Familia familia) => dao_familia.ExisteFamilia(familia.Nombre);
         public void AgregarPermisoFamilia(SER_Familia familia, SER_Componente componente)
         {
             if (componente is SER_Permiso p)
@@ -91,20 +62,6 @@ namespace MAP
                 dao_familia.AgregarFamilia(familia.Id, f.Id);
             }
         }
-        public SER_Familia ObtenerIdPorNombre(SER_Familia familia)
-        {
-            SER_Familia familiaAux = null;
-            SqlDataReader dr = dao_familia.ObtenerIdPorNombre(familia.Nombre);
-            while (dr.Read())
-            {
-                object[] datos = new object[dr.FieldCount];
-                dr.GetValues(datos);
-                familiaAux = new SER_Familia(datos);
-            }
-            dr.Close();
-            return familiaAux;
-        }
-
         public SER_Familia ObtenerArbol(int idFamilia)
         {
             SER_Familia familia = ConsultarFamilia(idFamilia);
@@ -122,44 +79,33 @@ namespace MAP
 
         private SER_Familia ConsultarFamilia(int idFamilia)
         {
-            SER_Familia familia = null;
-            SqlDataReader dr = dao_familia.ConsultarFamilia(idFamilia);
-            while (dr.Read())
-            {
-                object[] datos = new object[dr.FieldCount];
-                dr.GetValues(datos);
-                familia = new SER_Familia(datos);
-            }
-            dr.Close();
-            return familia;
+            DataTable tabla = dao_familia.ConsultarFamilia(idFamilia);
+            return tabla.Rows.Count > 0 ? new SER_Familia(tabla.Rows[0].ItemArray) : null;
         }
         private List<SER_Permiso> ConsultarPermisos(int idFamilia)
         {
-            List<SER_Permiso> lista = new List<SER_Permiso>();
-            SqlDataReader dr = dao_familia.ConsultarPermisos(idFamilia);
-
-            while (dr.Read())
+            var lista = new List<SER_Permiso>();
+            DataTable tabla = dao_familia.ConsultarPermisos(idFamilia);
+            foreach (DataRow fila in tabla.Rows)
             {
-                object[] datos = new object[dr.FieldCount];
-                dr.GetValues(datos);
-                lista.Add(new SER_Permiso(datos));
+                lista.Add(new SER_Permiso(fila.ItemArray));
             }
-            dr.Close();
             return lista;
         }
         private List<SER_Familia> ConsultarFamiliasHijas(int idFamilia)
         {
-            List<SER_Familia> lista = new List<SER_Familia>();
-            SqlDataReader dr = dao_familia.ConsultarFamiliasHijas(idFamilia);
-
-            while (dr.Read())
+            var lista = new List<SER_Familia>();
+            DataTable tabla = dao_familia.ConsultarFamiliasHijas(idFamilia);
+            foreach (DataRow fila in tabla.Rows)
             {
-                object[] datos = new object[dr.FieldCount];
-                dr.GetValues(datos);
-                lista.Add(new SER_Familia(datos));
+                lista.Add(new SER_Familia(fila.ItemArray));
             }
-            dr.Close();
             return lista;
+        }
+        public SER_Familia ObtenerIdPorNombre(SER_Familia familia)
+        {
+            DataTable tabla = dao_familia.ObtenerIdPorNombre(familia.Nombre);
+            return tabla.Rows.Count > 0 ? new SER_Familia(tabla.Rows[0].ItemArray) : null;
         }
     }
 }

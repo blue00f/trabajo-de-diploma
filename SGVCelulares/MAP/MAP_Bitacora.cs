@@ -1,6 +1,6 @@
 ﻿using DAL;
-using Microsoft.Data.SqlClient;
 using Servicio;
+using System.Data;
 
 namespace MAP
 {
@@ -16,25 +16,23 @@ namespace MAP
         public void RegistrarBitacora(SER_Bitacora bitacora) => dao_bitacora.Agregar(bitacora.Usuario.Dni, bitacora.Fecha, bitacora.Modulo, bitacora.Evento, bitacora.Criticidad);
         public List<SER_Bitacora> Consultar()
         {
-            List<SER_Bitacora> lista = new List<SER_Bitacora>();
-            SqlDataReader dr = dao_bitacora.Consultar();
-
-            while (dr.Read())
+            DataTable dt = dao_bitacora.Consultar();
+            var lista = new List<SER_Bitacora>();
+            foreach (DataRow fila in dt.Rows)
             {
-                object[] datos = new object[dr.FieldCount];
-                dr.GetValues(datos);
-
-                SER_Bitacora bitacora = new SER_Bitacora(
-                    map_usuario.ConsultarPorId(new SER_Usuario(datos[1].ToString())),
-                    Convert.ToDateTime(datos[2]),
-                    Convert.ToString(datos[3]),
-                    Convert.ToString(datos[4]),
-                    Convert.ToInt16(datos[5])
-                );
-                lista.Add(bitacora);
+                lista.Add(Mapear(fila));
             }
-            dr.Close();
             return lista;
+        }
+        private SER_Bitacora Mapear(DataRow fila)
+        {
+            return new SER_Bitacora(
+                map_usuario.ConsultarPorId(new SER_Usuario(fila["dni"].ToString())),
+                Convert.ToDateTime(fila["fecha"]),
+                Convert.ToString(fila["modulo"]),
+                Convert.ToString(fila["evento"]),
+                Convert.ToInt16(fila["criticidad"])
+            );
         }
     }
 }
