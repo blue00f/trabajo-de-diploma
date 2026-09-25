@@ -14,7 +14,7 @@ namespace UI
             // see https://aka.ms/applicationconfiguration.
             QuestPDF.Settings.License = LicenseType.Community;
             ApplicationConfiguration.Initialize();
-            Application.Run(new FrmLogin());
+            Application.Run(new FrmLogin_064RB());
         }
     }
 }
