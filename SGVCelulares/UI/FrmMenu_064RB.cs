@@ -235,12 +235,20 @@ namespace UI
             submenuBitacora.Text = bll_idioma.Traducir_064RB("FrmMenu.submenuBitacora");
             submenuGestionRoles.Text = bll_idioma.Traducir_064RB("FrmMenu.submenuGestionRoles");
             submenuGestionRespaldo.Text = bll_idioma.Traducir_064RB("FrmMenu.submenuGestionRespaldo");
+
             menuReportes.Text = bll_idioma.Traducir_064RB("FrmMenu.menuReportes");
+
             menuAyuda.Text = bll_idioma.Traducir_064RB("FrmMenu.menuAyuda");
+
             menuSesion.Text = bll_idioma.Traducir_064RB("FrmMenu.menuSesion");
             submenuRelogin.Text = bll_idioma.Traducir_064RB("FrmMenu.submenuRelogin");
             submenuCambiarClave.Text = bll_idioma.Traducir_064RB("FrmMenu.submenuCambiarClave");
             submenuCerrarSesion.Text = bll_idioma.Traducir_064RB("FrmMenu.submenuCerrarSesion");
+
+            menuMaestros.Text = bll_idioma.Traducir_064RB("FrmMenu.menuMaestros");
+            submenuProductos.Text = bll_idioma.Traducir_064RB("FrmMenu.submenuProductos");
+            submenuUnidadCelular.Text = bll_idioma.Traducir_064RB("FrmMenu.submenuUnidadCelular");
+            submenuClientes.Text = bll_idioma.Traducir_064RB("FrmMenu.submenuClientes");
         }
         private void ActualizarBienvenida()
         {

@@ -11,6 +11,11 @@ namespace BE_064RB
         {
             Imei_064RB = imei;
         }
+        public BE_UnidadCelular_064RB(string imei, string estado)
+        {
+            Imei_064RB = imei;
+            Estado_064RB = estado;
+        }
         public BE_UnidadCelular_064RB(string imei, string estado, BE_Celular_064RB celular)
         {
             Imei_064RB = imei;

@@ -23,7 +23,7 @@ namespace UI_064RB
             grillaProductos.MultiSelect = false;
             grillaProductos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             bll_producto = new();
-            Mostrar(grillaProductos, bll_producto.ConsultarGrilla());
+            Mostrar(grillaProductos, bll_producto.ConsultarGrilla_064RB());
             radCelular.Checked = true;
 
             SER_Usuario_064RB usuario = SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB;
@@ -67,7 +67,7 @@ namespace UI_064RB
 
                     BE_Celular_064RB celular = new(sku, marca, modelo, precio, descripcion, almacenamiento, color);
                     bll_producto.AgregarCelular_064RB(celular);
-                    Mostrar(grillaProductos, bll_producto.ConsultarGrilla());
+                    Mostrar(grillaProductos, bll_producto.ConsultarGrilla_064RB());
                 }
                 else
                 {
@@ -94,7 +94,7 @@ namespace UI_064RB
 
                     BE_Accesorio_064RB accesorio = new BE_Accesorio_064RB(sku, marca, modelo, precio, descripcion, categoria, stock);
                     bll_producto.AgregarAccesorio_064RB(accesorio);
-                    Mostrar(grillaProductos, bll_producto.ConsultarGrilla());
+                    Mostrar(grillaProductos, bll_producto.ConsultarGrilla_064RB());
                 }
             }
             catch (Exception ex)
@@ -110,7 +110,7 @@ namespace UI_064RB
                 if (grillaProductos.Rows.Count == 0) throw new Exception("No hay productos para borrar!");
                 string sku = grillaProductos.CurrentRow.Cells[0].Value.ToString();
                 bll_producto.Borrar_064RB(sku);
-                Mostrar(grillaProductos, bll_producto.ConsultarGrilla());
+                Mostrar(grillaProductos, bll_producto.ConsultarGrilla_064RB());
             }
             catch (Exception ex)
             {
@@ -158,7 +158,7 @@ namespace UI_064RB
                 }
 
                 bll_producto.Modificar_064RB(producto);
-                Mostrar(grillaProductos, bll_producto.ConsultarGrilla());
+                Mostrar(grillaProductos, bll_producto.ConsultarGrilla_064RB());
             }
             catch (Exception ex)
             {

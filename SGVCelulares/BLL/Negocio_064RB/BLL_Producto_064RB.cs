@@ -18,6 +18,7 @@ namespace BLL_064RB.Negocio_064RB
         }
         public void AgregarCelular_064RB(BE_Celular_064RB celular)
         {
+            if (Consultar_064RB().Any(p => p.Sku_064RB == celular.Sku_064RB)) throw new Exception("El celular está repetido!");
             map_producto.AgregarCelular_064RB(celular);
 
             SER_Usuario_064RB usu = SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB;
@@ -27,8 +28,8 @@ namespace BLL_064RB.Negocio_064RB
         }
         public void AgregarAccesorio_064RB(BE_Accesorio_064RB accesorio)
         {
+            if (Consultar_064RB().Any(p => p.Sku_064RB == accesorio.Sku_064RB)) throw new Exception("El accesorio está repetido!");
             map_producto.AgregarAccesorio_064RB(accesorio);
-
             SER_Usuario_064RB usu = SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB;
             bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(usu, DateTime.Now, "Productos", "Alta", 3));
         }
@@ -44,55 +45,59 @@ namespace BLL_064RB.Negocio_064RB
             SER_Usuario_064RB usu = SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB;
             bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(usu, DateTime.Now, "Productos", "Modificar", 3));
         }
-        public List<BE_ProductoListado_064RB> Consultar()
+        public List<BE_Producto_064RB> Consultar_064RB() => map_producto.Consultar_064RB();
+        private List<object> ProyectarGrilla_064RB(IEnumerable<BE_Producto_064RB> productos)
         {
-            return map_producto.Consultar_064RB();
+            var consulta = from p in productos
+                           let cel = p as BE_Celular_064RB
+                           let acc = p as BE_Accesorio_064RB
+                           select (object)new
+                           {
+                               SKU = p.Sku_064RB,
+                               Marca = p.Marca_064RB,
+                               Modelo = p.Modelo_064RB,
+                               Precio = p.Precio_064RB,
+                               Descripcion = p.Descripcion_064RB,
+                               Tipo = cel != null ? "Celular" : acc != null ? "Accesorio" : "Desconocido",
+                               Almacenamiento = cel != null ? cel.Almacenamiento_064RB : "-",
+                               Color = cel != null ? cel.Color_064RB : "-",
+                               Categoria = acc != null ? acc.Categoria_064RB : "-",
+                               Stock = ObtenerStock_064RB(p)
+                           };
+            return consulta.ToList<object>();
         }
-       
-        public List<object> ConsultarGrilla()
+        public List<object> ConsultarGrilla_064RB() => ProyectarGrilla_064RB(Consultar_064RB());
+        public List<object> ConsultarDisponibles_064RB() => ProyectarGrilla_064RB(Consultar_064RB().Where(p => ObtenerStock_064RB(p) >= 1));
+        private static bool Contiene_064RB(string? valor, string? filtro) => string.IsNullOrWhiteSpace(filtro) || (valor?.StartsWith(filtro.Trim(), StringComparison.OrdinalIgnoreCase) ?? false);
+        public List<object> Buscar_064RB(string? sku = null, string? marca = null, string? modelo = null, decimal? precioMax = null, string? tipo = null, string? almacenamiento = null, string? color = null, string? categoria = null, bool soloDisponible = true)
+        {
+            var filtrados = from p in Consultar_064RB()
+                            let cel = p as BE_Celular_064RB
+                            let acc = p as BE_Accesorio_064RB
+                            let tipoReal = cel != null ? "Celular" : acc != null ? "Accesorio" : "Desconocido"
+                            where (!soloDisponible || ObtenerStock_064RB(p) >= 1)
+                            && Contiene_064RB(p.Sku_064RB, sku)
+                            && Contiene_064RB(p.Marca_064RB, marca)
+                            && Contiene_064RB(p.Modelo_064RB, modelo)
+                            && (precioMax == null || p.Precio_064RB <= precioMax)
+                            && (string.IsNullOrWhiteSpace(tipo) || tipoReal == tipo)
+                            && Contiene_064RB(cel?.Almacenamiento_064RB, almacenamiento)
+                            && Contiene_064RB(cel?.Color_064RB, color)
+                            && Contiene_064RB(acc?.Categoria_064RB, categoria)
+                            select p;
+            return ProyectarGrilla_064RB(filtrados);
+        }
+        public int ObtenerStock_064RB(BE_Producto_064RB producto) => producto switch
+        {
+            BE_Celular_064RB c => c.UnidadCelulares_064RB?.Count(u => u.Estado_064RB == "Disponible") ?? 0,
+            BE_Accesorio_064RB a => a.Stock_064RB,
+            _ => 0
+        };
+        public List<object> ConsultarCelulares_064RB()
         {
             var consulta =
-            from p in Consultar()
-            select new
-            {
-                SKU = p.Sku_064RB,
-                Marca = p.Marca_064RB,
-                Modelo = p.Modelo_064RB,
-                Precio = p.Precio_064RB,
-                Descripcion = p.Descripcion_064RB,
-                Tipo = p.Tipo_064RB,
-                Almacenamiento = p.Almacenamiento_064RB ?? "-",
-                Color = p.Color_064RB ?? "-",
-                Categoria = p.Categoria_064RB ?? "-",
-                Stock = p.Stock_064RB
-            };
-            return consulta.Cast<object>().ToList();
-        }
-        public List<object> ConsultarDisponibles()
-        {
-            var consulta =
-            from p in Consultar()
-            where p.Stock_064RB > 0
-            select new
-            {
-                SKU = p.Sku_064RB,
-                Marca = p.Marca_064RB,
-                Modelo = p.Modelo_064RB,
-                Precio = p.Precio_064RB,
-                Descripcion = p.Descripcion_064RB,
-                Tipo = p.Tipo_064RB,
-                Almacenamiento = p.Almacenamiento_064RB ?? "-",
-                Color = p.Color_064RB ?? "-",
-                Categoria = p.Categoria_064RB ?? "-",
-                Stock = p.Stock_064RB
-            };
-            return consulta.Cast<object>().ToList();
-        }
-        public List<object> ConsultarCelulares()
-        {
-            var consulta =
-            from p in Consultar()
-            where p.Tipo_064RB == "Celular"
+            from p in Consultar_064RB()
+            where p is BE_Celular_064RB
             select new
             {
                 SKU = p.Sku_064RB,
@@ -100,14 +105,9 @@ namespace BLL_064RB.Negocio_064RB
             };
             return consulta.ToList<object>();
         }
-        public BE_Celular_064RB ConsultarCelularPorSku(string sku)
-        {
-            return map_producto.ConsultarCelularPorSku(sku);
-        }
-        public BE_Accesorio_064RB ConsultarAccesorioPorSku_064RB(string sku)
-        {
-            return map_producto.ConsultarAccesorioPorSku(sku);
-        }
+        public BE_Celular_064RB ConsultarCelularPorSku_064RB(string sku) => map_producto.ConsultarCelularPorSku(sku);
+        public BE_Accesorio_064RB ConsultarAccesorioPorSku_064RB(string sku) => map_producto.ConsultarAccesorioPorSku(sku);
+        public BE_Producto_064RB? ConsultarPorSku_064RB(string sku) => Consultar_064RB().FirstOrDefault(p => p.Sku_064RB == sku);
         public bool VerificarStock_064RB(BE_Producto_064RB producto, int cantidad)
         {
             bool rdo = false;

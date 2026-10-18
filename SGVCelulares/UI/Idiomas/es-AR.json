@@ -18,6 +18,10 @@
   "FrmMenu.submenuRelogin": "🔄 Volver a iniciar sesión",
   "FrmMenu.submenuCambiarClave": "🔑 Cambiar clave",
   "FrmMenu.submenuCerrarSesion": "🎚 Cerrar sesión",
+  "FrmMenu.menuMaestros": "Maestros",
+  "FrmMenu.submenuProductos": "Productos",
+  "FrmMenu.submenuUnidadCelular": "Unidad celular",
+  "FrmMenu.submenuClientes": "Clientes",
   "FrmMenu.msgCerrarSesion": "¿Seguro que desea cerrar la sesión?",
   "FrmMenu.msgConfirmacion": "Confirmación",
 

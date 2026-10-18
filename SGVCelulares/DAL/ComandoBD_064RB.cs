@@ -48,7 +48,7 @@ namespace DAL_064RB
             con.Open();
             return cmd.ExecuteScalar();
         }
-        private void ConfigurarComando_064RB(SqlCommand comando, List<ParametroBD_064RB>? parametros)
+        internal static void ConfigurarComando_064RB(SqlCommand comando, List<ParametroBD_064RB>? parametros)
         {
             if (parametros != null)
             {
@@ -58,7 +58,6 @@ namespace DAL_064RB
                 }
             }
         }
-
         public void EjecutarTransaccion_064RB(List<(string Sql, List<ParametroBD_064RB> Parametros)> comandos)
         {
             using SqlConnection con = new SqlConnection(cadenaConexion_064RB);
@@ -73,6 +72,23 @@ namespace DAL_064RB
                     cmd.ExecuteNonQuery();
                 }
                 tran.Commit();
+            }
+            catch
+            {
+                tran.Rollback();
+                throw;
+            }
+        }
+        public T EjecutarEnTransaccion_064RB<T>(Func<TransaccionBD_064RB, T> accion)
+        {
+            using SqlConnection con = new SqlConnection(cadenaConexion_064RB);
+            con.Open();
+            using SqlTransaction tran = con.BeginTransaction();
+            try
+            {
+                T res = accion(new TransaccionBD_064RB(con, tran));
+                tran.Commit();
+                return res;
             }
             catch
             {

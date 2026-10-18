@@ -1,5 +1,4 @@
 ﻿using System.Data;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace DAL_064RB.Negocio_064RB
 {

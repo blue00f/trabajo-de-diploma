@@ -103,23 +103,15 @@ namespace DAL_064RB.Negocio_064RB
             };
             com.EjecutarTransaccion_064RB(comandos);
         }
-        public DataTable Consultar_064RB()
+        public DataTable ConsultarCelulares_064RB()
         {
-            string sql =
-                "SELECT p.sku, p.marca, p.modelo, p.precio, p.descripcion," +
-                "   CASE WHEN c.sku IS NOT NULL THEN 'Celular' ELSE 'Accesorio' END AS tipo," +
-                "   c.almacenamiento, c.color, a.categoria," +
-                "   CASE WHEN c.sku IS NOT NULL THEN" +
-                "       (SELECT COUNT(*) FROM UnidadCelular_064RB u WHERE u.skuCelular = p.sku AND u.estado = 'Disponible')" +
-                "   ELSE a.stock END AS stock" +
-                " FROM Producto_064RB p" +
-                " LEFT JOIN Celular_064RB c ON p.sku = c.sku" +
-                " LEFT JOIN Accesorio_064RB a ON p.sku = a.sku";
-            return com.Consultar_064RB(sql);
+            return com.Consultar_064RB("select p.sku, p.marca, p.modelo, p.precio, p.descripcion, c.almacenamiento, c.color from Producto_064RB p" +
+                " inner join Celular_064RB c on p.sku = c.sku");
         }
-        public DataTable ConsultarProductos_064RB()
+        public DataTable ConsultarAccesorios_064RB()
         {
-            return com.Consultar_064RB("select * from Producto_064RB");
+            return com.Consultar_064RB("select p.sku, p.marca, p.modelo, p.precio, p.descripcion, a.categoria, a.stock from Producto_064RB p" +
+                " inner join Accesorio_064RB a on p.sku = a.sku");
         }
         public DataTable ConsultarCelularPorSku_064RB(string sku)
         {

@@ -18,6 +18,10 @@
   "FrmMenu.submenuRelogin": "🔄 Re-Login",
   "FrmMenu.submenuCambiarClave": "🔑 Change Password",
   "FrmMenu.submenuCerrarSesion": "🎚️ Sign out",
+  "FrmMenu.menuMaestros": "Masters",
+  "FrmMenu.submenuProductos": "Products",
+  "FrmMenu.submenuUnidadCelular": "Cellular unit",
+  "FrmMenu.submenuClientes": "Customers",
   "FrmMenu.msgCerrarSesion": "Are you sure you want to log out?",
   "FrmMenu.msgConfirmacion": "Confirmation",
 

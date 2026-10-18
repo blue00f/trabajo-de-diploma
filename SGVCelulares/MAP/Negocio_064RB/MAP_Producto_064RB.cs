@@ -8,9 +8,12 @@ namespace MAP_064RB.Negocio_064RB
     public class MAP_Producto_064RB
     {
         DAO_Producto_064RB dao_producto;
+        DAO_UnidadCelular_064RB dao_unidadCelular;
+
         public MAP_Producto_064RB()
         {
             dao_producto = new();
+            dao_unidadCelular = new();
         }
         public void AgregarCelular_064RB(BE_Celular_064RB celular)
         {
@@ -49,32 +52,27 @@ namespace MAP_064RB.Negocio_064RB
             DataRow fila = dt.Rows[0];
             return MapearAccesorio_064RB(fila);
         }
-        public List<BE_ProductoListado_064RB> Consultar_064RB()
+        public List<BE_Producto_064RB> Consultar_064RB()
         {
-            DataTable dt = dao_producto.Consultar_064RB();
-            List<BE_ProductoListado_064RB> productos = new();
-
-            foreach (DataRow row in dt.Rows)
+            DataTable dtC = dao_producto.ConsultarCelulares_064RB();
+            DataTable dtA = dao_producto.ConsultarAccesorios_064RB();
+            DataTable dtUc = dao_unidadCelular.Consultar_064RB();
+            var unidadesPorSku = MapearUnidadesPorSku_064RB(dtUc);
+            List<BE_Producto_064RB> productos = new();
+            
+            foreach (DataRow fila in dtC.Rows)
             {
-                productos.Add(new BE_ProductoListado_064RB
+                BE_Celular_064RB celular = MapearCelular_064RB(fila);
+                celular.UnidadCelulares_064RB = unidadesPorSku.ContainsKey(celular.Sku_064RB) ? unidadesPorSku[celular.Sku_064RB] : new List<BE_UnidadCelular_064RB>();
+                foreach (BE_UnidadCelular_064RB unidad in celular.UnidadCelulares_064RB)
                 {
-                    Sku_064RB = row["sku"].ToString(),
-                    Marca_064RB = row["marca"].ToString(),
-                    Modelo_064RB = row["modelo"].ToString(),
-                    Precio_064RB = Convert.ToDecimal(row["precio"]),
-                    Descripcion_064RB = row["descripcion"].ToString(),
-                    Tipo_064RB = row["tipo"].ToString(),
-                    Almacenamiento_064RB = row["almacenamiento"] == DBNull.Value
-                        ? null
-                        : row["almacenamiento"].ToString(),
-                    Color_064RB = row["color"] == DBNull.Value
-                        ? null
-                        : row["color"].ToString(),
-                    Categoria_064RB = row["categoria"] == DBNull.Value
-                        ? null
-                        : row["categoria"].ToString(),
-                    Stock_064RB = Convert.ToInt32(row["stock"])
-                });
+                    unidad.Celular_064RB = celular;
+                }
+                productos.Add(celular);
+            }
+            foreach (DataRow fila in dtA.Rows)
+            {
+                productos.Add(MapearAccesorio_064RB(fila));
             }
             return productos;
         }
@@ -101,6 +99,17 @@ namespace MAP_064RB.Negocio_064RB
                 Convert.ToString(fila[5]),
                 Convert.ToInt16(fila[6])
             );
+        }
+        private Dictionary<string, List<BE_UnidadCelular_064RB>> MapearUnidadesPorSku_064RB(DataTable dt)
+        {
+            var res = new Dictionary<string, List<BE_UnidadCelular_064RB>>();
+            foreach (DataRow fila in dt.Rows)
+            {
+                string skuCelular = fila["skuCelular"].ToString();
+                if (!res.ContainsKey(skuCelular)) res[skuCelular] = new List<BE_UnidadCelular_064RB>();
+                res[skuCelular].Add(new BE_UnidadCelular_064RB(fila["imei"].ToString(), fila["estado"].ToString()));
+            }
+            return res;
         }
     }
 }

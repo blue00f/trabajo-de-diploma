@@ -49,8 +49,8 @@ create table Rol_familia_064RB(
     idRol int not null,
     idFamilia int not null,
     constraint pk_rol_familia primary key (idRol, idFamilia),
-    constraint fk_rol_familia_rol foreign key (idRol) references rol(idRol),
-    constraint fk_rol_familia_familia foreign key (idFamilia) references familia(idFamilia)
+    constraint fk_rol_familia_rol foreign key (idRol) references Rol_064RB(idRol),
+    constraint fk_rol_familia_familia foreign key (idFamilia) references Familia_064RB(idFamilia)
 );
 GO
 
@@ -59,8 +59,8 @@ create table Familia_familia_064RB(
     idFamiliaPadre int not null,
     idFamiliaHija int not null,
     constraint pk_familia_familia primary key (idFamiliaPadre, idFamiliaHija),
-    constraint fk_ff_padre foreign key (idFamiliaPadre) references familia(idFamilia),
-    constraint fk_ff_hija foreign key (idFamiliaHija) references familia(idFamilia)
+    constraint fk_ff_padre foreign key (idFamiliaPadre) references Familia_064RB(idFamilia),
+    constraint fk_ff_hija foreign key (idFamiliaHija) references Familia_064RB(idFamilia)
 );
 GO
 
@@ -77,8 +77,8 @@ create table Permiso_familia_064RB(
     idFamilia int not null,
     idPermiso int not null,
     constraint pk_permiso_familia primary key (idFamilia, idPermiso),
-    constraint fk_permiso_familia_familia foreign key (idFamilia) references familia(idFamilia),
-    constraint fk_permiso_familia_permiso foreign key (idPermiso) references permiso(idPermiso)
+    constraint fk_permiso_familia_familia foreign key (idFamilia) references Familia_064RB(idFamilia),
+    constraint fk_permiso_familia_permiso foreign key (idPermiso) references Permiso_064RB(idPermiso)
 );
 GO
 
@@ -87,8 +87,8 @@ create table Rol_permiso_064RB(
     idRol int not null,
     idPermiso int not null,
     constraint pk_rol_permiso primary key (idRol, idPermiso),
-    constraint fk_rol_permiso_rol foreign key (idRol) references rol(idRol),
-    constraint fk_rol_permiso_permiso foreign key (idPermiso) references permiso(idPermiso)
+    constraint fk_rol_permiso_rol foreign key (idRol) references Rol_064RB(idRol),
+    constraint fk_rol_permiso_permiso foreign key (idPermiso) references Permiso_064RB(idPermiso)
 );
 GO
 
@@ -106,8 +106,8 @@ CREATE TABLE Usuario_064RB (
     idRol int not null,
     idIdioma varchar(8) not null,
     CONSTRAINT PK_usuario PRIMARY KEY (dni),
-    CONSTRAINT FK_usuario_rol FOREIGN KEY (idRol) REFERENCES rol(idRol),
-    CONSTRAINT FK_usuario_idioma FOREIGN KEY (idIdioma) REFERENCES idioma(idIdioma)
+    CONSTRAINT FK_usuario_rol FOREIGN KEY (idRol) REFERENCES Rol_064RB(idRol),
+    CONSTRAINT FK_usuario_idioma FOREIGN KEY (idIdioma) REFERENCES Idioma_064RB(idIdioma)
 );
 GO
 
@@ -120,7 +120,7 @@ CREATE TABLE Bitacora_064RB (
     evento VARCHAR(50) NOT NULL,
     criticidad TINYINT NOT NULL,
     CONSTRAINT PK_bitacora PRIMARY KEY (idBitacora),
-    CONSTRAINT FK_bitacora_usuario FOREIGN KEY (dni) REFERENCES usuario(dni)
+    CONSTRAINT FK_bitacora_usuario FOREIGN KEY (dni) REFERENCES Usuario_064RB(dni)
 );
 GO
 
@@ -174,7 +174,7 @@ VALUES('12345678','Bruno','Roca','admin@sgv.com','admin',LOWER(CONVERT(VARCHAR(6
 -- Asignar todos los permisos existentes al rol Administrador (idRol = 1)
 INSERT INTO Rol_permiso_064RB (idRol, idPermiso)
 SELECT 1, idPermiso
-FROM permiso;
+FROM Permiso_064RB;
 
 select * from Idioma_064RB;
 select * from Usuario_064RB;
@@ -219,6 +219,7 @@ insert into rol_064RB(nombre) values ('test');
 -- TABLAS NEGOCIO
 --
 
+GO
 CREATE TABLE Cliente_064RB (
     dni VARCHAR(8) PRIMARY KEY,
     nombre VARCHAR(50) NOT NULL,
@@ -227,7 +228,9 @@ CREATE TABLE Cliente_064RB (
     email VARCHAR(100) NULL,
     fechaNacimiento DATE NOT NULL
 );
+GO
 
+GO
 CREATE TABLE Producto_064RB (
     sku VARCHAR(50) PRIMARY KEY,
     marca VARCHAR(50) NOT NULL,
@@ -235,28 +238,36 @@ CREATE TABLE Producto_064RB (
     precio DECIMAL(18, 2) NOT NULL,
     descripcion VARCHAR(100) NULL
 );
+GO
 
+GO
 CREATE TABLE Celular_064RB (
     sku VARCHAR(50) PRIMARY KEY, -- PK y FK al mismo tiempo (Relación 1 a 1)
     almacenamiento VARCHAR(50) NOT NULL,
     color VARCHAR(50) NOT NULL,
     CONSTRAINT FK_Celulares_Productos FOREIGN KEY (sku) REFERENCES Producto_064RB(sku) ON DELETE CASCADE
 );
+GO
 
+GO
 CREATE TABLE Accesorio_064RB (
     sku VARCHAR(50) PRIMARY KEY, -- PK y FK al mismo tiempo (Relación 1 a 1)
     categoria VARCHAR(100) NOT NULL,
     stock INT NOT NULL DEFAULT 0,
     CONSTRAINT FK_Accesorios_Productos FOREIGN KEY (sku) REFERENCES Producto_064RB(sku) ON DELETE CASCADE
 );
+GO
 
+GO
 CREATE TABLE UnidadCelular_064RB (
     imei VARCHAR(15) PRIMARY KEY,
     estado VARCHAR(50) NOT NULL,
     skuCelular VARCHAR(50) NOT NULL,
     CONSTRAINT FK_Unidades_Celulares FOREIGN KEY (skuCelular) REFERENCES Celular_064RB(sku)
 );
+GO
 
+GO
 CREATE TABLE Venta_064RB (
     numVenta INT IDENTITY(1,1) PRIMARY KEY,
     formaPago VARCHAR(50) NOT NULL,
@@ -265,7 +276,9 @@ CREATE TABLE Venta_064RB (
     dniCliente VARCHAR(8) NOT NULL,
     CONSTRAINT FK_Ventas_Clientes FOREIGN KEY (dniCliente) REFERENCES Cliente_064RB(dni)
 );
+GO
 
+GO
 CREATE TABLE DetalleVenta_064RB (
     idDetalle INT IDENTITY(1,1) PRIMARY KEY,
     numVenta INT NOT NULL,
@@ -276,7 +289,9 @@ CREATE TABLE DetalleVenta_064RB (
     CONSTRAINT FK_Detalles_Ventas FOREIGN KEY (numVenta) REFERENCES Venta_064RB(numVenta) ON DELETE CASCADE,
     CONSTRAINT FK_Detalles_Productos FOREIGN KEY (skuProducto) REFERENCES Producto_064RB(sku)
 );
+GO
 
+GO
 CREATE TABLE DetalleVenta_Imeis_064RB (
     id_detalle INT NOT NULL,
     imei VARCHAR(15) NOT NULL,
@@ -284,24 +299,40 @@ CREATE TABLE DetalleVenta_Imeis_064RB (
     CONSTRAINT FK_DetalleImeis_Detalles FOREIGN KEY (id_detalle) REFERENCES DetalleVenta_064RB(idDetalle) ON DELETE CASCADE,
     CONSTRAINT FK_DetalleImeis_Unidades FOREIGN KEY (imei) REFERENCES UnidadCelular_064RB(imei)
 );
-
+GO
 
 select * from Producto_064RB;
 select * from Accesorio_064RB;
 select * from Celular_064RB;
 select * from Cliente_064RB;
-select * from UnidadCelular_064RB;
 select * from Venta_064RB;
+select * from UnidadCelular_064RB;
 select * from DetalleVenta_064RB;
 select * from DetalleVenta_Imeis_064RB;
 
 delete from Producto_064RB;
 
+
+-- consultar celular
+select p.sku, p.marca, p.modelo, p.precio, p.descripcion, c.almacenamiento, c.color from Producto_064RB p
+inner join Celular_064RB c
+on p.sku = c.sku
+
+-- consultar accesorio
+select p.sku, p.marca, p.modelo, p.precio, p.descripcion, a.categoria, a.stock from Producto_064RB p
+inner join Accesorio_064RB a
+on p.sku = a.sku
+
+-- consultar unidad celulares por accesorio
+select * from UnidadCelular_064RB;
+
+-- consultar celular por sku
 select p.sku, p.marca, p.modelo, p.precio, p.descripcion, c.almacenamiento, c.color
 from Producto_064RB p
 inner join Celular_064RB c ON p.sku = c.sku
 where c.sku='CEL001'
 
+-- consultar accesorio por sku
 select p.sku, p.marca, p.modelo, p.precio, p.descripcion, a.categoria, a.stock
 from Producto_064RB p
 inner join Accesorio_064RB a ON p.sku = a.sku

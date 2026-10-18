@@ -47,8 +47,31 @@
             btnEmitirComprobante = new Button();
             lblDetalleVenta = new Label();
             grillaDetalleVenta = new DataGridView();
+            lblSku = new Label();
+            txtSku = new TextBox();
+            txtMarca = new TextBox();
+            lblMarca = new Label();
+            txtModelo = new TextBox();
+            lblModelo = new Label();
+            txtCategoria = new TextBox();
+            lblCategoria = new Label();
+            txtAlmacenamiento = new TextBox();
+            lblAlmacenamiento = new Label();
+            txtColor = new TextBox();
+            lblColor = new Label();
+            lblTipo = new Label();
+            txtPrecioMax = new TextBox();
+            lblPrecioMax = new Label();
+            cbxTipo = new ComboBox();
+            btnFiltrar = new Button();
+            nudCantidad = new NumericUpDown();
+            btnQuitarProducto = new Button();
+            btnCancelar = new Button();
+            backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            lblUltimaVenta = new Label();
             ((System.ComponentModel.ISupportInitialize)grillaProductos).BeginInit();
             ((System.ComponentModel.ISupportInitialize)grillaDetalleVenta).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)nudCantidad).BeginInit();
             SuspendLayout();
             // 
             // btnSalir
@@ -56,9 +79,9 @@
             btnSalir.BackColor = Color.FromArgb(45, 60, 82);
             btnSalir.FlatStyle = FlatStyle.Popup;
             btnSalir.ForeColor = SystemColors.Menu;
-            btnSalir.Location = new Point(1019, 440);
+            btnSalir.Location = new Point(793, 739);
             btnSalir.Name = "btnSalir";
-            btnSalir.Size = new Size(118, 48);
+            btnSalir.Size = new Size(180, 45);
             btnSalir.TabIndex = 12;
             btnSalir.Text = "Salir";
             btnSalir.UseVisualStyleBackColor = false;
@@ -69,7 +92,7 @@
             lblSeccionCliente.AutoSize = true;
             lblSeccionCliente.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblSeccionCliente.ForeColor = SystemColors.Menu;
-            lblSeccionCliente.Location = new Point(20, 31);
+            lblSeccionCliente.Location = new Point(1000, 525);
             lblSeccionCliente.Name = "lblSeccionCliente";
             lblSeccionCliente.Size = new Size(81, 30);
             lblSeccionCliente.TabIndex = 11;
@@ -80,9 +103,9 @@
             btnAgregarProducto.BackColor = Color.FromArgb(45, 60, 82);
             btnAgregarProducto.FlatStyle = FlatStyle.Popup;
             btnAgregarProducto.ForeColor = SystemColors.Menu;
-            btnAgregarProducto.Location = new Point(286, 299);
+            btnAgregarProducto.Location = new Point(438, 464);
             btnAgregarProducto.Name = "btnAgregarProducto";
-            btnAgregarProducto.Size = new Size(212, 48);
+            btnAgregarProducto.Size = new Size(177, 36);
             btnAgregarProducto.TabIndex = 9;
             btnAgregarProducto.Text = "Agregar producto";
             btnAgregarProducto.UseVisualStyleBackColor = false;
@@ -93,10 +116,10 @@
             grillaProductos.AllowUserToAddRows = false;
             grillaProductos.AllowUserToDeleteRows = false;
             grillaProductos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            grillaProductos.Location = new Point(504, 80);
+            grillaProductos.Location = new Point(12, 56);
             grillaProductos.Name = "grillaProductos";
             grillaProductos.ReadOnly = true;
-            grillaProductos.Size = new Size(775, 267);
+            grillaProductos.Size = new Size(961, 267);
             grillaProductos.TabIndex = 8;
             // 
             // btnBuscarCliente
@@ -104,9 +127,9 @@
             btnBuscarCliente.BackColor = Color.FromArgb(45, 60, 82);
             btnBuscarCliente.FlatStyle = FlatStyle.Popup;
             btnBuscarCliente.ForeColor = SystemColors.Menu;
-            btnBuscarCliente.Location = new Point(286, 101);
+            btnBuscarCliente.Location = new Point(1212, 584);
             btnBuscarCliente.Name = "btnBuscarCliente";
-            btnBuscarCliente.Size = new Size(212, 36);
+            btnBuscarCliente.Size = new Size(108, 36);
             btnBuscarCliente.TabIndex = 7;
             btnBuscarCliente.Text = "Buscar cliente";
             btnBuscarCliente.UseVisualStyleBackColor = false;
@@ -114,7 +137,7 @@
             // 
             // txtDni
             // 
-            txtDni.Location = new Point(40, 109);
+            txtDni.Location = new Point(1000, 592);
             txtDni.Name = "txtDni";
             txtDni.Size = new Size(206, 23);
             txtDni.TabIndex = 14;
@@ -124,7 +147,7 @@
             lblDni.AutoSize = true;
             lblDni.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblDni.ForeColor = SystemColors.Menu;
-            lblDni.Location = new Point(40, 85);
+            lblDni.Location = new Point(1000, 568);
             lblDni.Name = "lblDni";
             lblDni.Size = new Size(37, 21);
             lblDni.TabIndex = 15;
@@ -135,7 +158,7 @@
             lblClienteTitulo.AutoSize = true;
             lblClienteTitulo.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblClienteTitulo.ForeColor = SystemColors.Menu;
-            lblClienteTitulo.Location = new Point(40, 147);
+            lblClienteTitulo.Location = new Point(1000, 630);
             lblClienteTitulo.Name = "lblClienteTitulo";
             lblClienteTitulo.Size = new Size(61, 21);
             lblClienteTitulo.TabIndex = 16;
@@ -146,18 +169,18 @@
             lblCliente.AutoSize = true;
             lblCliente.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblCliente.ForeColor = SystemColors.Menu;
-            lblCliente.Location = new Point(113, 147);
+            lblCliente.Location = new Point(1067, 630);
             lblCliente.Name = "lblCliente";
-            lblCliente.Size = new Size(68, 21);
+            lblCliente.Size = new Size(16, 21);
             lblCliente.TabIndex = 17;
-            lblCliente.Text = "Nombre";
+            lblCliente.Text = "-";
             // 
             // lblFormaPago
             // 
             lblFormaPago.AutoSize = true;
             lblFormaPago.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblFormaPago.ForeColor = SystemColors.Menu;
-            lblFormaPago.Location = new Point(20, 194);
+            lblFormaPago.Location = new Point(1000, 675);
             lblFormaPago.Name = "lblFormaPago";
             lblFormaPago.Size = new Size(161, 30);
             lblFormaPago.TabIndex = 18;
@@ -168,7 +191,7 @@
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label1.ForeColor = SystemColors.Menu;
-            label1.Location = new Point(40, 246);
+            label1.Location = new Point(1000, 715);
             label1.Name = "label1";
             label1.Size = new Size(118, 21);
             label1.TabIndex = 19;
@@ -177,7 +200,7 @@
             // cbxFormaPago
             // 
             cbxFormaPago.FormattingEnabled = true;
-            cbxFormaPago.Location = new Point(40, 270);
+            cbxFormaPago.Location = new Point(1000, 739);
             cbxFormaPago.Name = "cbxFormaPago";
             cbxFormaPago.Size = new Size(199, 23);
             cbxFormaPago.TabIndex = 20;
@@ -187,7 +210,7 @@
             lblProductos.AutoSize = true;
             lblProductos.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblProductos.ForeColor = SystemColors.Menu;
-            lblProductos.Location = new Point(504, 31);
+            lblProductos.Location = new Point(15, 23);
             lblProductos.Name = "lblProductos";
             lblProductos.Size = new Size(113, 30);
             lblProductos.TabIndex = 21;
@@ -198,7 +221,7 @@
             lblSubtotalTitulo.AutoSize = true;
             lblSubtotalTitulo.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblSubtotalTitulo.ForeColor = SystemColors.Menu;
-            lblSubtotalTitulo.Location = new Point(811, 653);
+            lblSubtotalTitulo.Location = new Point(793, 804);
             lblSubtotalTitulo.Name = "lblSubtotalTitulo";
             lblSubtotalTitulo.Size = new Size(68, 21);
             lblSubtotalTitulo.TabIndex = 23;
@@ -209,7 +232,7 @@
             lblSubtotal.AutoSize = true;
             lblSubtotal.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblSubtotal.ForeColor = SystemColors.Menu;
-            lblSubtotal.Location = new Point(885, 653);
+            lblSubtotal.Location = new Point(867, 804);
             lblSubtotal.Name = "lblSubtotal";
             lblSubtotal.Size = new Size(58, 21);
             lblSubtotal.TabIndex = 22;
@@ -220,31 +243,33 @@
             btnProcesarPago.BackColor = Color.FromArgb(45, 60, 82);
             btnProcesarPago.FlatStyle = FlatStyle.Popup;
             btnProcesarPago.ForeColor = SystemColors.Menu;
-            btnProcesarPago.Location = new Point(801, 440);
+            btnProcesarPago.Location = new Point(793, 558);
             btnProcesarPago.Name = "btnProcesarPago";
-            btnProcesarPago.Size = new Size(212, 48);
+            btnProcesarPago.Size = new Size(180, 45);
             btnProcesarPago.TabIndex = 24;
             btnProcesarPago.Text = "Procesar pago";
             btnProcesarPago.UseVisualStyleBackColor = false;
+            btnProcesarPago.Click += btnProcesarPago_Click;
             // 
             // btnEmitirComprobante
             // 
             btnEmitirComprobante.BackColor = Color.FromArgb(45, 60, 82);
             btnEmitirComprobante.FlatStyle = FlatStyle.Popup;
             btnEmitirComprobante.ForeColor = SystemColors.Menu;
-            btnEmitirComprobante.Location = new Point(801, 494);
+            btnEmitirComprobante.Location = new Point(793, 609);
             btnEmitirComprobante.Name = "btnEmitirComprobante";
-            btnEmitirComprobante.Size = new Size(212, 48);
+            btnEmitirComprobante.Size = new Size(180, 45);
             btnEmitirComprobante.TabIndex = 25;
             btnEmitirComprobante.Text = "Emitir comprobante de venta";
             btnEmitirComprobante.UseVisualStyleBackColor = false;
+            btnEmitirComprobante.Click += btnEmitirComprobante_Click;
             // 
             // lblDetalleVenta
             // 
             lblDetalleVenta.AutoSize = true;
             lblDetalleVenta.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblDetalleVenta.ForeColor = SystemColors.Menu;
-            lblDetalleVenta.Location = new Point(20, 387);
+            lblDetalleVenta.Location = new Point(15, 525);
             lblDetalleVenta.Name = "lblDetalleVenta";
             lblDetalleVenta.Size = new Size(143, 30);
             lblDetalleVenta.TabIndex = 27;
@@ -255,18 +280,241 @@
             grillaDetalleVenta.AllowUserToAddRows = false;
             grillaDetalleVenta.AllowUserToDeleteRows = false;
             grillaDetalleVenta.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            grillaDetalleVenta.Location = new Point(20, 440);
+            grillaDetalleVenta.Location = new Point(12, 558);
             grillaDetalleVenta.Name = "grillaDetalleVenta";
             grillaDetalleVenta.ReadOnly = true;
             grillaDetalleVenta.Size = new Size(775, 267);
             grillaDetalleVenta.TabIndex = 26;
+            // 
+            // lblSku
+            // 
+            lblSku.AutoSize = true;
+            lblSku.Font = new Font("Segoe UI", 10F);
+            lblSku.ForeColor = SystemColors.Menu;
+            lblSku.Location = new Point(72, 345);
+            lblSku.Name = "lblSku";
+            lblSku.Size = new Size(37, 19);
+            lblSku.TabIndex = 28;
+            lblSku.Text = "SKU:";
+            // 
+            // txtSku
+            // 
+            txtSku.Location = new Point(120, 345);
+            txtSku.Name = "txtSku";
+            txtSku.Size = new Size(174, 23);
+            txtSku.TabIndex = 29;
+            // 
+            // txtMarca
+            // 
+            txtMarca.Location = new Point(120, 383);
+            txtMarca.Name = "txtMarca";
+            txtMarca.Size = new Size(174, 23);
+            txtMarca.TabIndex = 31;
+            // 
+            // lblMarca
+            // 
+            lblMarca.AutoSize = true;
+            lblMarca.Font = new Font("Segoe UI", 10F);
+            lblMarca.ForeColor = SystemColors.Menu;
+            lblMarca.Location = new Point(58, 383);
+            lblMarca.Name = "lblMarca";
+            lblMarca.Size = new Size(50, 19);
+            lblMarca.TabIndex = 30;
+            lblMarca.Text = "Marca:";
+            // 
+            // txtModelo
+            // 
+            txtModelo.Location = new Point(120, 422);
+            txtModelo.Name = "txtModelo";
+            txtModelo.Size = new Size(174, 23);
+            txtModelo.TabIndex = 33;
+            // 
+            // lblModelo
+            // 
+            lblModelo.AutoSize = true;
+            lblModelo.Font = new Font("Segoe UI", 10F);
+            lblModelo.ForeColor = SystemColors.Menu;
+            lblModelo.Location = new Point(48, 422);
+            lblModelo.Name = "lblModelo";
+            lblModelo.Size = new Size(59, 19);
+            lblModelo.TabIndex = 32;
+            lblModelo.Text = "Modelo:";
+            // 
+            // txtCategoria
+            // 
+            txtCategoria.Location = new Point(441, 422);
+            txtCategoria.Name = "txtCategoria";
+            txtCategoria.Size = new Size(174, 23);
+            txtCategoria.TabIndex = 39;
+            // 
+            // lblCategoria
+            // 
+            lblCategoria.AutoSize = true;
+            lblCategoria.Font = new Font("Segoe UI", 10F);
+            lblCategoria.ForeColor = SystemColors.Menu;
+            lblCategoria.Location = new Point(358, 426);
+            lblCategoria.Name = "lblCategoria";
+            lblCategoria.Size = new Size(71, 19);
+            lblCategoria.TabIndex = 38;
+            lblCategoria.Text = "Categoría:";
+            // 
+            // txtAlmacenamiento
+            // 
+            txtAlmacenamiento.Location = new Point(441, 383);
+            txtAlmacenamiento.Name = "txtAlmacenamiento";
+            txtAlmacenamiento.Size = new Size(174, 23);
+            txtAlmacenamiento.TabIndex = 37;
+            // 
+            // lblAlmacenamiento
+            // 
+            lblAlmacenamiento.AutoSize = true;
+            lblAlmacenamiento.Font = new Font("Segoe UI", 10F);
+            lblAlmacenamiento.ForeColor = SystemColors.Menu;
+            lblAlmacenamiento.Location = new Point(312, 384);
+            lblAlmacenamiento.Name = "lblAlmacenamiento";
+            lblAlmacenamiento.Size = new Size(114, 19);
+            lblAlmacenamiento.TabIndex = 36;
+            lblAlmacenamiento.Text = "Almacenamiento:";
+            // 
+            // txtColor
+            // 
+            txtColor.Location = new Point(441, 345);
+            txtColor.Name = "txtColor";
+            txtColor.Size = new Size(174, 23);
+            txtColor.TabIndex = 35;
+            // 
+            // lblColor
+            // 
+            lblColor.AutoSize = true;
+            lblColor.Font = new Font("Segoe UI", 10F);
+            lblColor.ForeColor = SystemColors.Menu;
+            lblColor.Location = new Point(384, 346);
+            lblColor.Name = "lblColor";
+            lblColor.Size = new Size(45, 19);
+            lblColor.TabIndex = 34;
+            lblColor.Text = "Color:";
+            // 
+            // lblTipo
+            // 
+            lblTipo.AutoSize = true;
+            lblTipo.Font = new Font("Segoe UI", 10F);
+            lblTipo.ForeColor = SystemColors.Menu;
+            lblTipo.Location = new Point(679, 385);
+            lblTipo.Name = "lblTipo";
+            lblTipo.Size = new Size(38, 19);
+            lblTipo.TabIndex = 42;
+            lblTipo.Text = "Tipo:";
+            // 
+            // txtPrecioMax
+            // 
+            txtPrecioMax.Location = new Point(723, 343);
+            txtPrecioMax.Name = "txtPrecioMax";
+            txtPrecioMax.Size = new Size(174, 23);
+            txtPrecioMax.TabIndex = 41;
+            // 
+            // lblPrecioMax
+            // 
+            lblPrecioMax.AutoSize = true;
+            lblPrecioMax.Font = new Font("Segoe UI", 10F);
+            lblPrecioMax.ForeColor = SystemColors.Menu;
+            lblPrecioMax.Location = new Point(639, 343);
+            lblPrecioMax.Name = "lblPrecioMax";
+            lblPrecioMax.Size = new Size(78, 19);
+            lblPrecioMax.TabIndex = 40;
+            lblPrecioMax.Text = "Precio máx:";
+            // 
+            // cbxTipo
+            // 
+            cbxTipo.FormattingEnabled = true;
+            cbxTipo.Location = new Point(723, 381);
+            cbxTipo.Name = "cbxTipo";
+            cbxTipo.Size = new Size(174, 23);
+            cbxTipo.TabIndex = 43;
+            // 
+            // btnFiltrar
+            // 
+            btnFiltrar.BackColor = Color.FromArgb(45, 60, 82);
+            btnFiltrar.FlatStyle = FlatStyle.Popup;
+            btnFiltrar.ForeColor = SystemColors.Menu;
+            btnFiltrar.Location = new Point(120, 464);
+            btnFiltrar.Name = "btnFiltrar";
+            btnFiltrar.Size = new Size(174, 36);
+            btnFiltrar.TabIndex = 44;
+            btnFiltrar.Text = "Filtrar";
+            btnFiltrar.UseVisualStyleBackColor = false;
+            btnFiltrar.Click += btnFiltrar_Click;
+            // 
+            // nudCantidad
+            // 
+            nudCantidad.Location = new Point(441, 506);
+            nudCantidad.Name = "nudCantidad";
+            nudCantidad.Size = new Size(174, 23);
+            nudCantidad.TabIndex = 45;
+            // 
+            // btnQuitarProducto
+            // 
+            btnQuitarProducto.BackColor = Color.FromArgb(45, 60, 82);
+            btnQuitarProducto.FlatStyle = FlatStyle.Popup;
+            btnQuitarProducto.ForeColor = SystemColors.Menu;
+            btnQuitarProducto.Location = new Point(621, 464);
+            btnQuitarProducto.Name = "btnQuitarProducto";
+            btnQuitarProducto.Size = new Size(174, 36);
+            btnQuitarProducto.TabIndex = 46;
+            btnQuitarProducto.Text = "Quitar producto";
+            btnQuitarProducto.UseVisualStyleBackColor = false;
+            btnQuitarProducto.Click += btnQuitarProducto_Click;
+            // 
+            // btnCancelar
+            // 
+            btnCancelar.BackColor = Color.FromArgb(45, 60, 82);
+            btnCancelar.FlatStyle = FlatStyle.Popup;
+            btnCancelar.ForeColor = SystemColors.Menu;
+            btnCancelar.Location = new Point(793, 688);
+            btnCancelar.Name = "btnCancelar";
+            btnCancelar.Size = new Size(180, 45);
+            btnCancelar.TabIndex = 47;
+            btnCancelar.Text = "Cancelar";
+            btnCancelar.UseVisualStyleBackColor = false;
+            btnCancelar.Click += btnCancelar_Click;
+            // 
+            // lblUltimaVenta
+            // 
+            lblUltimaVenta.AutoSize = true;
+            lblUltimaVenta.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblUltimaVenta.ForeColor = SystemColors.Menu;
+            lblUltimaVenta.Location = new Point(1000, 347);
+            lblUltimaVenta.Name = "lblUltimaVenta";
+            lblUltimaVenta.Size = new Size(16, 21);
+            lblUltimaVenta.TabIndex = 48;
+            lblUltimaVenta.Text = "-";
             // 
             // FrmVenta_064RB
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(30, 42, 58);
-            ClientSize = new Size(1303, 719);
+            ClientSize = new Size(1408, 844);
+            Controls.Add(lblUltimaVenta);
+            Controls.Add(btnCancelar);
+            Controls.Add(btnQuitarProducto);
+            Controls.Add(nudCantidad);
+            Controls.Add(btnFiltrar);
+            Controls.Add(cbxTipo);
+            Controls.Add(lblTipo);
+            Controls.Add(txtPrecioMax);
+            Controls.Add(lblPrecioMax);
+            Controls.Add(txtCategoria);
+            Controls.Add(lblCategoria);
+            Controls.Add(txtAlmacenamiento);
+            Controls.Add(lblAlmacenamiento);
+            Controls.Add(txtColor);
+            Controls.Add(lblColor);
+            Controls.Add(txtModelo);
+            Controls.Add(lblModelo);
+            Controls.Add(txtMarca);
+            Controls.Add(lblMarca);
+            Controls.Add(txtSku);
+            Controls.Add(lblSku);
             Controls.Add(lblDetalleVenta);
             Controls.Add(grillaDetalleVenta);
             Controls.Add(btnEmitirComprobante);
@@ -291,6 +539,7 @@
             Load += FrmVenta_064RB_Load;
             ((System.ComponentModel.ISupportInitialize)grillaProductos).EndInit();
             ((System.ComponentModel.ISupportInitialize)grillaDetalleVenta).EndInit();
+            ((System.ComponentModel.ISupportInitialize)nudCantidad).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -315,5 +564,27 @@
         private Button btnEmitirComprobante;
         private Label lblDetalleVenta;
         private DataGridView grillaDetalleVenta;
+        private Label lblSku;
+        private TextBox txtSku;
+        private TextBox txtMarca;
+        private Label lblMarca;
+        private TextBox txtModelo;
+        private Label lblModelo;
+        private TextBox txtCategoria;
+        private Label lblCategoria;
+        private TextBox txtAlmacenamiento;
+        private Label lblAlmacenamiento;
+        private TextBox txtColor;
+        private Label lblColor;
+        private Label lblTipo;
+        private TextBox txtPrecioMax;
+        private Label lblPrecioMax;
+        private ComboBox cbxTipo;
+        private Button btnFiltrar;
+        private NumericUpDown nudCantidad;
+        private Button btnQuitarProducto;
+        private Button btnCancelar;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private Label lblUltimaVenta;
     }
 }
