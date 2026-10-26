@@ -4,7 +4,7 @@ using System.Data;
 
 namespace MAP_064RB.Tecnico_064RB
 {
-    public class MAP_Rol_064RB : IProtegidoPorDV_064RB
+    public class MAP_Rol_064RB
     {
         DAO_Rol_064RB dao_rol;
         MAP_Familia_064RB map_familia;
@@ -13,9 +13,6 @@ namespace MAP_064RB.Tecnico_064RB
             dao_rol = new();
             map_familia = new();
         }
-        public string NombreTabla_064RB => "Rol_064RB";
-        public List<object> ObtenerRegistrosParaDV_064RB() => Consultar_064RB().Cast<object>().ToList();
-        public string ObtenerIdParaDV_064RB(object registro) => Convert.ToString(((SER_Rol_064RB)registro).Id_064RB);
 
         public List<SER_Rol_064RB> Consultar_064RB()
         {

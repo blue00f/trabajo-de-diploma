@@ -27,11 +27,11 @@ namespace MAP_064RB.Tecnico_064RB
         private SER_Bitacora_064RB Mapear_064RB(DataRow fila)
         {
             return new SER_Bitacora_064RB(
-                map_usuario.ConsultarPorId_064RB(new SER_Usuario_064RB(fila["dni"].ToString())),
-                Convert.ToDateTime(fila["fecha"]),
-                Convert.ToString(fila["modulo"]),
-                Convert.ToString(fila["evento"]),
-                Convert.ToInt16(fila["criticidad"])
+                map_usuario.ConsultarPorId_064RB(new SER_Usuario_064RB(fila["Dni_064RB"].ToString())),
+                Convert.ToDateTime(fila["Fecha_064RB"]),
+                Convert.ToString(fila["Modulo_064RB"]),
+                Convert.ToString(fila["Evento_064RB"]),
+                Convert.ToInt16(fila["Criticidad_064RB"])
             );
         }
     }

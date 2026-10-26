@@ -22,18 +22,18 @@ namespace BLL_064RB.Tecnico_064RB
 
             map_familia.Borrar_064RB(familia);
 
-            bll_dv.BorrarDVH_064RB("familia", familia.Id_064RB.ToString());
+            //bll_dv.BorrarDVH_064RB("familia", familia.Id_064RB.ToString());
 
             foreach (var componente in familia.Componentes_064RB)
             {
                 string tabla = componente is SER_Familia_064RB ? "familia_familia" : "permiso_familia";
                 string id = $"{familia.Id_064RB}-{componente.Id_064RB}";
-                bll_dv.BorrarDVH_064RB(tabla, id);
+                //bll_dv.BorrarDVH_064RB(tabla, id);
             }
 
-            bll_dv.GenerarDVV_064RB("familia");
-            bll_dv.GenerarDVV_064RB("familia_familia");
-            bll_dv.GenerarDVV_064RB("permiso_familia");
+            //bll_dv.GenerarDVV_064RB("familia");
+            //bll_dv.GenerarDVV_064RB("familia_familia");
+            //bll_dv.GenerarDVV_064RB("permiso_familia");
 
             bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB, DateTime.Now, "Roles", "Borrar familia", 1));
         }
@@ -50,22 +50,18 @@ namespace BLL_064RB.Tecnico_064RB
             if (ValidarPermisosRepetidos_064RB(componentes)) throw new Exception("Existe un permiso repetido!");
             map_familia.Agregar_064RB(familia);
             familia.Id_064RB = map_familia.ObtenerIdPorNombre_064RB(familia).Id_064RB;
-            
-            bll_dv.GenerarDVH_064RB(familia, familia.Id_064RB.ToString(),"familia");
-            bll_dv.GenerarDVV_064RB("familia");
+            bll_dv.ActualizarDV_064RB("Familia_064RB");
             
             foreach (SER_Componente_064RB c in componentes)
             {
                 map_familia.AgregarPermisoFamilia_064RB(familia, c);
                 if (c is SER_Familia_064RB familiaHijo)
                 {
-                    bll_dv.GenerarDVH_064RB(new List<string>() { familia.Id_064RB.ToString(), c.Id_064RB.ToString() }, "familia_familia");
-                    bll_dv.GenerarDVV_064RB("familia_familia");
+                    bll_dv.ActualizarDV_064RB("Familia_familia_064RB");
                 }
                 else if (c is SER_Permiso_064RB permiso)
                 {
-                    bll_dv.GenerarDVH_064RB(new List<string>() { familia.Id_064RB.ToString(), c.Id_064RB.ToString() }, "permiso_familia");
-                    bll_dv.GenerarDVV_064RB("permiso_familia");
+                    bll_dv.ActualizarDV_064RB("Permiso_familia_064RB");
                 }
             }
             bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB, DateTime.Now, "Roles", "Crear familia", 1));

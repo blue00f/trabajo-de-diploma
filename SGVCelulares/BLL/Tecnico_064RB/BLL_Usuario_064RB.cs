@@ -1,4 +1,5 @@
-﻿using MAP_064RB.Tecnico_064RB;
+﻿using BLL_064RB;
+using MAP_064RB.Tecnico_064RB;
 using Servicio_064RB;
 
 namespace BLL_064RB.Tecnico_064RB
@@ -26,7 +27,8 @@ namespace BLL_064RB.Tecnico_064RB
             string passwordHasheado = SER_Cripto_064RB.Encriptar_064RB(usuario.Password_064RB);
             usuario.Password_064RB = passwordHasheado;
             map_usuario.Agregar_064RB(usuario);
-            ActualizarDV_064RB(usuario);
+            bll_dv.ActualizarDV_064RB("Usuario_064RB");
+            
             SER_Bitacora_064RB bitacora = new SER_Bitacora_064RB(SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB, DateTime.Now, "Usuarios", "Crear usuario", 2);
             bll_bitacora.RegistrarBitacora_064RB(bitacora);
         }
@@ -36,7 +38,7 @@ namespace BLL_064RB.Tecnico_064RB
             SER_Usuario_064RB usuAux = map_usuario.ConsultarPorNombreUsuario_064RB(usuario);
             if (usuAux != null && usuAux.Dni_064RB != usuario.Dni_064RB) throw new Exception("Ya existe usuario con este nombre de usuario");
             map_usuario.Modificar_064RB(usuario);
-            ActualizarDV_064RB(usuario);
+            bll_dv.ActualizarDV_064RB("Usuario_064RB");
 
             SER_Bitacora_064RB bitacora = new SER_Bitacora_064RB(SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB, DateTime.Now, "Usuarios", "Modificar usuario", 2);
             bll_bitacora.RegistrarBitacora_064RB(bitacora);
@@ -51,7 +53,7 @@ namespace BLL_064RB.Tecnico_064RB
             map_usuario.ModificarPassword_064RB(usuario, claveNuevaHasheada);
 
             usuario.Password_064RB = claveNuevaHasheada;
-            ActualizarDV_064RB(usuario);
+            bll_dv.ActualizarDV_064RB("Usuario_064RB");
 
             SER_Bitacora_064RB bitacora = new SER_Bitacora_064RB(usuario, DateTime.Now, "Usuarios", "Cambiar clave", 1);
             bll_bitacora.RegistrarBitacora_064RB(bitacora);
@@ -129,6 +131,18 @@ namespace BLL_064RB.Tecnico_064RB
         {
             mensajeInconsistencia = null;
             bool rdo = false;
+            bool integro = true;
+            try
+            {
+                integro = bll_dv.VerificarIntegridad_064RB(out string? mensaje);
+                mensajeInconsistencia = mensaje;
+            }
+            catch (Exception ex)
+            {
+                integro = false;
+                mensajeInconsistencia = ex.Message;
+            }
+
             SER_Usuario_064RB obj = map_usuario.ConsultarPorNombreUsuario_064RB(usuario);
             if (obj == null) throw new Exception("Datos erróneos!");
             if (EstaBloqueado_064RB(obj)) throw new Exception("La cuenta está bloqueada!");
@@ -136,29 +150,24 @@ namespace BLL_064RB.Tecnico_064RB
 
             if (!CompararPassword_064RB(obj, usuario.Password_064RB))
             {
-                map_usuario.SumarCantidadIntento_064RB(obj);
-                obj.CantIntentos_064RB += 1;
-                ActualizarDV_064RB(obj);
-                if (map_usuario.ConsultarPorNombreUsuario_064RB(usuario).CantIntentos_064RB >= 3)
+                // Con la BD inconsistente no se escribe nada: ActualizarDV "aceptaria" los datos alterados de esa tabla
+                if (integro)
                 {
-                    map_usuario.Bloquear_064RB(obj);
-                    obj.Bloqueo_064RB = true;
-                    ActualizarDV_064RB(obj);
-                    throw new Exception("Se bloqueó el usuario por motivos de seguridad!");
+                    map_usuario.SumarCantidadIntento_064RB(obj);
+                    obj.CantIntentos_064RB += 1;
+                    bll_dv.ActualizarDV_064RB("Usuario_064RB");
+                    if (map_usuario.ConsultarPorNombreUsuario_064RB(usuario).CantIntentos_064RB >= 3)
+                    {
+                        map_usuario.Bloquear_064RB(obj);
+                        obj.Bloqueo_064RB = true;
+                        bll_dv.ActualizarDV_064RB("Usuario_064RB");
+                        throw new Exception("Se bloqueó el usuario por motivos de seguridad!");
+                    }
                 }
                 throw new Exception("No se pudo iniciar sesión");
             }
-            bool integro = true;
 
-            try
-            {
-                bll_dv.VerificarIntegridad_064RB();
-            }
-            catch (Exception ex)
-            {
-                integro = false;
-                mensajeInconsistencia = ex.Message;
-            }
+            // 2) Credenciales correctas: si hay inconsistencia solo el administrador puede continuar (GUI de reparación)
             bool esAdmin = obj.Rol_064RB.Id_064RB == 1;
             if (!integro && !esAdmin) throw new Exception("El sistema no se encuentra disponible. Contacte con un administrador si el problema persiste.");
 
@@ -175,18 +184,19 @@ namespace BLL_064RB.Tecnico_064RB
             }
             rdo = true;
             SER_SessionManager_064RB sesion = SER_SessionManager_064RB.ObtenerSesion_064RB();
-            map_usuario.ReiniciarIntentos_064RB(obj);
             obj.CantIntentos_064RB = 0;
             if (integro)
             {
-                bll_dv.GenerarDVH_064RB(obj, obj.Dni_064RB, "usuario");
-                bll_dv.GenerarDVV_064RB("usuario");
+                map_usuario.ReiniciarIntentos_064RB(obj);
+                bll_dv.ActualizarDV_064RB("Usuario_064RB");
             }
             obj.Rol_064RB = map_rol.ObtenerArbol_064RB(obj.Rol_064RB.Id_064RB);
             sesion.Usuario_064RB = obj;
+
             string evento = esRelogin ? "Relogin" : "Login";
             SER_Bitacora_064RB bitacora = new SER_Bitacora_064RB(obj, DateTime.Now, "Usuarios", evento, 1);
             bll_bitacora.RegistrarBitacora_064RB(bitacora);
+
             return rdo;
         }
 
@@ -197,7 +207,7 @@ namespace BLL_064RB.Tecnico_064RB
             {
                 usuario.IdIdioma_064RB = bll_idioma.IdiomaActual;
                 map_usuario.ModificarIdioma_064RB(usuario);
-                ActualizarDV_064RB(usuario);
+                bll_dv.ActualizarDV_064RB("Usuario_064RB");
                 bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(usuario, DateTime.Now, "Usuarios", "Logout", 2));
                 bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(usuario, DateTime.Now, "Usuarios", "Cambiar Idioma", 3));
                 SER_SessionManager_064RB.CerrarSesion_064RB();
@@ -239,7 +249,7 @@ namespace BLL_064RB.Tecnico_064RB
             map_usuario.ReiniciarIntentos_064RB(usuarioAux);
             usuarioAux.CantIntentos_064RB = 0;
 
-            ActualizarDV_064RB(usuarioAux);
+            bll_dv.ActualizarDV_064RB("Usuario_064RB");
 
             SER_Bitacora_064RB bitacora = new SER_Bitacora_064RB(SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB, DateTime.Now, "Usuarios", "Desbloquear usuario", 2);
             bll_bitacora.RegistrarBitacora_064RB(bitacora);
@@ -251,7 +261,7 @@ namespace BLL_064RB.Tecnico_064RB
             {
                 usuarioAux.Activo_064RB = !usuarioAux.Activo_064RB;
                 map_usuario.CambiarEstadoActivo_064RB(usuarioAux);
-                ActualizarDV_064RB(usuarioAux);
+                bll_dv.ActualizarDV_064RB("Usuario_064RB");
                 if (usuarioAux.Activo_064RB)
                 {
                     SER_Bitacora_064RB bitacora = new SER_Bitacora_064RB(SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB, DateTime.Now, "Usuarios", "Activar usuario", 3);
@@ -264,11 +274,6 @@ namespace BLL_064RB.Tecnico_064RB
                     bll_bitacora.RegistrarBitacora_064RB(bitacora);
                 }
             }
-        }
-        private void ActualizarDV_064RB(SER_Usuario_064RB usuario)
-        {
-            bll_dv.GenerarDVH_064RB(usuario, usuario.Dni_064RB, "Usuario_064RB");
-            bll_dv.GenerarDVV_064RB("Usuario_064RB");
         }
     }
 }

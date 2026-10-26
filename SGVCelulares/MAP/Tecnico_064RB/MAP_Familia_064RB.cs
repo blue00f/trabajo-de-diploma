@@ -4,14 +4,10 @@ using System.Data;
 
 namespace MAP_064RB.Tecnico_064RB
 {
-    public class MAP_Familia_064RB : IABMC_064RB<SER_Familia_064RB>, IProtegidoPorDV_064RB
+    public class MAP_Familia_064RB : IABMC_064RB<SER_Familia_064RB>
     {
         DAO_Familia_064RB dao_familia;
         public MAP_Familia_064RB() => dao_familia = new();
-        public string NombreTabla_064RB => "Familia_064RB";
-        public List<object> ObtenerRegistrosParaDV_064RB() => Consultar_064RB().Cast<object>().ToList();
-        public string ObtenerIdParaDV_064RB(object registro) => Convert.ToString(((SER_Familia_064RB)registro).Id_064RB);
-
         public void Agregar_064RB(SER_Familia_064RB familia) => dao_familia.Agregar_064RB(familia.Nombre_064RB);
         public void Borrar_064RB(SER_Familia_064RB familia) => dao_familia.Borrar_064RB(familia.Id_064RB);
         public List<SER_Familia_064RB> Consultar_064RB()

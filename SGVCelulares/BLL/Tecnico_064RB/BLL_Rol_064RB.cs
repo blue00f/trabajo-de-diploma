@@ -24,21 +24,19 @@ namespace BLL_064RB.Tecnico_064RB
             if (ValidarPermisosRepetidos_064RB(componentes)) throw new Exception("El permiso repite con otro");
             map_rol.Agregar_064RB(rol);
             rol.Id_064RB = map_rol.ObtenerIdPorNombre_064RB(rol).Id_064RB;
-            bll_dv.GenerarDVH_064RB(rol, rol.Id_064RB.ToString(),"rol_064RB");
-            bll_dv.GenerarDVV_064RB("rol_064RB");
-            
+            bll_dv.ActualizarDV_064RB("Rol_064RB");
+
+
             foreach (SER_Componente_064RB c in componentes)
             {
                 map_rol.AgregarPermisoFamilia_064RB(rol, c);
                 if(c is SER_Familia_064RB familia)
                 {
-                    bll_dv.GenerarDVH_064RB(new List<string>() { rol.Id_064RB.ToString(), c.Id_064RB.ToString() }, "rol_familia_064RB");
-                    bll_dv.GenerarDVV_064RB("rol_familia_064RB");
+                    bll_dv.ActualizarDV_064RB("Rol_familia_064RB");
                 }
                 else if (c is SER_Permiso_064RB permiso)
                 {
-                    bll_dv.GenerarDVH_064RB(new List<string>() { rol.Id_064RB.ToString(), c.Id_064RB.ToString() }, "rol_permiso_064RB");
-                    bll_dv.GenerarDVV_064RB("rol_permiso_064RB");
+                    bll_dv.ActualizarDV_064RB("Rol_permiso_064RB");
                 }
             }
             bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB, DateTime.Now, "Roles", "Crear rol", 1));
@@ -73,24 +71,9 @@ namespace BLL_064RB.Tecnico_064RB
         }
         public void Borrar_064RB(SER_Rol_064RB rol)
         {
-            if (map_rol.EstaEnUso_064RB(rol))
-                throw new Exception("No se puede borrar: el rol está asignado a uno o más usuarios.");
-
+            if (map_rol.EstaEnUso_064RB(rol)) throw new Exception("No se puede borrar: el rol está asignado a uno o más usuarios.");
             map_rol.Borrar_064RB(rol);
-
-            bll_dv.BorrarDVH_064RB("rol", rol.Id_064RB.ToString());
-
-            foreach (var componente in rol.Componentes_064RB)
-            {
-                string tabla = componente is SER_Familia_064RB ? "rol_familia_064RB" : "rol_permiso_064RB";
-                string id = $"{rol.Id_064RB}-{componente.Id_064RB}";
-                bll_dv.BorrarDVH_064RB(tabla, id);
-            }
-
-            bll_dv.GenerarDVV_064RB("rol_064RB");
-            bll_dv.GenerarDVV_064RB("rol_familia_064RB");
-            bll_dv.GenerarDVV_064RB("rol_permiso_064RB");
-
+            bll_dv.ActualizarDV_064RB("Rol_064RB", "Rol_familia_064RB", "Rol_permiso_064RB");
             bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB, DateTime.Now, "Roles", "Borrar rol", 1));
         }
     }

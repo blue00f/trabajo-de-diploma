@@ -15,8 +15,7 @@ namespace BLL_064RB.Tecnico_064RB
         }
         public void Suscribir_064RB(IObservadorIdioma_064RB observador)
         {
-            if (!observadores_064RB.Contains(observador))
-                observadores_064RB.Add(observador);
+            if (!observadores_064RB.Contains(observador)) observadores_064RB.Add(observador);
         }
         public void Desuscribir_064RB(IObservadorIdioma_064RB observador)
         {
@@ -39,7 +38,9 @@ namespace BLL_064RB.Tecnico_064RB
         private void Notificar_064RB()
         {
             foreach (IObservadorIdioma_064RB observador in observadores_064RB.ToArray())
+            {
                 observador.ActualizarIdioma_064RB();
+            }
         }
     }
 }

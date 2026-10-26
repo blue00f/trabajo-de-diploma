@@ -1,244 +1,259 @@
 ﻿using MAP_064RB.Tecnico_064RB;
 using Servicio_064RB;
-using System.Reflection;
+using System.Data;
+using System.Globalization;
+using System.Numerics;
 using System.Text;
+using System.Text.Encodings.Web;
+using System.Text.Json;
 
 namespace BLL_064RB.Tecnico_064RB
 {
     public class BLL_DV_064RB
     {
+        private static readonly JsonSerializerOptions JsonOpts_064RB = new() { Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping };
+
         MAP_DV_064RB map_dv;
-        private const string SEPARADOR_HASH = "|";
-        private const string SEPARADOR_ID = "-";
         public BLL_DV_064RB() => map_dv = new();
+        public void ActualizarDV_064RB(params string[] tablas)
+        {
+            var porTabla = map_dv.ObtenerDV_064RB().Where(d => d.Tabla_064RB != MAP_DV_064RB.FilaBD_064RB).ToDictionary(d => d.Tabla_064RB);
+            var dvs = new List<SER_DV_064RB>();
+            var upsert = new List<SER_DVRegistro_064RB>();
+            var eliminar = new List<SER_DVRegistro_064RB>();
 
-        #region "Generaciones"
-        public void GenerarDVH_064RB(List<string> valores, string nombreTabla)
-        {
-            string id = string.Join(SEPARADOR_ID, valores);
-            GenerarDVH_064RB((object)valores, id, nombreTabla);
-        }
-        public void GenerarDVH_064RB(object valor, string id, string nombreTabla)
-        {
-            string hash = CalcularHash_064RB(valor);
-            SER_DVH_064RB dvh = new SER_DVH_064RB(nombreTabla, id, hash);
-            if (map_dv.ExisteDVH_064RB(nombreTabla, id)) map_dv.ModificarDVH_064RB(dvh);
-            else map_dv.AgregarDVH_064RB(dvh);
-        }
-        public void GenerarDVV_064RB(string nombreTabla)
-        {
-            List<string> listaDVH = map_dv.ConsultarDVHValores_064RB(nombreTabla);
-            if (listaDVH.Count == 0)
+            foreach (string tabla in tablas.Distinct())
             {
-                if (map_dv.ExisteDVV_064RB(nombreTabla)) map_dv.BorrarDVV_064RB(nombreTabla);
-                return;
-            }
-            string hash = CalcularHash_064RB(listaDVH);
-            SER_DVV_064RB dvv = new SER_DVV_064RB(nombreTabla, hash);
-            if (map_dv.ExisteDVV_064RB(nombreTabla)) map_dv.ModificarDVV_064RB(dvv);
-            else map_dv.AgregarDVV_064RB(dvv);
-        }
-        #endregion
+                var (dv, registros) = CalcularTabla_064RB(tabla);
+                porTabla[tabla] = dv;
+                dvs.Add(dv);
 
-        #region "Recalculos"
+                Dictionary<string, SER_DVRegistro_064RB> guardados = map_dv.ObtenerRegistrosDV_064RB(tabla).ToDictionary(r => r.IdRegistro_064RB);
+                var idsActuales = new HashSet<string>();
+                foreach (SER_DVRegistro_064RB r in registros)
+                {
+                    idsActuales.Add(r.IdRegistro_064RB);
+                    if (!guardados.TryGetValue(r.IdRegistro_064RB, out SER_DVRegistro_064RB? g) || !IgualesRegistro_064RB(g, r)) upsert.Add(r);
+                }
+                eliminar.AddRange(guardados.Values.Where(g => !idsActuales.Contains(g.IdRegistro_064RB)));
+            }
+            dvs.Add(CalcularBD_064RB(porTabla.Values.ToList()));
+            map_dv.Guardar_064RB(dvs, upsert, eliminar);
+        }
+
         public void RecalcularDV_064RB()
         {
-            foreach (var entidad in ObtenerEntidadesRegistradas_064RB())
+            var dvs = new List<SER_DV_064RB>();
+            var registros = new List<SER_DVRegistro_064RB>();
+            foreach (string tabla in map_dv.ObtenerTablas_064RB())
             {
-                RecalcularEntidad_064RB(entidad);
+                var (dv, regs) = CalcularTabla_064RB(tabla);
+                dvs.Add(dv);
+                registros.AddRange(regs);
             }
-            foreach (var relacion in ObtenerRelacionesRegistradas_064RB())
-            {
-                RecalcularRelacion_064RB(relacion);
-            }
-        }
-        private void RecalcularEntidad_064RB(IProtegidoPorDV_064RB entidad)
-        {
-            var registros = entidad.ObtenerRegistrosParaDV_064RB();
-            BorrarDVHHuerfanos_064RB(entidad.NombreTabla_064RB, registros.Select(entidad.ObtenerIdParaDV_064RB).ToList());
-            foreach (var r in registros)
-            {
-                GenerarDVH_064RB(r, entidad.ObtenerIdParaDV_064RB(r), entidad.NombreTabla_064RB);
-            }
-            GenerarDVV_064RB(entidad.NombreTabla_064RB);
-        }
-        private void RecalcularRelacion_064RB(RelacionDV_064RB relacion)
-        {
-            var registros = OrdenarCompuesta_064RB(relacion.ObtenerRegistros_064RB());
-            var ids = registros.Select(ObtenerIdCompuesto_064RB).ToList();
-            BorrarDVHHuerfanos_064RB(relacion.NombreTabla_064RB, ids);
-            foreach (var r in registros)
-            {
-                GenerarDVH_064RB(new List<string> { r[0].ToString(), r[1].ToString() }, relacion.NombreTabla_064RB);
-            }
-            GenerarDVV_064RB(relacion.NombreTabla_064RB);
-        }
-        private void BorrarDVHHuerfanos_064RB(string nombreTabla, List<string> idsReales)
-        {
-            List<string> idsDVH = map_dv.ConsultarDVHIds_064RB(nombreTabla);
-            foreach (var id in idsDVH)
-            {
-                if (!idsReales.Contains(id)) BorrarDVH_064RB(nombreTabla, id);
-            }
-        }
-        public void BorrarDVH_064RB(string nombreTabla, string id)
-        {
-            if (map_dv.ExisteDVH_064RB(nombreTabla, id)) map_dv.BorrarDVH_064RB(nombreTabla, id);
-        }
-        #endregion
-
-        #region "Catalogos"
-        private List<IProtegidoPorDV_064RB> ObtenerEntidadesRegistradas_064RB()
-        {
-            return typeof(MAP_DV_064RB).Assembly.GetTypes()
-                .Where(t => typeof(IProtegidoPorDV_064RB).IsAssignableFrom(t) && !t.IsInterface && !t.IsAbstract)
-                .Select(t => (IProtegidoPorDV_064RB)Activator.CreateInstance(t))
-                .ToList();
-        }
-        private List<RelacionDV_064RB> ObtenerRelacionesRegistradas_064RB()
-        {
-            BLL_Rol_064RB bll_rol = new();
-            BLL_Familia_064RB bll_familia = new();
-
-            return new List<RelacionDV_064RB>
-            {
-                new RelacionDV_064RB { NombreTabla_064RB = "rol_familia_064RB", ObtenerRegistros_064RB = () => bll_rol.ConsultarRolFamilia_064RB() },
-                new RelacionDV_064RB { NombreTabla_064RB = "rol_permiso_064RB", ObtenerRegistros_064RB = () => bll_rol.ConsultarRolPermiso_064RB() },
-                new RelacionDV_064RB { NombreTabla_064RB = "familia_familia_064RB", ObtenerRegistros_064RB = () => bll_familia.ConsultarFamiliaFamilia_064RB() },
-                new RelacionDV_064RB { NombreTabla_064RB = "permiso_familia_064RB", ObtenerRegistros_064RB = () => bll_familia.ConsultarFamiliaPermiso_064RB() },
-            };
+            dvs.Add(CalcularBD_064RB(dvs));
+            map_dv.ReemplazarTodo_064RB(dvs, registros);
         }
 
-        #endregion
+        public bool VerificarIntegridad_064RB() => Analizar_064RB().Ok;
 
-        #region "Verificacion"
-        public List<SER_Inconsistencia_064RB> ObtenerInconsistencias_064RB() => VerificarTodasLasTablas_064RB(); // Para FrmRepararInconsistencia: junta todo, no corta nunca
-        public bool VerificarIntegridad_064RB() // Para el resto del sistema (ej. login): mantiene el comportamiento actual de cortar con excepción
+        public bool VerificarIntegridad_064RB(out string? mensaje)
         {
-            var inconsistencias = VerificarTodasLasTablas_064RB();
-            if (inconsistencias.Count > 0) throw new Exception("Se detecto inconsistencia en la base de datos. \n Redirigiendo a formulario de reparación.");
-            return true;
+            var (ok, tablas, _) = Analizar_064RB();
+            mensaje = ok
+                ? null
+                : tablas.Count > 0
+                    ? "Se detectaron inconsistencias en las tablas: " + string.Join(", ", tablas)
+                    : "Se detectó una inconsistencia en el dígito verificador de la base de datos.";
+            return ok;
         }
-        private List<SER_Inconsistencia_064RB> VerificarTodasLasTablas_064RB()
-        {
-            var inconsistencias = new List<SER_Inconsistencia_064RB>();
+        public List<string> ObtenerTablasInconsistentes_064RB() => Analizar_064RB().Tablas;
+        public List<SER_Inconsistencia_064RB> ObtenerInconsistencias_064RB() => Analizar_064RB().Detalle;
 
-            foreach (var entidad in ObtenerEntidadesRegistradas_064RB())
+
+        private (bool Ok, List<string> Tablas, List<SER_Inconsistencia_064RB> Detalle) Analizar_064RB()
+        {
+            var calculado = new List<SER_DV_064RB>();
+            var registrosCalculados = new Dictionary<string, List<SER_DVRegistro_064RB>>();
+            foreach (string tabla in map_dv.ObtenerTablas_064RB())
             {
-                VerificarTabla_064RB(entidad.NombreTabla_064RB, entidad.ObtenerRegistrosParaDV_064RB(), entidad.ObtenerIdParaDV_064RB, inconsistencias);
+                var (dv, regs) = CalcularTabla_064RB(tabla);
+                calculado.Add(dv);
+                registrosCalculados[tabla] = regs;
             }
-            foreach (var relacion in ObtenerRelacionesRegistradas_064RB())
+            SER_DV_064RB calculadoBD = CalcularBD_064RB(calculado);
+
+            List<SER_DV_064RB> guardado = map_dv.ObtenerDV_064RB();
+            SER_DV_064RB? guardadoBD = guardado.FirstOrDefault(d => d.Tabla_064RB == MAP_DV_064RB.FilaBD_064RB);
+            var guardadoPorTabla = guardado.Where(d => d.Tabla_064RB != MAP_DV_064RB.FilaBD_064RB).ToDictionary(d => d.Tabla_064RB);
+            var registrosGuardados = map_dv.ObtenerRegistrosDV_064RB().GroupBy(r => r.Tabla_064RB).ToDictionary(g => g.Key, g => g.ToDictionary(r => r.IdRegistro_064RB));
+            var tablasInconsistentes = new List<string>();
+            var detalle = new List<SER_Inconsistencia_064RB>();
+
+            foreach (SER_DV_064RB c in calculado)
             {
-                var registros = OrdenarCompuesta_064RB(relacion.ObtenerRegistros_064RB()).Cast<object>().ToList();
-                VerificarTabla_064RB(relacion.NombreTabla_064RB, registros, o => ObtenerIdCompuesto_064RB((object[])o), inconsistencias);
+                bool tablaOk = guardadoPorTabla.TryGetValue(c.Tabla_064RB, out SER_DV_064RB? g) && Iguales_064RB(g, c);
+                registrosGuardados.TryGetValue(c.Tabla_064RB, out Dictionary<string, SER_DVRegistro_064RB>? guardadosTabla);
+                List<SER_Inconsistencia_064RB> diferencias = CompararRegistros_064RB(c.Tabla_064RB, registrosCalculados[c.Tabla_064RB], guardadosTabla);
+
+                if (tablaOk && diferencias.Count == 0) continue;
+
+                tablasInconsistentes.Add(c.Tabla_064RB);
+                if (diferencias.Count > 0) detalle.AddRange(diferencias);
+                else detalle.Add(new SER_Inconsistencia_064RB(c.Tabla_064RB, "-", "El dígito verificador de la tabla no coincide con el registrado, pero no se pudo identificar el registro afectado."));
             }
-            return inconsistencias;
+
+            // tablas registradas en DV que ya no existen en la BD
+            foreach (string t in guardadoPorTabla.Keys.Where(t => calculado.All(c => c.Tabla_064RB != t)))
+            {
+                tablasInconsistentes.Add(t);
+                detalle.Add(new SER_Inconsistencia_064RB(t, "-", "Operación detectada: DROP TABLE\r\nLa tabla fue eliminada de la base de datos."));
+            }
+
+            bool bdOk = guardadoBD != null && Iguales_064RB(guardadoBD, calculadoBD);
+            if (!bdOk && tablasInconsistentes.Count == 0) detalle.Add(new SER_Inconsistencia_064RB("(BD)", "-", "El dígito verificador general de la base de datos no coincide con el registrado."));
+            return (bdOk && tablasInconsistentes.Count == 0, tablasInconsistentes, detalle);
         }
-        private void VerificarTabla_064RB(string nombreTabla, List<object> registros, Func<object, string> getId, List<SER_Inconsistencia_064RB> inconsistencias)
+
+        // Compara los registros actuales contra el snapshot guardado e indica la operacion realizada
+        private static List<SER_Inconsistencia_064RB> CompararRegistros_064RB(string tabla, List<SER_DVRegistro_064RB> actuales, Dictionary<string, SER_DVRegistro_064RB>? guardados)
         {
-            int cantidadDVH = map_dv.ConsultarDVHValores_064RB(nombreTabla).Count;
-            
-            if (registros.Count == 0 && cantidadDVH == 0 && !map_dv.ExisteDVV_064RB(nombreTabla)) return;
-            bool huboEliminacion = cantidadDVH > registros.Count;
-            if (huboEliminacion)
-            {
-                inconsistencias.Add(new SER_Inconsistencia_064RB(nombreTabla, "-", $"La tabla '{nombreTabla}' tiene más entradas en DVH ({cantidadDVH}) que registros reales ({registros.Count}). Ocurrió una ELIMINACIÓN directa en BD."));
-            }
+            var resultado = new List<SER_Inconsistencia_064RB>();
+            var idsActuales = new HashSet<string>();
 
-            var dvhCalculados = new List<string>();
-            bool huboErrorRegistro = huboEliminacion;
-
-            foreach (var reg in registros)
+            foreach (SER_DVRegistro_064RB a in actuales)
             {
-                string dvhCalc = CalcularHash_064RB(reg);
-                SER_DVH_064RB dvh = map_dv.ObtenerDVH_064RB(nombreTabla, getId(reg));
-                if (dvh == null)
+                idsActuales.Add(a.IdRegistro_064RB);
+                if (guardados == null || !guardados.TryGetValue(a.IdRegistro_064RB, out SER_DVRegistro_064RB? g))
                 {
-                    inconsistencias.Add(new SER_Inconsistencia_064RB(nombreTabla, getId(reg), $"No se encontró el DVH para el registro con Datos (INSERCIÓN):{Environment.NewLine}{MostrarDatos_064RB(reg, nombreTabla)}"));
-                    huboErrorRegistro = true;
-                    continue;
+                    resultado.Add(new(tabla, a.IdRegistro_064RB, "Operación detectada: INSERT\r\nSe agregó un registro directamente en la BD, sin pasar por el sistema.\r\n\r\nDatos del registro:\r\n" + Listar_064RB(Deserializar_064RB(a.Datos_064RB), null)));
                 }
-                if (dvhCalc != dvh.Valor_064RB)
+                else if (!IgualesRegistro_064RB(g, a))
                 {
-                    inconsistencias.Add(new SER_Inconsistencia_064RB(nombreTabla, getId(reg), $"No coincide El DVH para el registro con Datos (MODIFICACIÓN):{Environment.NewLine}{MostrarDatos_064RB(reg, nombreTabla)}."));
-                    huboErrorRegistro = true;
-                    continue;
+                    resultado.Add(new(tabla, a.IdRegistro_064RB, "Operación detectada: UPDATE\r\nSe modificó un registro directamente en la BD, sin pasar por el sistema.\r\n\r\n" + "Datos actuales del registro (en las columnas modificadas se indica el valor anterior):\r\n" + Listar_064RB(Deserializar_064RB(a.Datos_064RB), Deserializar_064RB(g.Datos_064RB))));
                 }
-                dvhCalculados.Add(dvhCalc);
-            } // DEBUGGEAR ACÁ PARA LOS DV
-
-            if (huboErrorRegistro) return; // el DVV va a fallar como consecuencia directa; reportarlo también sería ruido
-
-            SER_DVV_064RB dvv = map_dv.ObtenerDVV_064RB(nombreTabla);
-            if (dvv == null)
-            {
-                inconsistencias.Add(new SER_Inconsistencia_064RB(nombreTabla, "(tabla completa)", $"La tabla '{nombreTabla}' tiene registros con DVH válido, pero no existe un DVV generado para la tabla.{Environment.NewLine}Posible eliminación directa del DVV en la base de datos."));
-                return;
             }
-            string dvvCalc = CalcularHash_064RB(dvhCalculados);
-            if (dvvCalc != dvv.Valor_064RB)
-            {
-                inconsistencias.Add(new SER_Inconsistencia_064RB(nombreTabla, "(tabla completa)", $"El DVV para la tabla '{nombreTabla}' no coincide con el valor calculado.{Environment.NewLine}..."));
-            }
-        }
 
-        #endregion
-
-        #region "Calculos"
-        private string Concatenar_064RB(object obj)
-        {
-            if (obj == null) throw new ArgumentNullException(nameof(obj));
-            if (obj is object[] valores)
+            if (guardados != null)
             {
-                return string.Join(SEPARADOR_HASH, valores.Select(v => v?.ToString() ?? string.Empty));
-            }
-            if (obj is IEnumerable<string> listaStr)
-            {
-                return string.Join(SEPARADOR_HASH, listaStr);
-            }
-            PropertyInfo[] propiedades = obj.GetType().GetProperties().OrderBy(p => p.Name).ToArray();
-            return string.Join(SEPARADOR_HASH, propiedades.Select(p => p.GetValue(obj)?.ToString() ?? string.Empty));
-        }
-        public string CalcularHash_064RB(object o) => SER_Cripto_064RB.Encriptar_064RB(Concatenar_064RB(o));
-        #endregion
-
-        #region "Utilidades"
-        private string ObtenerIdCompuesto_064RB(object[] registro) => $"{registro[0]}{SEPARADOR_ID}{registro[1]}";
-        private List<object[]> OrdenarCompuesta_064RB(List<object[]> lista) => lista.OrderBy(x => Convert.ToInt32(x[0])).ThenBy(x => Convert.ToInt32(x[1])).ToList();
-        #endregion
-
-        #region "Presentacion"
-        private string MostrarDatos_064RB(object obj, string nombreTabla = null)
-        {
-            if (obj is object[] valores)
-            {
-                string[] nombresCampos = ObtenerNombresCampos_064RB(nombreTabla);
-                var lineas = valores.Select((v, i) =>
+                foreach (SER_DVRegistro_064RB g in guardados.Values.Where(g => !idsActuales.Contains(g.IdRegistro_064RB)))
                 {
-                    string nombreCampo = (nombresCampos != null && i < nombresCampos.Length) ? nombresCampos[i] : $"Campo{i}";
-                    return $"{nombreCampo}: {v?.ToString() ?? "null"}";
-                });
-                return string.Join(Environment.NewLine, lineas);
+                    resultado.Add(new(tabla, g.IdRegistro_064RB, "Operación detectada: DELETE\r\nSe eliminó un registro directamente de la BD, sin pasar por el sistema.\r\n\r\n" + "Datos del registro eliminado (último estado válido):\r\n" + Listar_064RB(Deserializar_064RB(g.Datos_064RB), null)));
+                }
             }
-            StringBuilder sb = new StringBuilder();
-            PropertyInfo[] propiedades = obj.GetType().GetProperties().Where(p => p.PropertyType == typeof(string) || !typeof(System.Collections.IEnumerable).IsAssignableFrom(p.PropertyType)).ToArray();
-            foreach (PropertyInfo propiedad in propiedades)
-            {
-                sb.Append($"{propiedad.Name}: {propiedad.GetValue(obj)}").Append(Environment.NewLine);
-            }
-            return sb.ToString().TrimEnd();
+            return resultado;
         }
-        private string[] ObtenerNombresCampos_064RB(string nombreTabla)
+
+        private static string Listar_064RB(Dictionary<string, string?> datos, Dictionary<string, string?>? previos)
         {
-            switch (nombreTabla)
+            var sb = new StringBuilder();
+            foreach (var kv in datos)
             {
-                case "Rol_familia_064RB": return new[] { "IdRol", "IdFamilia" };
-                case "Rol_permiso_064RB": return new[] { "IdRol", "IdPermiso" };
-                case "Familia_familia_064RB": return new[] { "IdFamiliaPadre", "IdFamiliaHija" };
-                case "Permiso_familia_064RB": return new[] { "IdFamilia", "IdPermiso" };
-                default: return null;
+                sb.Append($"  {kv.Key}: {kv.Value ?? "NULL"}");
+                if (previos != null && (!previos.TryGetValue(kv.Key, out string? anterior) || anterior != kv.Value))
+                {
+                    previos.TryGetValue(kv.Key, out string? valorPrevio);
+                    sb.Append($"   <-- antes: {valorPrevio ?? "NULL"}");
+                }
+                sb.Append("\r\n");
+            }
+            return sb.ToString();
+        }
+
+        private static Dictionary<string, string?> Deserializar_064RB(string json)
+        {
+            try 
+            {
+                return JsonSerializer.Deserialize<Dictionary<string, string?>>(json) ?? new();
+            }
+            catch
+            { 
+                return new();
             }
         }
-        #endregion
+
+        // DV de la tabla + DVH y datos de cada registro
+        private (SER_DV_064RB Dv, List<SER_DVRegistro_064RB> Registros) CalcularTabla_064RB(string tabla)
+        {
+            DataTable dt = map_dv.ObtenerRegistros_064RB(tabla);
+            List<string> pk = map_dv.ObtenerClavePrimaria_064RB(tabla);
+
+            // Cada celda se convierte a su hexadecimal una sola vez y se acumula:
+            //  - por registro (horizontal -> DVH de cada registro)
+            //  - por columna  (vertical   -> DVV de cada columna)
+            var dvvColumnas = new BigInteger[dt.Columns.Count];
+            var registros = new List<SER_DVRegistro_064RB>(dt.Rows.Count);
+            var ids = new HashSet<string>();
+            BigInteger dvhTabla = BigInteger.Zero;
+
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                DataRow fila = dt.Rows[i];
+                BigInteger dvhRegistro = BigInteger.Zero;
+                var datos = new Dictionary<string, string?>();
+
+                for (int j = 0; j < dt.Columns.Count; j++)
+                {
+                    object valor = fila[j];
+                    string texto = ValorATexto_064RB(valor);
+                    BigInteger hash = HexANumero_064RB(SER_Cripto_064RB.Encriptar_064RB(texto));
+                    dvhRegistro += hash;
+                    dvvColumnas[j] += hash;
+                    datos[dt.Columns[j].ColumnName] = valor is DBNull ? null : texto;
+                }
+
+                string dvhHex = NumeroAHex_064RB(dvhRegistro);
+                // Id del registro: valores de la PK; si la tabla no tiene PK se usa el DVH del registro
+                string id = pk.Count > 0 ? string.Join("-", pk.Select(c => ValorATexto_064RB(fila[c]))) : dvhHex;
+                if (!ids.Add(id)) { id += "#" + i; ids.Add(id); }
+
+                registros.Add(new SER_DVRegistro_064RB(tabla, id, dvhHex, JsonSerializer.Serialize(datos, JsonOpts_064RB)));
+                dvhTabla += dvhRegistro; // DVH de la tabla = suma de los DVH de los registros
+            }
+
+            BigInteger dvvTabla = BigInteger.Zero;
+            foreach (BigInteger v in dvvColumnas) dvvTabla += v; // DVV de la tabla = suma de los DVV de las columnas
+
+            return (new SER_DV_064RB(tabla, NumeroAHex_064RB(dvhTabla), NumeroAHex_064RB(dvvTabla)), registros);
+        }
+
+        // DVH y DVV de la BD: suma de los DV de todas las tablas
+        private static SER_DV_064RB CalcularBD_064RB(List<SER_DV_064RB> tablas)
+        {
+            BigInteger dvh = BigInteger.Zero, dvv = BigInteger.Zero;
+            foreach (SER_DV_064RB t in tablas)
+            {
+                dvh += HexANumero_064RB(t.DVH_064RB);
+                dvv += HexANumero_064RB(t.DVV_064RB);
+            }
+            return new SER_DV_064RB(MAP_DV_064RB.FilaBD_064RB, NumeroAHex_064RB(dvh), NumeroAHex_064RB(dvv));
+        }
+
+        // Representacion en texto estable de cada valor, que es lo que recibe Encriptar
+        private static string ValorATexto_064RB(object? valor) => valor switch
+        {
+            null => "<NULL>",
+            DBNull => "<NULL>",
+            byte[] b => Convert.ToHexString(b),
+            bool b => b ? "1" : "0",
+            DateTime d => d.ToString("yyyy-MM-dd HH:mm:ss.fffffff", CultureInfo.InvariantCulture),
+            IFormattable f => f.ToString(null, CultureInfo.InvariantCulture),
+            _ => Convert.ToString(valor, CultureInfo.InvariantCulture) ?? string.Empty
+        };
+
+        private static BigInteger HexANumero_064RB(string? hex)
+        {
+            if (string.IsNullOrWhiteSpace(hex)) return BigInteger.Zero;
+            // el "0" inicial evita que BigInteger interprete el numero como negativo
+            return BigInteger.TryParse("0" + hex, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out BigInteger r) ? r : BigInteger.MinusOne;
+        }
+
+        private static string NumeroAHex_064RB(BigInteger n)
+        {
+            string hex = n.ToString("x").TrimStart('0');
+            return hex.Length == 0 ? "0" : hex;
+        }
+        private static bool Iguales_064RB(SER_DV_064RB a, SER_DV_064RB b) => HexANumero_064RB(a.DVH_064RB) == HexANumero_064RB(b.DVH_064RB) && HexANumero_064RB(a.DVV_064RB) == HexANumero_064RB(b.DVV_064RB);
+        private static bool IgualesRegistro_064RB(SER_DVRegistro_064RB a, SER_DVRegistro_064RB b) => HexANumero_064RB(a.DVH_064RB) == HexANumero_064RB(b.DVH_064RB) && a.Datos_064RB == b.Datos_064RB;
     }
 }

@@ -4,7 +4,7 @@ using System.Data;
 
 namespace MAP_064RB.Tecnico_064RB
 {
-    public class MAP_Usuario_064RB : IABMC_064RB<SER_Usuario_064RB>, IProtegidoPorDV_064RB
+    public class MAP_Usuario_064RB : IABMC_064RB<SER_Usuario_064RB>
     {
         DAO_Usuario_064RB dao_usuario;
         MAP_Rol_064RB map_rol;
@@ -13,9 +13,6 @@ namespace MAP_064RB.Tecnico_064RB
             dao_usuario = new DAO_Usuario_064RB();
             map_rol = new MAP_Rol_064RB();
         }
-        public string NombreTabla_064RB => "Usuario_064RB";
-        public List<object> ObtenerRegistrosParaDV_064RB() => Consultar_064RB().Cast<object>().ToList();
-        public string ObtenerIdParaDV_064RB(object registro) => ((SER_Usuario_064RB)registro).Dni_064RB;
 
         public void Agregar_064RB(SER_Usuario_064RB usuario) => dao_usuario.Agregar_064RB(usuario.Dni_064RB, usuario.Nombre_064RB, usuario.Apellido_064RB, usuario.Correo_064RB, usuario.NombreUsuario_064RB, usuario.Password_064RB, usuario.Bloqueo_064RB, usuario.Activo_064RB, usuario.CantIntentos_064RB, usuario.Rol_064RB.Id_064RB, usuario.IdIdioma_064RB);
         public void Borrar_064RB(SER_Usuario_064RB usuario) => throw new NotImplementedException();

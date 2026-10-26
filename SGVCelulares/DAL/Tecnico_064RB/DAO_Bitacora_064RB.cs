@@ -16,7 +16,7 @@ namespace DAL_064RB.Tecnico_064RB
                 new("@evento", SqlDbType.VarChar, evento),
                 new("@criticidad", SqlDbType.TinyInt, criticidad)
             };
-            com.Ejecutar_064RB("INSERT INTO Bitacora_064RB(dni,fecha,modulo,evento,criticidad) values (@dni,@fecha,@modulo,@evento,@criticidad)", parametros);
+            com.Ejecutar_064RB("INSERT INTO Bitacora_064RB(Dni_064RB,Fecha_064RB,Modulo_064RB,Evento_064RB,Criticidad_064RB) values (@dni,@fecha,@modulo,@evento,@criticidad)", parametros);
         }
         public DataTable Consultar_064RB() => com.Consultar_064RB("select * from Bitacora_064RB");
     }

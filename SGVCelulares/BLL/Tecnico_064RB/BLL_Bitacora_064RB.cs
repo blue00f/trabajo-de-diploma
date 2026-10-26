@@ -6,12 +6,20 @@ namespace BLL_064RB.Tecnico_064RB
     public class BLL_Bitacora_064RB
     {
         MAP_Bitacora_064RB map_bitacora;
+        List<SER_Bitacora_064RB> bitacoraCache;
         public BLL_Bitacora_064RB()
         {
             map_bitacora = new MAP_Bitacora_064RB();
         }
-        public void RegistrarBitacora_064RB(SER_Bitacora_064RB bitacora) => map_bitacora.RegistrarBitacora_064RB(bitacora);
-        public List<SER_Bitacora_064RB> Consultar_064RB() => map_bitacora.Consultar_064RB();
+        private List<SER_Bitacora_064RB> Consultar_064RB()
+        {
+            if (bitacoraCache == null) bitacoraCache = map_bitacora.Consultar_064RB();
+            return bitacoraCache;
+        }
+        public void RegistrarBitacora_064RB(SER_Bitacora_064RB bitacora)
+        {
+            map_bitacora.RegistrarBitacora_064RB(bitacora);
+        }
         public List<object> ConsultarParaGrilla_064RB()
         {
             var consulta = from b in Consultar_064RB()
