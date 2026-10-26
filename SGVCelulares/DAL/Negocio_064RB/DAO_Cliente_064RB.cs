@@ -20,7 +20,7 @@ namespace DAL_064RB.Negocio_064RB
                 new("@email", SqlDbType.VarChar, email),
                 new("@fechaNacimiento", SqlDbType.Date, fechaNacimiento)
             };
-            com.Ejecutar_064RB("INSERT INTO Cliente_064RB(dni,nombre,apellido,telefono,email,fechaNacimiento) values (@dni,@nombre,@apellido,@telefono,@email,@fechaNacimiento)", parametros);
+            com.Ejecutar_064RB("INSERT INTO Cliente_064RB(Dni_064RB,Nombre_064RB,Apellido_064RB,Telefono_064RB,Email_064RB,FechaNacimiento_064RB) values (@dni,@nombre,@apellido,@telefono,@email,@fechaNacimiento)", parametros);
         }
         public void Borrar_064RB(string dni)
         {
@@ -28,7 +28,7 @@ namespace DAL_064RB.Negocio_064RB
             {
                 new("@dni", SqlDbType.VarChar, dni)
             };
-            com.Ejecutar_064RB("DELETE FROM Cliente_064RB WHERE dni=@dni;", parametros);
+            com.Ejecutar_064RB("DELETE FROM Cliente_064RB WHERE Dni_064RB=@dni;", parametros);
         }
         public void Modificar_064RB(string dni, string nombre, string apellido, string telefono, string email, DateTime fechaNacimiento)
         {
@@ -41,7 +41,7 @@ namespace DAL_064RB.Negocio_064RB
                 new("@email", SqlDbType.VarChar, email),
                 new("@fechaNacimiento", SqlDbType.Date, fechaNacimiento)
             };
-            com.Ejecutar_064RB("UPDATE Cliente_064RB SET nombre=@nombre,apellido=@apellido,telefono=@telefono,email=@email,fechaNacimiento=@fechaNacimiento WHERE dni=@dni", parametros);
+            com.Ejecutar_064RB("UPDATE Cliente_064RB SET Nombre_064RB=@nombre,Apellido_064RB=@apellido,Telefono_064RB=@telefono,Email_064RB=@email,FechaNacimiento_064RB=@fechaNacimiento WHERE Dni_064RB=@dni", parametros);
         }
         public DataTable Consultar_064RB()
         {
@@ -53,7 +53,7 @@ namespace DAL_064RB.Negocio_064RB
             {
                 new("@dni", SqlDbType.VarChar, dni)
             };
-            return com.Consultar_064RB("SELECT * FROM Cliente_064RB WHERE dni=@dni", parametros);
+            return com.Consultar_064RB("SELECT * FROM Cliente_064RB WHERE Dni_064RB=@dni", parametros);
         }
     }
 }

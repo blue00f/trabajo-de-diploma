@@ -15,7 +15,7 @@ namespace DAL_064RB.Negocio_064RB
         {
             var comandos = new List<(string, List<ParametroBD_064RB>)>
             {
-                ("INSERT INTO Producto_064RB(sku,marca,modelo,precio,descripcion) VALUES (@sku,@marca,@modelo,@precio,@descripcion)",
+                ("INSERT INTO Producto_064RB(Sku_064RB,Marca_064RB,Modelo_064RB,Precio_064RB,Descripcion_064RB) VALUES (@sku,@marca,@modelo,@precio,@descripcion)",
                     new List<ParametroBD_064RB> {
                         new("@sku", SqlDbType.VarChar, sku),
                         new("@marca", SqlDbType.VarChar, marca),
@@ -23,7 +23,7 @@ namespace DAL_064RB.Negocio_064RB
                         new("@precio", SqlDbType.Decimal, precio),
                         new("@descripcion", SqlDbType.VarChar, descripcion)
                     }),
-                ("INSERT INTO Celular_064RB(sku,almacenamiento,color) VALUES (@sku,@almacenamiento,@color)",
+                ("INSERT INTO Celular_064RB(Sku_064RB,Almacenamiento_064RB,Color_064RB) VALUES (@sku,@almacenamiento,@color)",
                     new List<ParametroBD_064RB> {
                         new("@sku", SqlDbType.VarChar, sku),
                         new("@almacenamiento", SqlDbType.VarChar, almacenamiento),
@@ -36,7 +36,7 @@ namespace DAL_064RB.Negocio_064RB
         {
             var comandos = new List<(string, List<ParametroBD_064RB>)>
             {
-                ("INSERT INTO Producto_064RB(sku,marca,modelo,precio,descripcion) VALUES (@sku,@marca,@modelo,@precio,@descripcion)",
+                ("INSERT INTO Producto_064RB(Sku_064RB,Marca_064RB,Modelo_064RB,Precio_064RB,Descripcion_064RB) VALUES (@sku,@marca,@modelo,@precio,@descripcion)",
                     new List<ParametroBD_064RB> {
                         new("@sku", SqlDbType.VarChar, sku),
                         new("@marca", SqlDbType.VarChar, marca),
@@ -44,7 +44,7 @@ namespace DAL_064RB.Negocio_064RB
                         new("@precio", SqlDbType.Decimal, precio),
                         new("@descripcion", SqlDbType.VarChar, descripcion)
                     }),
-                ("INSERT INTO Accesorio_064RB(sku,categoria,stock) VALUES (@sku,@categoria,@stock)",
+                ("INSERT INTO Accesorio_064RB(Sku_064RB,Categoria_064RB,Stock_064RB) VALUES (@sku,@categoria,@stock)",
                     new List<ParametroBD_064RB> {
                         new("@sku", SqlDbType.VarChar, sku),
                         new("@categoria", SqlDbType.VarChar, categoria),
@@ -59,13 +59,13 @@ namespace DAL_064RB.Negocio_064RB
             {
                 new("@sku", SqlDbType.VarChar, sku)
             };
-            com.Ejecutar_064RB("delete from Producto_064RB where sku=@sku", parametros);
+            com.Ejecutar_064RB("delete from Producto_064RB where Sku_064RB=@sku", parametros);
         }
         public void ModificarCelular_064RB(string sku, string marca, string modelo, decimal precio, string descripcion, string almacenamiento, string color)
         {
             var comandos = new List<(string, List<ParametroBD_064RB>)>
             {
-                ("update Producto_064RB set marca=@marca, modelo=@modelo, precio=@precio, descripcion=@descripcion where sku=@sku",
+                ("update Producto_064RB set Marca_064RB=@marca, Modelo_064RB=@modelo, Precio_064RB=@precio, Descripcion_064RB=@descripcion where Sku_064RB=@sku",
                     new List<ParametroBD_064RB> {
                         new("@sku", SqlDbType.VarChar, sku),
                         new("@marca", SqlDbType.VarChar, marca),
@@ -73,7 +73,7 @@ namespace DAL_064RB.Negocio_064RB
                         new("@precio", SqlDbType.Decimal, precio),
                         new("@descripcion", SqlDbType.VarChar, descripcion)
                     }),
-                ("update Celular_064RB set almacenamiento=@almacenamiento, color=@color where sku=@sku",
+                ("update Celular_064RB set Almacenamiento_064RB=@almacenamiento, Color_064RB=@color where Sku_064RB=@sku",
                     new List<ParametroBD_064RB> {
                         new("@sku", SqlDbType.VarChar, sku),
                         new("@almacenamiento", SqlDbType.VarChar, almacenamiento),
@@ -86,7 +86,7 @@ namespace DAL_064RB.Negocio_064RB
         {
             var comandos = new List<(string, List<ParametroBD_064RB>)>
             {
-                ("update Producto_064RB set marca=@marca, modelo=@modelo, precio=@precio, descripcion=@descripcion where sku=@sku",
+                ("update Producto_064RB set Marca_064RB=@marca, Modelo_064RB=@modelo, Precio_064RB=@precio, Descripcion_064RB=@descripcion where Sku_064RB=@sku",
                     new List<ParametroBD_064RB> {
                         new("@sku", SqlDbType.VarChar, sku),
                         new("@marca", SqlDbType.VarChar, marca),
@@ -94,7 +94,7 @@ namespace DAL_064RB.Negocio_064RB
                         new("@precio", SqlDbType.Decimal, precio),
                         new("@descripcion", SqlDbType.VarChar, descripcion)
                     }),
-                ("update Accesorio_064RB set categoria=@categoria, stock=@stock where sku=@sku",
+                ("update Accesorio_064RB set Categoria_064RB=@categoria, Stock_064RB=@stock where Sku_064RB=@sku",
                     new List<ParametroBD_064RB> {
                         new("@sku", SqlDbType.VarChar, sku),
                         new("@categoria", SqlDbType.VarChar, categoria),
@@ -105,13 +105,13 @@ namespace DAL_064RB.Negocio_064RB
         }
         public DataTable ConsultarCelulares_064RB()
         {
-            return com.Consultar_064RB("select p.sku, p.marca, p.modelo, p.precio, p.descripcion, c.almacenamiento, c.color from Producto_064RB p" +
-                " inner join Celular_064RB c on p.sku = c.sku");
+            return com.Consultar_064RB("select p.Sku_064RB, p.Marca_064RB, p.Modelo_064RB, p.Precio_064RB, p.Descripcion_064RB, c.Almacenamiento_064RB, c.Color_064RB from Producto_064RB p" +
+                " inner join Celular_064RB c on p.Sku_064RB = c.Sku_064RB");
         }
         public DataTable ConsultarAccesorios_064RB()
         {
-            return com.Consultar_064RB("select p.sku, p.marca, p.modelo, p.precio, p.descripcion, a.categoria, a.stock from Producto_064RB p" +
-                " inner join Accesorio_064RB a on p.sku = a.sku");
+            return com.Consultar_064RB("select p.Sku_064RB, p.Marca_064RB, p.Modelo_064RB, p.Precio_064RB, p.Descripcion_064RB, a.Categoria_064RB, a.Stock_064RB from Producto_064RB p" +
+                " inner join Accesorio_064RB a on p.Sku_064RB = a.Sku_064RB");
         }
         public DataTable ConsultarCelularPorSku_064RB(string sku)
         {
@@ -119,7 +119,7 @@ namespace DAL_064RB.Negocio_064RB
             {
                 new("@sku", SqlDbType.VarChar, sku),
             };
-            return com.Consultar_064RB("select p.sku, p.marca, p.modelo, p.precio, p.descripcion, c.almacenamiento, c.color from Producto_064RB p inner join Celular_064RB c ON p.sku = c.sku where c.sku=@sku", parametros);
+            return com.Consultar_064RB("select p.Sku_064RB, p.Marca_064RB, p.Modelo_064RB, p.Precio_064RB, p.Descripcion_064RB, c.Almacenamiento_064RB, c.Color_064RB from Producto_064RB p inner join Celular_064RB c ON p.Sku_064RB = c.Sku_064RB where c.Sku_064RB=@sku", parametros);
         }
         public DataTable ConsultarAccesorioPorSku_064RB(string sku)
         {
@@ -127,7 +127,7 @@ namespace DAL_064RB.Negocio_064RB
             {
                 new("@sku", SqlDbType.VarChar, sku),
             };
-            return com.Consultar_064RB("select p.sku, p.marca, p.modelo, p.precio, p.descripcion, a.categoria, a.stock from Producto_064RB p inner join Accesorio_064RB a ON p.sku = a.sku where a.sku=@sku", parametros);
+            return com.Consultar_064RB("select p.Sku_064RB, p.Marca_064RB, p.Modelo_064RB, p.Precio_064RB, p.Descripcion_064RB, a.Categoria_064RB, a.Stock_064RB from Producto_064RB p inner join Accesorio_064RB a ON p.Sku_064RB = a.Sku_064RB where a.Sku_064RB=@sku", parametros);
         }
     }
 }

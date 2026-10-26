@@ -1,18 +1,12 @@
 ﻿using BE_064RB;
 using DAL_064RB.Negocio_064RB;
-using Servicio_064RB;
 using System.Data;
 
 namespace MAP_064RB.Negocio_064RB
 {
-    public class MAP_Cliente_064RB : IProtegidoPorDV_064RB
+    public class MAP_Cliente_064RB
     {
         DAO_Cliente_064RB dao_cliente;
-        public string NombreTabla_064RB => "Cliente_064RB";
-        public List<object> ObtenerRegistrosParaDV_064RB() => Consultar().Cast<object>().ToList();
-        public string ObtenerIdParaDV_064RB(object registro) => Convert.ToString(((BE_Cliente_064RB)registro).Dni_064RB);
-
-
         public MAP_Cliente_064RB()
         {
             dao_cliente = new();

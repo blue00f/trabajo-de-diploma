@@ -12,12 +12,14 @@ namespace BLL_064RB.Negocio_064RB
         BLL_DetalleVenta_064RB bll_detalle;
         BLL_Cliente_064RB bll_cliente;
         BLL_Bitacora_064RB bll_bitacora;
+        BLL_DV_064RB bll_dv;
         public BLL_Venta_064RB()
         {
             map_venta = new();
             bll_detalle = new();
             bll_cliente = new();
             bll_bitacora = new();
+            bll_dv = new();
         }
         public BE_Venta_064RB Iniciar_064RB() => new() { Detalle_064RB = new List<BE_DetalleVenta_064RB>() };
         private static void ValidarEditable_064RB(BE_Venta_064RB venta)
@@ -67,6 +69,7 @@ namespace BLL_064RB.Negocio_064RB
 
             SER_Usuario_064RB usu = SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB;
             bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(usu, DateTime.Now, "Ventas", "Alta", 1));
+            bll_dv.ActualizarDV_064RB("Venta_064RB", "DetalleVenta_064RB", "UnidadCelular_064RB", "DetalleVenta_Imeis_064RB", "Accesorio_064RB");
             return venta.NumVenta_064RB;
         }
         public BE_Comprobante_064RB ObtenerComprobante(int numVenta)

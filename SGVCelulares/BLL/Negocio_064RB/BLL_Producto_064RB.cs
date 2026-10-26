@@ -23,8 +23,8 @@ namespace BLL_064RB.Negocio_064RB
 
             SER_Usuario_064RB usu = SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB;
             bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(usu, DateTime.Now, "Productos", "Alta", 3));
-            bll_dv.GenerarDVH_064RB(celular, celular.Sku_064RB, "Producto_064RB");
-            bll_dv.GenerarDVV_064RB("Producto_064RB");
+            bll_dv.ActualizarDV_064RB("Producto_064RB", "Celular_064RB");
+
         }
         public void AgregarAccesorio_064RB(BE_Accesorio_064RB accesorio)
         {
@@ -32,18 +32,24 @@ namespace BLL_064RB.Negocio_064RB
             map_producto.AgregarAccesorio_064RB(accesorio);
             SER_Usuario_064RB usu = SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB;
             bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(usu, DateTime.Now, "Productos", "Alta", 3));
+            bll_dv.ActualizarDV_064RB("Producto_064RB", "Accesorio_064RB");
         }
         public void Borrar_064RB(string sku)
         {
             map_producto.Borrar_064RB(sku);
             SER_Usuario_064RB usu = SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB;
             bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(usu, DateTime.Now, "Productos", "Baja", 3));
+            BE_Producto_064RB producto = ConsultarPorSku_064RB(sku);
+            if (producto is BE_Celular_064RB) bll_dv.ActualizarDV_064RB("Producto_064RB", "Celular_064RB");
+            if (producto is BE_Accesorio_064RB) bll_dv.ActualizarDV_064RB("Producto_064RB", "Accesorio_064RB");
         }
         public void Modificar_064RB(BE_Producto_064RB producto)
         {
             map_producto.Modificar_064RB(producto);
             SER_Usuario_064RB usu = SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB;
             bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(usu, DateTime.Now, "Productos", "Modificar", 3));
+            if (producto is BE_Celular_064RB) bll_dv.ActualizarDV_064RB("Producto_064RB", "Celular_064RB");
+            if (producto is BE_Accesorio_064RB) bll_dv.ActualizarDV_064RB("Producto_064RB", "Accesorio_064RB");
         }
         public List<BE_Producto_064RB> Consultar_064RB() => map_producto.Consultar_064RB();
         private List<object> ProyectarGrilla_064RB(IEnumerable<BE_Producto_064RB> productos)

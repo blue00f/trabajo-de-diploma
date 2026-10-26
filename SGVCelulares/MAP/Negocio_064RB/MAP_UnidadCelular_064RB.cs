@@ -5,11 +5,8 @@ using System.Data;
 
 namespace MAP_064RB.Negocio_064RB
 {
-    public class MAP_UnidadCelular_064RB : IProtegidoPorDV_064RB
+    public class MAP_UnidadCelular_064RB
     {
-        public string NombreTabla_064RB => "UnidadCelular_064RB";
-        public List<object> ObtenerRegistrosParaDV_064RB() => Consultar_064RB().ToList<object>();
-        public string ObtenerIdParaDV_064RB(object registro) => Convert.ToString(((BE_UnidadCelular_064RB)registro).Imei_064RB);
         MAP_Producto_064RB map_producto;
         DAO_UnidadCelular_064RB dao_unidadCelular;
         public MAP_UnidadCelular_064RB()

@@ -1,6 +1,5 @@
 ﻿using BE_064RB;
 using DAL_064RB.Negocio_064RB;
-using Servicio_064RB;
 using System.Data;
 
 namespace MAP_064RB.Negocio_064RB
@@ -105,9 +104,9 @@ namespace MAP_064RB.Negocio_064RB
             var res = new Dictionary<string, List<BE_UnidadCelular_064RB>>();
             foreach (DataRow fila in dt.Rows)
             {
-                string skuCelular = fila["skuCelular"].ToString();
+                string skuCelular = fila["SkuCelular_064RB"].ToString();
                 if (!res.ContainsKey(skuCelular)) res[skuCelular] = new List<BE_UnidadCelular_064RB>();
-                res[skuCelular].Add(new BE_UnidadCelular_064RB(fila["imei"].ToString(), fila["estado"].ToString()));
+                res[skuCelular].Add(new BE_UnidadCelular_064RB(fila["Imei_064RB"].ToString(), fila["Estado_064RB"].ToString()));
             }
             return res;
         }

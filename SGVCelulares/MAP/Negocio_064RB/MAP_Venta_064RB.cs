@@ -29,22 +29,22 @@ namespace MAP_064RB.Negocio_064RB
             DataRow f = dt.Rows[0];
             var comprobante = new BE_Comprobante_064RB
             (
-                Convert.ToInt32(f["numVenta"]),
-                Convert.ToDateTime(f["fecha"]),
-                f["formaPago"].ToString(),
-                Convert.ToDecimal(f["montoTotal"]),
-                f["dni"].ToString(),
-                $"{f["nombre"]} {f["apellido"]}"
+                Convert.ToInt32(f["NumVenta_064RB"]),
+                Convert.ToDateTime(f["Fecha_064RB"]),
+                f["FormaPago_064RB"].ToString(),
+                Convert.ToDecimal(f["MontoTotal_064RB"]),
+                f["Dni_064RB"].ToString(),
+                $"{f["Nombre_064RB"]} {f["Apellido_064RB"]}"
             );
             foreach (DataRow fila in dt.Rows)
             {
-                string desc = fila["descripcion"] == DBNull.Value ? "" : $" - {fila["descripcion"]}";
+                string desc = fila["Descripcion_064RB"] == DBNull.Value ? "" : $" - {fila["Descripcion_064RB"]}";
                 comprobante.Items_064RB.Add(new BE_ComprobanteItem_064RB
                 (
-                    $"{fila["marca"]} {fila["modelo"]}{desc}",
-                    Convert.ToInt32(fila["cantidad"]),
-                    Convert.ToDecimal(fila["precioUnitario"]),
-                    Convert.ToDecimal(fila["subtotal"])
+                    $"{fila["Marca_064RB"]} {fila["Modelo_064RB"]}{desc}",
+                    Convert.ToInt32(fila["Cantidad_064RB"]),
+                    Convert.ToDecimal(fila["PrecioUnitario_064RB"]),
+                    Convert.ToDecimal(fila["Subtotal_064RB"])
                 ));
             }
             return comprobante;

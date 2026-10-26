@@ -17,7 +17,7 @@ namespace DAL_064RB.Negocio_064RB
                 new("@estado", SqlDbType.VarChar, estado),
                 new("@sku", SqlDbType.VarChar, sku),
             };
-            com.Ejecutar_064RB("INSERT INTO UnidadCelular_064RB(imei,estado,skuCelular) values (@imei,@estado,@sku)", parametros);
+            com.Ejecutar_064RB("INSERT INTO UnidadCelular_064RB(Imei_064RB,Estado_064RB,SkuCelular_064RB) values (@imei,@estado,@sku)", parametros);
         }
         public void Borrar_064RB(string imei)
         {
@@ -25,7 +25,7 @@ namespace DAL_064RB.Negocio_064RB
             {
                 new("@imei", SqlDbType.VarChar, imei)
             };
-            com.Ejecutar_064RB("DELETE FROM UnidadCelular_064RB WHERE imei=@imei;", parametros);
+            com.Ejecutar_064RB("DELETE FROM UnidadCelular_064RB WHERE Imei_064RB=@imei;", parametros);
         }
         public void Modificar_064RB(string estado, string sku, string imei)
         {
@@ -35,7 +35,7 @@ namespace DAL_064RB.Negocio_064RB
                 new("@sku", SqlDbType.VarChar, sku),
                 new("@imei", SqlDbType.VarChar, imei),
             };
-            com.Ejecutar_064RB("UPDATE UnidadCelular_064RB SET estado=@estado, skuCelular=@sku WHERE imei=@imei", parametros);
+            com.Ejecutar_064RB("UPDATE UnidadCelular_064RB SET Estado_064RB=@estado, SkuCelular_064RB=@sku WHERE Imei_064RB=@imei", parametros);
         }
         public DataTable Consultar_064RB()
         {
