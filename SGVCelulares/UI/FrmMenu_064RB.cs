@@ -27,7 +27,7 @@ namespace UI
             submenuBitacora.Visible = TieneAlgun(usuario, "Consultar Bitácora");
             submenuGestionRespaldo.Visible = TieneAlgun(usuario, "Realizar Backup", "Realizar Restore");
             submenuProductos.Visible = TieneAlgun(usuario, "Crear Producto", "Borrar Producto", "Modificar Producto");
-            submenuUnidadCelular.Visible = TieneAlgun(usuario, "Agregar Unidad Celular", "Borrar Unidad Celular", "Modificar Unidad Celular");
+            submenuUnidadCelular.Visible = TieneAlgun(usuario, "Crear Unidad Celular", "Borrar Unidad Celular", "Modificar Unidad Celular");
             submenuClientes.Visible = TieneAlgun(usuario, "Crear Cliente", "Borrar Cliente", "Modificar Cliente");
             menuAdmin.Visible = submenuGestionUsuarios.Visible || submenuGestionRoles.Visible || submenuBitacora.Visible || submenuGestionRespaldo.Visible || submenuProductos.Visible || submenuUnidadCelular.Visible || submenuClientes.Visible;
             menuAdmin.Visible = true;

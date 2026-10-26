@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             pnlTopbar = new Panel();
             lblTitulo = new Label();
             pnlContenido = new Panel();
@@ -37,7 +37,7 @@
             richTextBox1 = new RichTextBox();
             pnlBotones = new Panel();
             btnSalir = new Button();
-            btnRealizarRespaldo = new Button();
+            btnRestaurarBackup = new Button();
             btnRestaurarDV = new Button();
             pnlTopbar.SuspendLayout();
             pnlContenido.SuspendLayout();
@@ -85,23 +85,23 @@
             grillaInconsistencias.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             grillaInconsistencias.BackgroundColor = Color.FromArgb(25, 37, 53);
             grillaInconsistencias.BorderStyle = BorderStyle.None;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = Color.FromArgb(21, 32, 48);
-            dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            dataGridViewCellStyle1.ForeColor = Color.FromArgb(148, 163, 184);
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            grillaInconsistencias.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = Color.FromArgb(21, 32, 48);
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            dataGridViewCellStyle3.ForeColor = Color.FromArgb(148, 163, 184);
+            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
+            grillaInconsistencias.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
             grillaInconsistencias.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = Color.FromArgb(25, 37, 53);
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9.5F);
-            dataGridViewCellStyle2.ForeColor = Color.FromArgb(226, 232, 240);
-            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(45, 60, 82);
-            dataGridViewCellStyle2.SelectionForeColor = Color.FromArgb(226, 232, 240);
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
-            grillaInconsistencias.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = Color.FromArgb(25, 37, 53);
+            dataGridViewCellStyle4.Font = new Font("Segoe UI", 9.5F);
+            dataGridViewCellStyle4.ForeColor = Color.FromArgb(226, 232, 240);
+            dataGridViewCellStyle4.SelectionBackColor = Color.FromArgb(45, 60, 82);
+            dataGridViewCellStyle4.SelectionForeColor = Color.FromArgb(226, 232, 240);
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.False;
+            grillaInconsistencias.DefaultCellStyle = dataGridViewCellStyle4;
             grillaInconsistencias.EnableHeadersVisualStyles = false;
             grillaInconsistencias.GridColor = Color.FromArgb(45, 60, 82);
             grillaInconsistencias.Location = new Point(24, 24);
@@ -130,7 +130,7 @@
             // 
             pnlBotones.BackColor = Color.FromArgb(25, 37, 53);
             pnlBotones.Controls.Add(btnSalir);
-            pnlBotones.Controls.Add(btnRealizarRespaldo);
+            pnlBotones.Controls.Add(btnRestaurarBackup);
             pnlBotones.Controls.Add(btnRestaurarDV);
             pnlBotones.Dock = DockStyle.Bottom;
             pnlBotones.Location = new Point(0, 470);
@@ -156,22 +156,22 @@
             btnSalir.UseVisualStyleBackColor = false;
             btnSalir.Click += btnSalir_Click;
             // 
-            // btnRealizarRespaldo
+            // btnRestaurarBackup
             // 
-            btnRealizarRespaldo.BackColor = Color.FromArgb(45, 60, 82);
-            btnRealizarRespaldo.Cursor = Cursors.Hand;
-            btnRealizarRespaldo.FlatAppearance.BorderSize = 0;
-            btnRealizarRespaldo.FlatAppearance.MouseOverBackColor = Color.FromArgb(71, 85, 105);
-            btnRealizarRespaldo.FlatStyle = FlatStyle.Flat;
-            btnRealizarRespaldo.Font = new Font("Segoe UI", 9.5F);
-            btnRealizarRespaldo.ForeColor = Color.FromArgb(226, 232, 240);
-            btnRealizarRespaldo.Location = new Point(16, 11);
-            btnRealizarRespaldo.Name = "btnRealizarRespaldo";
-            btnRealizarRespaldo.Size = new Size(198, 53);
-            btnRealizarRespaldo.TabIndex = 0;
-            btnRealizarRespaldo.Text = "Realizar respaldo";
-            btnRealizarRespaldo.UseVisualStyleBackColor = false;
-            btnRealizarRespaldo.Click += btnRealizarRespaldo_Click;
+            btnRestaurarBackup.BackColor = Color.FromArgb(45, 60, 82);
+            btnRestaurarBackup.Cursor = Cursors.Hand;
+            btnRestaurarBackup.FlatAppearance.BorderSize = 0;
+            btnRestaurarBackup.FlatAppearance.MouseOverBackColor = Color.FromArgb(71, 85, 105);
+            btnRestaurarBackup.FlatStyle = FlatStyle.Flat;
+            btnRestaurarBackup.Font = new Font("Segoe UI", 9.5F);
+            btnRestaurarBackup.ForeColor = Color.FromArgb(226, 232, 240);
+            btnRestaurarBackup.Location = new Point(16, 11);
+            btnRestaurarBackup.Name = "btnRestaurarBackup";
+            btnRestaurarBackup.Size = new Size(198, 53);
+            btnRestaurarBackup.TabIndex = 0;
+            btnRestaurarBackup.Text = "Realizar respaldo";
+            btnRestaurarBackup.UseVisualStyleBackColor = false;
+            btnRestaurarBackup.Click += btnRestaurarBackup_Click;
             // 
             // btnRestaurarDV
             // 
@@ -220,7 +220,7 @@
         private Label lblTitulo;
         private Panel pnlContenido;
         private Panel pnlBotones;
-        private Button btnRealizarRespaldo;
+        private Button btnRestaurarBackup;
         private Button btnRestaurarDV;
         private DataGridView grillaInconsistencias;
         private RichTextBox richTextBox1;

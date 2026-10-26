@@ -66,7 +66,7 @@ namespace UI
             grilla.Columns["NombreTabla_064RB"].HeaderText = bll_idioma.Traducir_064RB("FrmRepararInconsistencia.colNombreTabla");
             grilla.Columns["IdRegistro_064RB"].HeaderText = bll_idioma.Traducir_064RB("FrmRepararInconsistencia.colIdRegistro");
         }
-        private void btnRealizarRespaldo_Click(object sender, EventArgs e)
+        private void btnRestaurarBackup_Click(object sender, EventArgs e)
         {
             try
             {
@@ -98,9 +98,13 @@ namespace UI
 
         private void btnRestaurarDV_Click(object sender, EventArgs e)
         {
-            bll_dv.RecalcularDV_064RB();
-            MessageBox.Show("Los valores del DV fueron recalculados correctamente.", "Recalcular DV", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            this.Close();
+            DialogResult res = MessageBox.Show("¿Estás seguro de que desea realcular los valores del DV?", "Confirmar operación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (res == DialogResult.Yes)
+            {
+                bll_dv.RecalcularDV_064RB();
+                MessageBox.Show("Los valores del DV fueron recalculados correctamente.", "Recalcular DV", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.Close();
+            }
         }
 
         private void grillaInconsistencias_SelectionChanged(object sender, EventArgs e)
@@ -117,7 +121,7 @@ namespace UI
         public void ActualizarIdioma_064RB()
         {
             this.Text = bll_idioma.Traducir_064RB("FrmRepararInconsistencia.Form");
-            btnRealizarRespaldo.Text = bll_idioma.Traducir_064RB("FrmRepararInconsistencia.btnRealizarRespaldo");
+            btnRestaurarBackup.Text = bll_idioma.Traducir_064RB("FrmRepararInconsistencia.btnRestaurarBackup");
             btnRestaurarDV.Text = bll_idioma.Traducir_064RB("FrmRepararInconsistencia.btnRestaurarDV");
             lblTitulo.Text = bll_idioma.Traducir_064RB("FrmRepararInconsistencia.lblTitulo");
             btnSalir.Text = bll_idioma.Traducir_064RB("FrmRepararInconsistencia.btnSalir");
