@@ -103,19 +103,19 @@ create table Usuario_064RB (
     IdIdioma_064RB varchar(8) not null,
     constraint pk_usuario_064RB primary key (Dni_064RB),
     constraint fk_usuario_rol_064RB foreign key (IdRol_064RB) references Rol_064RB(IdRol_064RB),
-    constraint fk_usuario_idioma_064RB foreign key (IdIdioma_064RB) REFERENCES Idioma_064RB(IdIdioma_064RB)
+    constraint fk_usuario_idioma_064RB foreign key (IdIdioma_064RB) references Idioma_064RB(IdIdioma_064RB)
 );
 go
 go
 create table Bitacora_064RB (
-    IdBitacora_064RB INT IDENTITY(1,1) not null,
-    Dni_064RB VARCHAR(8) not null,
-    Fecha_064RB DATETIME not null,
-    Modulo_064RB VARCHAR(50) not null,
-    Evento_064RB VARCHAR(50) not null,
-    Criticidad_064RB TINYINT not null,
-    CONSTRAINT pk_bitacora_064RB PRIMARY KEY (IdBitacora_064RB),
-    CONSTRAINT fk_bitacora_usuario_064RB FOREIGN KEY (Dni_064RB) REFERENCES Usuario_064RB(Dni_064RB)
+    IdBitacora_064RB int identity(1,1) not null,
+    Dni_064RB varchar(8) not null,
+    Fecha_064RB datetime not null,
+    Modulo_064RB varchar(50) not null,
+    Evento_064RB varchar(50) not null,
+    Criticidad_064RB tinyint not null,
+    constraint pk_bitacora_064RB primary key (IdBitacora_064RB),
+    constraint fk_bitacora_usuario_064RB foreign key (Dni_064RB) references Usuario_064RB(Dni_064RB)
 );
 go
 
