@@ -104,7 +104,7 @@
   "FrmBackup.msgConfirmarOperacion": "Confirm operation",
 
   "FrmRepararInconsistencia.Form": "Repair of inconsistencies",
-  "FrmRepararInconsistencia.btnRealizarRespaldo": "Perform backup",
+  "FrmRepararInconsistencia.btnRestaurarBackup": "Perform backup",
   "FrmRepararInconsistencia.btnRestaurarDV": "Recalculate check digits",
   "FrmRepararInconsistencia.btnSalir": "Close",
   "FrmRepararInconsistencia.lblTitulo": "FIX INCONSISTENCIES",
