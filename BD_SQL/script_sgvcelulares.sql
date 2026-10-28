@@ -1,6 +1,8 @@
-CREATE DATABASE bd_santsung_064RB;
-USE bd_santsung_064RB;
+create database bd_santsung_064RB;
+use bd_santsung_064RB;
 
+use bd_dv;
+drop database bd_santsung_064RB;
 --
 -- Tablas de aspectos técnicos
 --
@@ -141,7 +143,9 @@ create table Producto_064RB (
     Modelo_064RB varchar(50) not null,
     Precio_064RB decimal(18, 2) not null,
     Descripcion_064RB varchar(100),
-    constraint pk_producto_064RB primary key (Sku_064RB)
+    StockMinimo_064RB int not null default 0,
+    constraint pk_producto_064RB primary key (Sku_064RB),
+    constraint chk_producto_stockminimo check (StockMinimo_064RB >= 0),
 );
 go
 go
@@ -204,6 +208,48 @@ create table DetalleVenta_Imeis_064RB (
     constraint fk_detalleVentaImei_unidadCelular_064RB foreign key (Imei_064RB) references UnidadCelular_064RB(Imei_064RB)
 );
 go
+go
+create table Proveedor_064RB (
+    Cuit_064RB varchar(11) not null,
+    RazonSocial_064RB varchar(100) not null,
+    Activo_064RB bit not null default 1,
+    constraint pk_proveedor_064RB primary key (Cuit_064RB)
+);
+go
+go
+create table SolicitudCompra_064RB (
+    IdSolicitud_064RB int identity(1,1),
+    SkuProducto_064RB varchar(50) not null,
+    Cantidad_064RB int not null check (Cantidad_064RB > 0),
+    Estado_064RB varchar(30) not null default 'Pendiente de compra' check (Estado_064RB in ('Pendiente de compra','Cotizada','Aprobada','Rechazada','Pendiente de recepción','Recibida')),
+    FechaSolicitud_064RB datetime not null default GETDATE(),
+    -- paso 3: cotización
+    CuitProveedor_064RB varchar(11),
+    PrecioUnitario_064RB decimal(18,2),
+    MontoTotal_064RB decimal(18,2),
+    -- paso 4: decisión del gerente
+    FechaDecision_064RB datetime,
+    Motivo_064RB varchar(200),
+    constraint pk_solicitudCompra_064RB primary key (IdSolicitud_064RB),
+    constraint fk_solicitudCompra_producto_064RB foreign key (SkuProducto_064RB) references Producto_064RB(Sku_064RB),
+    constraint fk_solicitudCompra_proveedor_064RB foreign key (CuitProveedor_064RB) references Proveedor_064RB(Cuit_064RB)
+);
+go
+go
+create unique index ux_solicitud_activa_064RB on SolicitudCompra_064RB(SkuProducto_064RB)
+where Estado_064RB <> 'Rechazada' and Estado_064RB <> 'Recibida';
+go
+go
+create table OrdenCompra_064RB (
+    NumOrden_064RB int identity(1,1),
+    IdSolicitud_064RB int not null,
+    Fecha_064RB datetime not null default GETDATE(),
+    MontoPagado_064RB decimal(18,2) not null check (MontoPagado_064RB > 0),
+    constraint pk_ordenCompra_064RB primary key (NumOrden_064RB),
+    constraint fk_ordenCompra_solicitud_064RB foreign key (IdSolicitud_064RB) references SolicitudCompra_064RB(IdSolicitud_064RB),
+    constraint uq_idSolicitud_064RB unique (IdSolicitud_064RB)
+);
+go
 
 --
 -- INSERT iniciales
@@ -217,14 +263,17 @@ values
 ('Desbloquear Usuario'),
 ('Activar Usuario'),
 ('Desactivar Usuario'),
+
 ('Consultar Bitácora'),
 ('Exportar Bitácora'),
+
 ('Crear Rol'),
 ('Crear Familia'),
-('Realizar Backup'),
-('Realizar Restore'),
 ('Eliminar Rol'),
-('Eliminar Familia');
+('Eliminar Familia'),
+
+('Realizar Backup'),
+('Realizar Restore');
 
 -- INSERT permisos de Maestros
 insert into Permiso_064RB (Nombre_064RB)
@@ -232,14 +281,25 @@ values
 ('Crear Producto'),
 ('Borrar Producto'),
 ('Modificar Producto'),
+
 ('Crear Unidad Celular'),
 ('Borrar Unidad Celular'),
 ('Modificar Unidad Celular'),
+
 ('Crear Cliente'),
 ('Borrar Cliente'),
 ('Modificar Cliente'),
+
+('Crear Proveedor'),
+('Borrar Proveedor'),
+('Modificar Proveedor'),
+
 ('Generar Reporte de Ventas'),
-('Realizar Venta');
+('Generar Reporte de Stock'),
+('Realizar Venta'),
+('Solicitar Reposicion'),
+('Cotizar Solicitud'),
+('Evaluar Solicitud');
 
 insert into Idioma_064RB (IdIdioma_064RB, Nombre_064RB)
 values
@@ -309,6 +369,10 @@ select * from Venta_064RB;
 select * from UnidadCelular_064RB;
 select * from DetalleVenta_064RB;
 select * from DetalleVenta_Imeis_064RB;
+
+select * from Proveedor_064RB;
+select * from SolicitudCompra_064RB;
+select * from OrdenCompra_064RB;
 
 -- consultar celular
 select p.Sku_064RB, p.Marca_064RB, p.Modelo_064RB, p.Precio_064RB, p.Descripcion_064RB, c.Almacenamiento_064RB, c.Color_064RB from Producto_064RB p
