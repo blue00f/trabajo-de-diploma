@@ -18,6 +18,7 @@ namespace BLL_064RB.Negocio_064RB
         }
         public void AgregarCelular_064RB(BE_Celular_064RB celular)
         {
+            if (celular.StockMinimo_064RB < 0) throw new Exception("El stock mínimo no puede ser negativo!");
             if (Consultar_064RB().Any(p => p.Sku_064RB == celular.Sku_064RB)) throw new Exception("El celular está repetido!");
             map_producto.AgregarCelular_064RB(celular);
 
@@ -28,6 +29,7 @@ namespace BLL_064RB.Negocio_064RB
         }
         public void AgregarAccesorio_064RB(BE_Accesorio_064RB accesorio)
         {
+            if (accesorio.StockMinimo_064RB < 0) throw new Exception("El stock mínimo no puede ser negativo!");
             if (Consultar_064RB().Any(p => p.Sku_064RB == accesorio.Sku_064RB)) throw new Exception("El accesorio está repetido!");
             map_producto.AgregarAccesorio_064RB(accesorio);
             SER_Usuario_064RB usu = SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB;
@@ -45,6 +47,7 @@ namespace BLL_064RB.Negocio_064RB
         }
         public void Modificar_064RB(BE_Producto_064RB producto)
         {
+            if (producto.StockMinimo_064RB < 0) throw new Exception("El stock mínimo no puede ser negativo!");
             map_producto.Modificar_064RB(producto);
             SER_Usuario_064RB usu = SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB;
             bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(usu, DateTime.Now, "Productos", "Modificar", 3));
@@ -68,7 +71,8 @@ namespace BLL_064RB.Negocio_064RB
                                Almacenamiento = cel != null ? cel.Almacenamiento_064RB : "-",
                                Color = cel != null ? cel.Color_064RB : "-",
                                Categoria = acc != null ? acc.Categoria_064RB : "-",
-                               Stock = ObtenerStock_064RB(p)
+                               Stock = ObtenerStock_064RB(p),
+                               StockMinimo = p.StockMinimo_064RB
                            };
             return consulta.ToList<object>();
         }

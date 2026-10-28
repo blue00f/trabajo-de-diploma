@@ -37,8 +37,11 @@
             groupBox1 = new GroupBox();
             radAccesorio = new RadioButton();
             radCelular = new RadioButton();
+            nudStockMinimo = new NumericUpDown();
+            lblStockMinimo = new Label();
             ((System.ComponentModel.ISupportInitialize)grillaProductos).BeginInit();
             groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)nudStockMinimo).BeginInit();
             SuspendLayout();
             // 
             // btnAgregar
@@ -149,12 +152,32 @@
             radCelular.Text = "Celular";
             radCelular.UseVisualStyleBackColor = true;
             // 
+            // nudStockMinimo
+            // 
+            nudStockMinimo.Location = new Point(557, 342);
+            nudStockMinimo.Name = "nudStockMinimo";
+            nudStockMinimo.Size = new Size(130, 23);
+            nudStockMinimo.TabIndex = 7;
+            // 
+            // lblStockMinimo
+            // 
+            lblStockMinimo.AutoSize = true;
+            lblStockMinimo.Font = new Font("Segoe UI", 9F);
+            lblStockMinimo.ForeColor = SystemColors.Menu;
+            lblStockMinimo.Location = new Point(467, 344);
+            lblStockMinimo.Name = "lblStockMinimo";
+            lblStockMinimo.Size = new Size(84, 15);
+            lblStockMinimo.TabIndex = 16;
+            lblStockMinimo.Text = "Stock mínimo:";
+            // 
             // FrmProductos_064RB
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(30, 42, 58);
             ClientSize = new Size(1122, 500);
+            Controls.Add(lblStockMinimo);
+            Controls.Add(nudStockMinimo);
             Controls.Add(groupBox1);
             Controls.Add(btnSalir);
             Controls.Add(lblProductos);
@@ -168,6 +191,7 @@
             ((System.ComponentModel.ISupportInitialize)grillaProductos).EndInit();
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)nudStockMinimo).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -183,5 +207,7 @@
         private GroupBox groupBox1;
         private RadioButton radAccesorio;
         private RadioButton radCelular;
+        private NumericUpDown nudStockMinimo;
+        private Label lblStockMinimo;
     }
 }

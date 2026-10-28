@@ -7,13 +7,15 @@
         public string Modelo_064RB { get; set; }
         public decimal Precio_064RB { get; set; }
         public string Descripcion_064RB { get; set; }
-        public BE_Producto_064RB(string sku, string marca, string modelo, decimal precio, string descripcion)
+        public int StockMinimo_064RB { get; set; }
+        public BE_Producto_064RB(string sku, string marca, string modelo, decimal precio, string descripcion, int stockMinimo)
         {
             Sku_064RB = sku;
             Marca_064RB = marca;
             Modelo_064RB = modelo;
             Precio_064RB = precio;
             Descripcion_064RB = descripcion;
+            StockMinimo_064RB = stockMinimo;
         }
     }
 }

@@ -65,7 +65,7 @@ namespace UI_064RB
                     string color = Interaction.InputBox("Ingresa el color:", "Alta de celular");
                     if (color.Length == 0) throw new Exception("El color está vacío!");
 
-                    BE_Celular_064RB celular = new(sku, marca, modelo, precio, descripcion, almacenamiento, color);
+                    BE_Celular_064RB celular = new(sku, marca, modelo, precio, descripcion, Convert.ToInt16(nudStockMinimo.Value), almacenamiento, color);
                     bll_producto.AgregarCelular_064RB(celular);
                     Mostrar(grillaProductos, bll_producto.ConsultarGrilla_064RB());
                 }
@@ -92,7 +92,7 @@ namespace UI_064RB
                     string stockInput = Interaction.InputBox("Ingresa el stock:", "Alta de accesorio");
                     if (!int.TryParse(stockInput, out int stock)) throw new Exception("El stock debe ser numérico!");
 
-                    BE_Accesorio_064RB accesorio = new BE_Accesorio_064RB(sku, marca, modelo, precio, descripcion, categoria, stock);
+                    BE_Accesorio_064RB accesorio = new BE_Accesorio_064RB(sku, marca, modelo, precio, descripcion, Convert.ToInt16(nudStockMinimo.Value), categoria, stock);
                     bll_producto.AgregarAccesorio_064RB(accesorio);
                     Mostrar(grillaProductos, bll_producto.ConsultarGrilla_064RB());
                 }
@@ -146,7 +146,7 @@ namespace UI_064RB
                     if (almacenamiento.Length == 0) throw new Exception("El almacenamiento está vacío!");
                     string color = Interaction.InputBox("Ingresa el color:", "Modificar celular", grillaProductos.CurrentRow.Cells[7].Value.ToString());
                     if (color.Length == 0) throw new Exception("El color está vacío!");
-                    producto = new BE_Celular_064RB(sku, marca, modelo, precio, descripcion, almacenamiento, color);
+                    producto = new BE_Celular_064RB(sku, marca, modelo, precio, descripcion, Convert.ToInt16(nudStockMinimo.Value), almacenamiento, color);
                 }
                 else
                 {
@@ -154,7 +154,7 @@ namespace UI_064RB
                     if (categoria.Length == 0) throw new Exception("La categoría está vacía!");
                     string stockInput = Interaction.InputBox("Ingresa el stock:", "Modificar accesorio");
                     if (!int.TryParse(stockInput, out int stock)) throw new Exception("El stock debe ser numérico!");
-                    producto = new BE_Accesorio_064RB(sku, marca, modelo, precio, descripcion, categoria, stock);
+                    producto = new BE_Accesorio_064RB(sku, marca, modelo, precio, descripcion, Convert.ToInt16(nudStockMinimo.Value), categoria, stock);
                 }
 
                 bll_producto.Modificar_064RB(producto);

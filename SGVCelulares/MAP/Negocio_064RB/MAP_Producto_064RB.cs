@@ -14,27 +14,18 @@ namespace MAP_064RB.Negocio_064RB
             dao_producto = new();
             dao_unidadCelular = new();
         }
-        public void AgregarCelular_064RB(BE_Celular_064RB celular)
-        {
-            dao_producto.AgregarCelular_064RB(celular.Sku_064RB, celular.Marca_064RB, celular.Modelo_064RB, celular.Precio_064RB, celular.Descripcion_064RB, celular.Almacenamiento_064RB, celular.Color_064RB);      
-        }
-        public void AgregarAccesorio_064RB(BE_Accesorio_064RB accesorio)
-        {
-            dao_producto.AgregarAccesorio_064RB(accesorio.Sku_064RB, accesorio.Marca_064RB, accesorio.Modelo_064RB, accesorio.Precio_064RB, accesorio.Descripcion_064RB, accesorio.Categoria_064RB, accesorio.Stock_064RB);
-        }
-        public void Borrar_064RB(string sku)
-        {
-            dao_producto.Borrar_064RB(sku);
-        }
+        public void AgregarCelular_064RB(BE_Celular_064RB celular) => dao_producto.AgregarCelular_064RB(celular.Sku_064RB, celular.Marca_064RB, celular.Modelo_064RB, celular.Precio_064RB, celular.Descripcion_064RB, celular.StockMinimo_064RB, celular.Almacenamiento_064RB, celular.Color_064RB);
+        public void AgregarAccesorio_064RB(BE_Accesorio_064RB accesorio) => dao_producto.AgregarAccesorio_064RB(accesorio.Sku_064RB, accesorio.Marca_064RB, accesorio.Modelo_064RB, accesorio.Precio_064RB, accesorio.Descripcion_064RB, accesorio.StockMinimo_064RB, accesorio.Categoria_064RB, accesorio.Stock_064RB);
+        public void Borrar_064RB(string sku) => dao_producto.Borrar_064RB(sku);
         public void Modificar_064RB(BE_Producto_064RB producto)
         {
             if(producto is BE_Celular_064RB cel)
             {
-                dao_producto.ModificarCelular_064RB(cel.Sku_064RB, cel.Marca_064RB, cel.Modelo_064RB, cel.Precio_064RB, cel.Descripcion_064RB, cel.Almacenamiento_064RB, cel.Color_064RB);
+                dao_producto.ModificarCelular_064RB(cel.Sku_064RB, cel.Marca_064RB, cel.Modelo_064RB, cel.Precio_064RB, cel.Descripcion_064RB, cel.StockMinimo_064RB, cel.Almacenamiento_064RB, cel.Color_064RB);
             }
             else if (producto is BE_Accesorio_064RB acc)
             {
-                dao_producto.ModificarAccesorio_064RB(acc.Sku_064RB, acc.Marca_064RB, acc.Modelo_064RB, acc.Precio_064RB, acc.Descripcion_064RB, acc.Categoria_064RB, acc.Stock_064RB);
+                dao_producto.ModificarAccesorio_064RB(acc.Sku_064RB, acc.Marca_064RB, acc.Modelo_064RB, acc.Precio_064RB, acc.Descripcion_064RB, acc.StockMinimo_064RB, acc.Categoria_064RB, acc.Stock_064RB);
             }
         }
         public BE_Celular_064RB ConsultarCelularPorSku(string sku)
@@ -83,8 +74,9 @@ namespace MAP_064RB.Negocio_064RB
                 Convert.ToString(fila[2]),
                 Convert.ToDecimal(fila[3]),
                 Convert.ToString(fila[4]),
-                Convert.ToString(fila[5]),
-                Convert.ToString(fila[6])
+                Convert.ToInt16(fila[5]),
+                Convert.ToString(fila[6]),
+                Convert.ToString(fila[7])
             );
         }
         private BE_Accesorio_064RB MapearAccesorio_064RB(DataRow fila)
@@ -95,8 +87,9 @@ namespace MAP_064RB.Negocio_064RB
                 Convert.ToString(fila[2]),
                 Convert.ToDecimal(fila[3]),
                 Convert.ToString(fila[4]),
-                Convert.ToString(fila[5]),
-                Convert.ToInt16(fila[6])
+                Convert.ToInt16(fila[5]),
+                Convert.ToString(fila[6]),
+                Convert.ToInt16(fila[7])
             );
         }
         private Dictionary<string, List<BE_UnidadCelular_064RB>> MapearUnidadesPorSku_064RB(DataTable dt)

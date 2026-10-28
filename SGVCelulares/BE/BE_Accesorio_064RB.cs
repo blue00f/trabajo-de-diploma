@@ -4,7 +4,7 @@
     {
         public string Categoria_064RB { get; set; }
         public int Stock_064RB { get; set; }
-        public BE_Accesorio_064RB(string sku, string marca, string modelo, decimal precio, string descripcion, string categoria, int stock) : base(sku, marca, modelo, precio, descripcion)
+        public BE_Accesorio_064RB(string sku, string marca, string modelo, decimal precio, string descripcion, int stockMinimo, string categoria, int stock) : base(sku, marca, modelo, precio, descripcion, stockMinimo)
         {
             Categoria_064RB = categoria;
             Stock_064RB = stock;
