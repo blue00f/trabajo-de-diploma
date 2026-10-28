@@ -29,8 +29,28 @@ namespace UI
             submenuProductos.Visible = TieneAlgun(usuario, "Crear Producto", "Borrar Producto", "Modificar Producto");
             submenuUnidadCelular.Visible = TieneAlgun(usuario, "Crear Unidad Celular", "Borrar Unidad Celular", "Modificar Unidad Celular");
             submenuClientes.Visible = TieneAlgun(usuario, "Crear Cliente", "Borrar Cliente", "Modificar Cliente");
-            menuAdmin.Visible = submenuGestionUsuarios.Visible || submenuGestionRoles.Visible || submenuBitacora.Visible || submenuGestionRespaldo.Visible || submenuProductos.Visible || submenuUnidadCelular.Visible || submenuClientes.Visible;
+            submenuVenta.Visible = TieneAlgun(usuario, "Realizar Venta");
+
+            submenuProveedores.Visible = TieneAlgun(usuario, "Crear Proveedor", "Borrar Proveedor", "Modificar Proveedor");
+            submenuSolicitarReposicion.Visible = TieneAlgun(usuario, "Solicitar Reposicion");
+            submenuCotizarSolicitud.Visible = TieneAlgun(usuario, "Cotizar Solicitud");
+            submenuEvaluarSolicitud.Visible = TieneAlgun(usuario, "Evaluar Solicitud");
+            menuAdmin.Visible = submenuGestionUsuarios.Visible || submenuGestionRoles.Visible || submenuBitacora.Visible || submenuGestionRespaldo.Visible || submenuProductos.Visible || submenuUnidadCelular.Visible || submenuClientes.Visible ||
+                submenuVenta.Visible || submenuProveedores.Visible || submenuSolicitarReposicion.Visible || submenuCotizarSolicitud.Visible || submenuEvaluarSolicitud.Visible;
             menuAdmin.Visible = true;
+
+            try
+            {
+                lblRama.Text = $"Rama actual: {GitInfo_064RB.ObtenerRama_064RB()}";
+                lblUltimoCommit.Text = $"Último commit: {GitInfo_064RB.ObtenerFechaCommit_064RB()}";
+                lblHashCommit.Text = $"Hash del último commit: {GitInfo_064RB.ObtenerHashCommit_064RB()}";
+            }
+            catch (Exception)
+            {
+                lblRama.Text = "Rama actual: no disponible";
+                lblUltimoCommit.Text = "Último commit: no disponible";
+                lblHashCommit.Text = "Hash del último commit: no disponible";
+            }
         }
         private bool TieneAlgun(SER_Usuario_064RB usuario, params string[] permisos)
         {
@@ -48,7 +68,7 @@ namespace UI
         }
         private void submenuGestionUsuarios_Click(object sender, EventArgs e)
         {
-            Form frm = Application.OpenForms["FrmUsuarios"];
+            Form frm = Application.OpenForms["FrmGestionUsuarios_064RB"];
             if (frm == null)
             {
                 FrmGestionUsuarios_064RB frmUsuarios = new FrmGestionUsuarios_064RB();
@@ -64,7 +84,7 @@ namespace UI
 
         private void submenuBitacora_Click(object sender, EventArgs e)
         {
-            Form frm = Application.OpenForms["FrmBitacora"];
+            Form frm = Application.OpenForms["FrmBitacora_064RB"];
             if (frm == null)
             {
                 FrmBitacora_064RB frmBitacora = new FrmBitacora_064RB();
@@ -80,7 +100,7 @@ namespace UI
 
         private void submenuGestionRoles_Click(object sender, EventArgs e)
         {
-            Form frm = Application.OpenForms["FrmRoles"];
+            Form frm = Application.OpenForms["FrmGestionRoles_064RB"];
             if (frm == null)
             {
                 FrmGestionRoles_064RB frmRoles = new FrmGestionRoles_064RB();
@@ -96,7 +116,7 @@ namespace UI
 
         private void submenuGestionRespaldo_Click(object sender, EventArgs e)
         {
-            Form frm = Application.OpenForms["FrmBackup"];
+            Form frm = Application.OpenForms["FrmBackup_064RB"];
             if (frm == null)
             {
                 FrmBackup_064RB frmBackup = new FrmBackup_064RB();
@@ -126,7 +146,7 @@ namespace UI
 
         private void submenuCambiarClave_Click(object sender, EventArgs e)
         {
-            Form frm = Application.OpenForms["FrmCambiarClave"];
+            Form frm = Application.OpenForms["FrmCambiarClave_064RB"];
             if (frm == null)
             {
                 FrmCambiarClave_064RB frmCambiarClave = new FrmCambiarClave_064RB();
@@ -196,6 +216,66 @@ namespace UI
             {
                 FrmUnidadCelular_064RB frmUnidadCelular = new();
                 frmUnidadCelular.ShowDialog();
+            }
+            else
+            {
+                frm.WindowState = FormWindowState.Normal;
+                frm.BringToFront();
+                frm.Focus();
+            }
+        }
+        private void submenuProveedores_Click(object sender, EventArgs e)
+        {
+            Form frm = Application.OpenForms["FrmProveedores_064RB"];
+            if (frm == null)
+            {
+                FrmProveedores_064RB frmProveedores_064RB = new();
+                frmProveedores_064RB.ShowDialog();
+            }
+            else
+            {
+                frm.WindowState = FormWindowState.Normal;
+                frm.BringToFront();
+                frm.Focus();
+            }
+        }
+        private void submenuSolicitarReposicion_Click(object sender, EventArgs e)
+        {
+            Form frm = Application.OpenForms["FrmSolicitarReposicion_064RB"];
+            if (frm == null)
+            {
+                FrmSolicitarReposicion_064RB frmSolicitarReposicion_064RB = new();
+                frmSolicitarReposicion_064RB.ShowDialog();
+            }
+            else
+            {
+                frm.WindowState = FormWindowState.Normal;
+                frm.BringToFront();
+                frm.Focus();
+            }
+        }
+        private void submenuCotizarSolicitud_Click(object sender, EventArgs e)
+        {
+            Form frm = Application.OpenForms["FrmCotizarSolicitud_064RB"];
+            if (frm == null)
+            {
+                FrmCotizarSolicitud_064RB frmCotizarSolicitud_064RB = new();
+                frmCotizarSolicitud_064RB.ShowDialog();
+            }
+            else
+            {
+                frm.WindowState = FormWindowState.Normal;
+                frm.BringToFront();
+                frm.Focus();
+            }
+        }
+        private void submenuEvaluarSolicitud_Click(object sender, EventArgs e)
+        {
+            Form frm = Application.OpenForms["FrmEvaluarSolicitud_064RB"];
+            if (frm == null)
+            {
+                FrmEvaluarSolicitud_064RB frmEvaluarSolicitud_064RB = new();
+                frmEvaluarSolicitud_064RB.ShowDialog();
             }
             else
             {

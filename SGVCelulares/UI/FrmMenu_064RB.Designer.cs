@@ -41,6 +41,9 @@
             submenuGestionRespaldo = new ToolStripMenuItem();
             menuVendedor = new ToolStripMenuItem();
             submenuVenta = new ToolStripMenuItem();
+            menuStock = new ToolStripMenuItem();
+            submenuSolicitarReposicion = new ToolStripMenuItem();
+            submenuCotizarSolicitud = new ToolStripMenuItem();
             menuReportes = new ToolStripMenuItem();
             menuAyuda = new ToolStripMenuItem();
             menuSesion = new ToolStripMenuItem();
@@ -51,10 +54,16 @@
             submenuProductos = new ToolStripMenuItem();
             submenuUnidadCelular = new ToolStripMenuItem();
             submenuClientes = new ToolStripMenuItem();
+            submenuProveedores = new ToolStripMenuItem();
             pnlSidebar = new Panel();
             pnlContenido = new Panel();
+            lblHashCommit = new Label();
+            lblUltimoCommit = new Label();
+            lblRama = new Label();
+            submenuEvaluarSolicitud = new ToolStripMenuItem();
             pnlTopbar.SuspendLayout();
             menuStrip1.SuspendLayout();
+            pnlContenido.SuspendLayout();
             SuspendLayout();
             // 
             // pnlTopbar
@@ -117,7 +126,7 @@
             // 
             // menuStrip1
             // 
-            menuStrip1.Items.AddRange(new ToolStripItem[] { menuAdmin, menuVendedor, menuReportes, menuAyuda, menuSesion, menuMaestros });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { menuAdmin, menuVendedor, menuStock, menuReportes, menuAyuda, menuSesion, menuMaestros });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(960, 24);
@@ -173,6 +182,27 @@
             submenuVenta.Text = "Realizar venta";
             submenuVenta.Click += submenuVenta_Click;
             // 
+            // menuStock
+            // 
+            menuStock.DropDownItems.AddRange(new ToolStripItem[] { submenuSolicitarReposicion, submenuCotizarSolicitud, submenuEvaluarSolicitud });
+            menuStock.Name = "menuStock";
+            menuStock.Size = new Size(48, 20);
+            menuStock.Text = "Stock";
+            // 
+            // submenuSolicitarReposicion
+            // 
+            submenuSolicitarReposicion.Name = "submenuSolicitarReposicion";
+            submenuSolicitarReposicion.Size = new Size(180, 22);
+            submenuSolicitarReposicion.Text = "Solicitar reposición";
+            submenuSolicitarReposicion.Click += submenuSolicitarReposicion_Click;
+            // 
+            // submenuCotizarSolicitud
+            // 
+            submenuCotizarSolicitud.Name = "submenuCotizarSolicitud";
+            submenuCotizarSolicitud.Size = new Size(180, 22);
+            submenuCotizarSolicitud.Text = "Cotizar solicitud";
+            submenuCotizarSolicitud.Click += submenuCotizarSolicitud_Click;
+            // 
             // menuReportes
             // 
             menuReportes.Name = "menuReportes";
@@ -195,27 +225,27 @@
             // submenuRelogin
             // 
             submenuRelogin.Name = "submenuRelogin";
-            submenuRelogin.Size = new Size(149, 22);
+            submenuRelogin.Size = new Size(180, 22);
             submenuRelogin.Text = "Re-login";
             submenuRelogin.Click += submenuRelogin_Click;
             // 
             // submenuCambiarClave
             // 
             submenuCambiarClave.Name = "submenuCambiarClave";
-            submenuCambiarClave.Size = new Size(149, 22);
+            submenuCambiarClave.Size = new Size(180, 22);
             submenuCambiarClave.Text = "Cambiar clave";
             submenuCambiarClave.Click += submenuCambiarClave_Click;
             // 
             // submenuCerrarSesion
             // 
             submenuCerrarSesion.Name = "submenuCerrarSesion";
-            submenuCerrarSesion.Size = new Size(149, 22);
+            submenuCerrarSesion.Size = new Size(180, 22);
             submenuCerrarSesion.Text = "Cerrar sesión";
             submenuCerrarSesion.Click += submenuCerrarSesion_Click;
             // 
             // menuMaestros
             // 
-            menuMaestros.DropDownItems.AddRange(new ToolStripItem[] { submenuProductos, submenuUnidadCelular, submenuClientes });
+            menuMaestros.DropDownItems.AddRange(new ToolStripItem[] { submenuProductos, submenuUnidadCelular, submenuClientes, submenuProveedores });
             menuMaestros.Name = "menuMaestros";
             menuMaestros.Size = new Size(67, 20);
             menuMaestros.Text = "Maestros";
@@ -223,23 +253,30 @@
             // submenuProductos
             // 
             submenuProductos.Name = "submenuProductos";
-            submenuProductos.Size = new Size(180, 22);
+            submenuProductos.Size = new Size(177, 22);
             submenuProductos.Text = "Productos";
             submenuProductos.Click += submenuProductos_Click;
             // 
             // submenuUnidadCelular
             // 
             submenuUnidadCelular.Name = "submenuUnidadCelular";
-            submenuUnidadCelular.Size = new Size(180, 22);
+            submenuUnidadCelular.Size = new Size(177, 22);
             submenuUnidadCelular.Text = "Unidades de celular";
             submenuUnidadCelular.Click += submenuUnidadCelular_Click;
             // 
             // submenuClientes
             // 
             submenuClientes.Name = "submenuClientes";
-            submenuClientes.Size = new Size(180, 22);
+            submenuClientes.Size = new Size(177, 22);
             submenuClientes.Text = "Clientes";
             submenuClientes.Click += submenuClientes_Click;
+            // 
+            // submenuProveedores
+            // 
+            submenuProveedores.Name = "submenuProveedores";
+            submenuProveedores.Size = new Size(177, 22);
+            submenuProveedores.Text = "Proveedores";
+            submenuProveedores.Click += submenuProveedores_Click;
             // 
             // pnlSidebar
             // 
@@ -253,12 +290,55 @@
             // pnlContenido
             // 
             pnlContenido.BackColor = Color.FromArgb(30, 42, 58);
+            pnlContenido.Controls.Add(lblHashCommit);
+            pnlContenido.Controls.Add(lblUltimoCommit);
+            pnlContenido.Controls.Add(lblRama);
             pnlContenido.Dock = DockStyle.Fill;
             pnlContenido.Location = new Point(193, 81);
             pnlContenido.Name = "pnlContenido";
             pnlContenido.Padding = new Padding(24);
             pnlContenido.Size = new Size(767, 390);
             pnlContenido.TabIndex = 2;
+            // 
+            // lblHashCommit
+            // 
+            lblHashCommit.AutoSize = true;
+            lblHashCommit.Font = new Font("Segoe UI", 11F);
+            lblHashCommit.ForeColor = Color.FromArgb(226, 232, 240);
+            lblHashCommit.Location = new Point(6, 354);
+            lblHashCommit.Name = "lblHashCommit";
+            lblHashCommit.Size = new Size(172, 20);
+            lblHashCommit.TabIndex = 7;
+            lblHashCommit.Text = "Hash del último commit:";
+            // 
+            // lblUltimoCommit
+            // 
+            lblUltimoCommit.AutoSize = true;
+            lblUltimoCommit.Font = new Font("Segoe UI", 11F);
+            lblUltimoCommit.ForeColor = Color.FromArgb(226, 232, 240);
+            lblUltimoCommit.Location = new Point(6, 322);
+            lblUltimoCommit.Name = "lblUltimoCommit";
+            lblUltimoCommit.Size = new Size(112, 20);
+            lblUltimoCommit.TabIndex = 6;
+            lblUltimoCommit.Text = "Último commit:";
+            // 
+            // lblRama
+            // 
+            lblRama.AutoSize = true;
+            lblRama.Font = new Font("Segoe UI", 11F);
+            lblRama.ForeColor = Color.FromArgb(226, 232, 240);
+            lblRama.Location = new Point(6, 288);
+            lblRama.Name = "lblRama";
+            lblRama.Size = new Size(94, 20);
+            lblRama.TabIndex = 5;
+            lblRama.Text = "Rama actual:";
+            // 
+            // submenuEvaluarSolicitud
+            // 
+            submenuEvaluarSolicitud.Name = "submenuEvaluarSolicitud";
+            submenuEvaluarSolicitud.Size = new Size(180, 22);
+            submenuEvaluarSolicitud.Text = "Evaluar solicitud";
+            submenuEvaluarSolicitud.Click += submenuEvaluarSolicitud_Click;
             // 
             // FrmMenu_064RB
             // 
@@ -280,6 +360,8 @@
             pnlTopbar.PerformLayout();
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
+            pnlContenido.ResumeLayout(false);
+            pnlContenido.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -312,5 +394,13 @@
         private ToolStripMenuItem submenuUnidadCelular;
         private ToolStripMenuItem submenuClientes;
         private ToolStripMenuItem submenuVenta;
+        private Label lblUltimoCommit;
+        private Label lblRama;
+        private Label lblHashCommit;
+        private ToolStripMenuItem submenuProveedores;
+        private ToolStripMenuItem menuStock;
+        private ToolStripMenuItem submenuSolicitarReposicion;
+        private ToolStripMenuItem submenuCotizarSolicitud;
+        private ToolStripMenuItem submenuEvaluarSolicitud;
     }
 }
