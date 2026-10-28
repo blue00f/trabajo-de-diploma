@@ -123,5 +123,20 @@ namespace BLL_064RB.Negocio_064RB
             bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(usu, DateTime.Now, "Solicitudes de compra", "Modificar", 3));
             bll_dv.ActualizarDV_064RB("SolicitudCompra_064RB");
         }
+
+        public List<object> ConsultarAprobadasGrilla_064RB() =>
+            ConsultarPorEstado_064RB(EstadoSolicitud_064RB.Aprobada_064RB).Select(s => (object)new
+            {
+                Solicitud = s.IdSolicitud_064RB,
+                SKU = s.Producto_064RB.Sku_064RB,
+                Marca = s.Producto_064RB.Marca_064RB,
+                Modelo = s.Producto_064RB.Modelo_064RB,
+                Cantidad = s.Cantidad_064RB,
+                Proveedor = s.Proveedor_064RB?.RazonSocial_064RB,
+                CUIT = s.Proveedor_064RB?.Cuit_064RB,
+                PrecioUnitario = s.PrecioUnitario_064RB,
+                MontoTotal = s.MontoTotal_064RB,
+                Aprobada = s.FechaDecision_064RB?.ToString("dd/MM/yyyy")
+            }).ToList();
     } 
 }

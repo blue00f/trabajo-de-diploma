@@ -44,6 +44,7 @@
             menuStock = new ToolStripMenuItem();
             submenuSolicitarReposicion = new ToolStripMenuItem();
             submenuCotizarSolicitud = new ToolStripMenuItem();
+            submenuEvaluarSolicitud = new ToolStripMenuItem();
             menuReportes = new ToolStripMenuItem();
             menuAyuda = new ToolStripMenuItem();
             menuSesion = new ToolStripMenuItem();
@@ -60,7 +61,7 @@
             lblHashCommit = new Label();
             lblUltimoCommit = new Label();
             lblRama = new Label();
-            submenuEvaluarSolicitud = new ToolStripMenuItem();
+            submenuEfectuarPedido = new ToolStripMenuItem();
             pnlTopbar.SuspendLayout();
             menuStrip1.SuspendLayout();
             pnlContenido.SuspendLayout();
@@ -184,7 +185,7 @@
             // 
             // menuStock
             // 
-            menuStock.DropDownItems.AddRange(new ToolStripItem[] { submenuSolicitarReposicion, submenuCotizarSolicitud, submenuEvaluarSolicitud });
+            menuStock.DropDownItems.AddRange(new ToolStripItem[] { submenuSolicitarReposicion, submenuCotizarSolicitud, submenuEvaluarSolicitud, submenuEfectuarPedido });
             menuStock.Name = "menuStock";
             menuStock.Size = new Size(48, 20);
             menuStock.Text = "Stock";
@@ -202,6 +203,13 @@
             submenuCotizarSolicitud.Size = new Size(180, 22);
             submenuCotizarSolicitud.Text = "Cotizar solicitud";
             submenuCotizarSolicitud.Click += submenuCotizarSolicitud_Click;
+            // 
+            // submenuEvaluarSolicitud
+            // 
+            submenuEvaluarSolicitud.Name = "submenuEvaluarSolicitud";
+            submenuEvaluarSolicitud.Size = new Size(180, 22);
+            submenuEvaluarSolicitud.Text = "Evaluar solicitud";
+            submenuEvaluarSolicitud.Click += submenuEvaluarSolicitud_Click;
             // 
             // menuReportes
             // 
@@ -225,21 +233,21 @@
             // submenuRelogin
             // 
             submenuRelogin.Name = "submenuRelogin";
-            submenuRelogin.Size = new Size(180, 22);
+            submenuRelogin.Size = new Size(149, 22);
             submenuRelogin.Text = "Re-login";
             submenuRelogin.Click += submenuRelogin_Click;
             // 
             // submenuCambiarClave
             // 
             submenuCambiarClave.Name = "submenuCambiarClave";
-            submenuCambiarClave.Size = new Size(180, 22);
+            submenuCambiarClave.Size = new Size(149, 22);
             submenuCambiarClave.Text = "Cambiar clave";
             submenuCambiarClave.Click += submenuCambiarClave_Click;
             // 
             // submenuCerrarSesion
             // 
             submenuCerrarSesion.Name = "submenuCerrarSesion";
-            submenuCerrarSesion.Size = new Size(180, 22);
+            submenuCerrarSesion.Size = new Size(149, 22);
             submenuCerrarSesion.Text = "Cerrar sesión";
             submenuCerrarSesion.Click += submenuCerrarSesion_Click;
             // 
@@ -333,12 +341,12 @@
             lblRama.TabIndex = 5;
             lblRama.Text = "Rama actual:";
             // 
-            // submenuEvaluarSolicitud
+            // submenuEfectuarPedido
             // 
-            submenuEvaluarSolicitud.Name = "submenuEvaluarSolicitud";
-            submenuEvaluarSolicitud.Size = new Size(180, 22);
-            submenuEvaluarSolicitud.Text = "Evaluar solicitud";
-            submenuEvaluarSolicitud.Click += submenuEvaluarSolicitud_Click;
+            submenuEfectuarPedido.Name = "submenuEfectuarPedido";
+            submenuEfectuarPedido.Size = new Size(180, 22);
+            submenuEfectuarPedido.Text = "Efectuar pedido";
+            submenuEfectuarPedido.Click += submenuEfectuarPedido_Click;
             // 
             // FrmMenu_064RB
             // 
@@ -402,5 +410,6 @@
         private ToolStripMenuItem submenuSolicitarReposicion;
         private ToolStripMenuItem submenuCotizarSolicitud;
         private ToolStripMenuItem submenuEvaluarSolicitud;
+        private ToolStripMenuItem submenuEfectuarPedido;
     }
 }

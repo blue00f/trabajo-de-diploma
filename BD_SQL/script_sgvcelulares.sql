@@ -1,8 +1,6 @@
 create database bd_santsung_064RB;
 use bd_santsung_064RB;
 
-use bd_dv;
-drop database bd_santsung_064RB;
 --
 -- Tablas de aspectos técnicos
 --
@@ -299,7 +297,8 @@ values
 ('Realizar Venta'),
 ('Solicitar Reposicion'),
 ('Cotizar Solicitud'),
-('Evaluar Solicitud');
+('Evaluar Solicitud'),
+('Efectuar Pedido al Proveedor');
 
 insert into Idioma_064RB (IdIdioma_064RB, Nombre_064RB)
 values

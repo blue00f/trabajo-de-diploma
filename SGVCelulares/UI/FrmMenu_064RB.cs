@@ -35,8 +35,9 @@ namespace UI
             submenuSolicitarReposicion.Visible = TieneAlgun(usuario, "Solicitar Reposicion");
             submenuCotizarSolicitud.Visible = TieneAlgun(usuario, "Cotizar Solicitud");
             submenuEvaluarSolicitud.Visible = TieneAlgun(usuario, "Evaluar Solicitud");
+            submenuEfectuarPedido.Visible = TieneAlgun(usuario, "Efectuar Pedido al Proveedor");
             menuAdmin.Visible = submenuGestionUsuarios.Visible || submenuGestionRoles.Visible || submenuBitacora.Visible || submenuGestionRespaldo.Visible || submenuProductos.Visible || submenuUnidadCelular.Visible || submenuClientes.Visible ||
-                submenuVenta.Visible || submenuProveedores.Visible || submenuSolicitarReposicion.Visible || submenuCotizarSolicitud.Visible || submenuEvaluarSolicitud.Visible;
+                submenuVenta.Visible || submenuProveedores.Visible || submenuSolicitarReposicion.Visible || submenuCotizarSolicitud.Visible || submenuEvaluarSolicitud.Visible || submenuEfectuarPedido.Visible;
             menuAdmin.Visible = true;
 
             try
@@ -276,6 +277,21 @@ namespace UI
             {
                 FrmEvaluarSolicitud_064RB frmEvaluarSolicitud_064RB = new();
                 frmEvaluarSolicitud_064RB.ShowDialog();
+            }
+            else
+            {
+                frm.WindowState = FormWindowState.Normal;
+                frm.BringToFront();
+                frm.Focus();
+            }
+        }
+        private void submenuEfectuarPedido_Click(object sender, EventArgs e)
+        {
+            Form frm = Application.OpenForms["FrmEfectuarPedido_064RB"];
+            if (frm == null)
+            {
+                FrmEfectuarPedido_064RB frmEfectuarPedido_064RB = new();
+                frmEfectuarPedido_064RB.ShowDialog();
             }
             else
             {
