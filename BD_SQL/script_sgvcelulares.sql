@@ -248,7 +248,33 @@ create table OrdenCompra_064RB (
     constraint uq_idSolicitud_064RB unique (IdSolicitud_064RB)
 );
 go
-
+go
+create table RemitoCompra_064RB (
+    IdRemito_064RB int identity(1,1) not null,
+    NumOrden_064RB int not null,
+    NumRemito_064RB int not null,
+    Estado_064RB varchar(20) not null,
+    FechaRecepcion_064RB datetime not null default GETDATE(),
+    constraint pk_remito_064RB primary key (IdRemito_064RB),
+    constraint fk_remito_orden_064RB foreign key (NumOrden_064RB) references OrdenCompra_064RB(NumOrden_064RB),
+    constraint uq_remito_orden_064RB unique (NumOrden_064RB),
+    constraint chk_remito_estado_064RB check (Estado_064RB in ('Conforme', 'No conforme'))
+);
+go
+go
+create table Discrepancia_064RB (
+    IdRemito_064RB int not null,
+    CantidadFaltante_064RB int not null default 0,
+    CantidadDanada_064RB int not null default 0,
+    Observaciones_064RB varchar(300) not null,
+    constraint pk_discrepancia_064RB primary key (IdRemito_064RB),
+    constraint fk_discrepancia_remito_064RB foreign key (IdRemito_064RB) references RemitoCompra_064RB(IdRemito_064RB),
+    constraint chk_discrepancia_faltante_064RB check (CantidadFaltante_064RB >= 0),
+    constraint chk_discrepancia_danada_064RB check (CantidadDanada_064RB >= 0),
+    constraint chk_discrepancia_algo_064RB check (CantidadFaltante_064RB + CantidadDanada_064RB > 0),
+    constraint chk_discrepancia_observaciones_064RB check (LEN(LTRIM(RTRIM(Observaciones_064RB))) > 0)
+);
+go
 --
 -- INSERT iniciales
 --
@@ -294,11 +320,14 @@ values
 
 ('Generar Reporte de Ventas'),
 ('Generar Reporte de Stock'),
+
 ('Realizar Venta'),
 ('Solicitar Reposicion'),
 ('Cotizar Solicitud'),
 ('Evaluar Solicitud'),
-('Efectuar Pedido al Proveedor');
+('Efectuar Pedido al Proveedor'),
+('Recibir Mercadería'),
+('Registrar Discrepancia');
 
 insert into Idioma_064RB (IdIdioma_064RB, Nombre_064RB)
 values

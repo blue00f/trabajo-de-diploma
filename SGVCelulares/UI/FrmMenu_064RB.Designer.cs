@@ -45,6 +45,7 @@
             submenuSolicitarReposicion = new ToolStripMenuItem();
             submenuCotizarSolicitud = new ToolStripMenuItem();
             submenuEvaluarSolicitud = new ToolStripMenuItem();
+            submenuEfectuarPedido = new ToolStripMenuItem();
             menuReportes = new ToolStripMenuItem();
             menuAyuda = new ToolStripMenuItem();
             menuSesion = new ToolStripMenuItem();
@@ -61,7 +62,7 @@
             lblHashCommit = new Label();
             lblUltimoCommit = new Label();
             lblRama = new Label();
-            submenuEfectuarPedido = new ToolStripMenuItem();
+            submenuRecibirMercaderia = new ToolStripMenuItem();
             pnlTopbar.SuspendLayout();
             menuStrip1.SuspendLayout();
             pnlContenido.SuspendLayout();
@@ -185,7 +186,7 @@
             // 
             // menuStock
             // 
-            menuStock.DropDownItems.AddRange(new ToolStripItem[] { submenuSolicitarReposicion, submenuCotizarSolicitud, submenuEvaluarSolicitud, submenuEfectuarPedido });
+            menuStock.DropDownItems.AddRange(new ToolStripItem[] { submenuSolicitarReposicion, submenuCotizarSolicitud, submenuEvaluarSolicitud, submenuEfectuarPedido, submenuRecibirMercaderia });
             menuStock.Name = "menuStock";
             menuStock.Size = new Size(48, 20);
             menuStock.Text = "Stock";
@@ -210,6 +211,13 @@
             submenuEvaluarSolicitud.Size = new Size(180, 22);
             submenuEvaluarSolicitud.Text = "Evaluar solicitud";
             submenuEvaluarSolicitud.Click += submenuEvaluarSolicitud_Click;
+            // 
+            // submenuEfectuarPedido
+            // 
+            submenuEfectuarPedido.Name = "submenuEfectuarPedido";
+            submenuEfectuarPedido.Size = new Size(180, 22);
+            submenuEfectuarPedido.Text = "Efectuar pedido";
+            submenuEfectuarPedido.Click += submenuEfectuarPedido_Click;
             // 
             // menuReportes
             // 
@@ -341,12 +349,12 @@
             lblRama.TabIndex = 5;
             lblRama.Text = "Rama actual:";
             // 
-            // submenuEfectuarPedido
+            // submenuRecibirMercaderia
             // 
-            submenuEfectuarPedido.Name = "submenuEfectuarPedido";
-            submenuEfectuarPedido.Size = new Size(180, 22);
-            submenuEfectuarPedido.Text = "Efectuar pedido";
-            submenuEfectuarPedido.Click += submenuEfectuarPedido_Click;
+            submenuRecibirMercaderia.Name = "submenuRecibirMercaderia";
+            submenuRecibirMercaderia.Size = new Size(180, 22);
+            submenuRecibirMercaderia.Text = "Recibir mercadería";
+            submenuRecibirMercaderia.Click += submenuRecibirMercaderia_Click;
             // 
             // FrmMenu_064RB
             // 
@@ -411,5 +419,6 @@
         private ToolStripMenuItem submenuCotizarSolicitud;
         private ToolStripMenuItem submenuEvaluarSolicitud;
         private ToolStripMenuItem submenuEfectuarPedido;
+        private ToolStripMenuItem submenuRecibirMercaderia;
     }
 }

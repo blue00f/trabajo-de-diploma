@@ -36,8 +36,9 @@ namespace UI
             submenuCotizarSolicitud.Visible = TieneAlgun(usuario, "Cotizar Solicitud");
             submenuEvaluarSolicitud.Visible = TieneAlgun(usuario, "Evaluar Solicitud");
             submenuEfectuarPedido.Visible = TieneAlgun(usuario, "Efectuar Pedido al Proveedor");
+            submenuRecibirMercaderia.Visible = TieneAlgun(usuario, "Recibir Mercadería");
             menuAdmin.Visible = submenuGestionUsuarios.Visible || submenuGestionRoles.Visible || submenuBitacora.Visible || submenuGestionRespaldo.Visible || submenuProductos.Visible || submenuUnidadCelular.Visible || submenuClientes.Visible ||
-                submenuVenta.Visible || submenuProveedores.Visible || submenuSolicitarReposicion.Visible || submenuCotizarSolicitud.Visible || submenuEvaluarSolicitud.Visible || submenuEfectuarPedido.Visible;
+                submenuVenta.Visible || submenuProveedores.Visible || submenuSolicitarReposicion.Visible || submenuCotizarSolicitud.Visible || submenuEvaluarSolicitud.Visible || submenuEfectuarPedido.Visible || submenuRecibirMercaderia.Visible;
             menuAdmin.Visible = true;
 
             try
@@ -292,6 +293,21 @@ namespace UI
             {
                 FrmEfectuarPedido_064RB frmEfectuarPedido_064RB = new();
                 frmEfectuarPedido_064RB.ShowDialog();
+            }
+            else
+            {
+                frm.WindowState = FormWindowState.Normal;
+                frm.BringToFront();
+                frm.Focus();
+            }
+        }
+        private void submenuRecibirMercaderia_Click(object sender, EventArgs e)
+        {
+            Form frm = Application.OpenForms["FrmRecepcionMercaderia_064RB"];
+            if (frm == null)
+            {
+                FrmRecepcionMercaderia_064RB frmRecepcionMercaderia_064RB = new();
+                frmRecepcionMercaderia_064RB.ShowDialog();
             }
             else
             {
