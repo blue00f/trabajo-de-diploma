@@ -401,6 +401,8 @@ select * from DetalleVenta_Imeis_064RB;
 select * from Proveedor_064RB;
 select * from SolicitudCompra_064RB;
 select * from OrdenCompra_064RB;
+select * from RemitoCompra_064RB;
+select * from Discrepancia_064RB;
 
 -- consultar celular
 select p.Sku_064RB, p.Marca_064RB, p.Modelo_064RB, p.Precio_064RB, p.Descripcion_064RB, c.Almacenamiento_064RB, c.Color_064RB from Producto_064RB p
