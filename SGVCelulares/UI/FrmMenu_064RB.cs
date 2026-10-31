@@ -303,11 +303,11 @@ namespace UI
         }
         private void submenuRecibirMercaderia_Click(object sender, EventArgs e)
         {
-            Form frm = Application.OpenForms["FrmRecepcionMercaderia_064RB"];
+            Form frm = Application.OpenForms["FrmRecibirMercaderia_064RB"];
             if (frm == null)
             {
-                FrmRecepcionMercaderia_064RB frmRecepcionMercaderia_064RB = new();
-                frmRecepcionMercaderia_064RB.ShowDialog();
+                FrmRecibirMercaderia_064RB frmRecibirMercaderia_064RB = new();
+                frmRecibirMercaderia_064RB.ShowDialog();
             }
             else
             {

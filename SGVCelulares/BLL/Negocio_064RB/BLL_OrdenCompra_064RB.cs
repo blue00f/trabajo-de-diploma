@@ -40,5 +40,40 @@ namespace BLL_064RB.Negocio_064RB
             bll_dv.ActualizarDV_064RB("OrdenCompra_064RB", "SolicitudCompra_064RB");
             return numOrden;
         }
+        public List<BE_OrdenCompra_064RB> ConsultarPendientesDeRecepcion_064RB()
+        {
+            List<BE_SolicitudCompra_064RB> solicitudes = bll_solicitud.ConsultarPorEstado_064RB(EstadoSolicitud_064RB.PendienteDeRecepcion_064RB);
+            return map_orden.ConsultarPendientesDeRecepcion_064RB(solicitudes);
+        }
+
+        public BE_OrdenCompra_064RB? ObtenerPendientePorNumero_064RB(int numOrden)
+        {
+            foreach (BE_OrdenCompra_064RB orden in ConsultarPendientesDeRecepcion_064RB())
+            {
+                if (orden.NumOrden_064RB == numOrden) return orden;
+            }
+            return null;
+        }
+
+        public List<object> ConsultarPendientesDeRecepcionGrilla_064RB()
+        {
+            List<object> lista = new List<object>();
+            foreach (BE_OrdenCompra_064RB orden in ConsultarPendientesDeRecepcion_064RB())
+            {
+                BE_SolicitudCompra_064RB s = orden.SolicitudCompra_064RB;
+                lista.Add(new
+                {
+                    Orden = orden.NumOrden_064RB,
+                    SKU = s.Producto_064RB.Sku_064RB,
+                    Marca = s.Producto_064RB.Marca_064RB,
+                    Modelo = s.Producto_064RB.Modelo_064RB,
+                    Tipo = s.Producto_064RB is BE_Celular_064RB ? "Celular" : "Accesorio",
+                    Cantidad = s.Cantidad_064RB,
+                    Proveedor = s.Proveedor_064RB?.RazonSocial_064RB,
+                    Fecha = orden.Fecha_064RB.ToString("dd/MM/yyyy")
+                });
+            }
+            return lista;
+        }
     }
 }

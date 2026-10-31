@@ -133,7 +133,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(30, 42, 58);
-            ClientSize = new Size(1150, 451);
+            ClientSize = new Size(1150, 469);
             Controls.Add(lblProveedoresRegistrados);
             Controls.Add(grillaProveedores);
             Controls.Add(lblPrecioUnitario);

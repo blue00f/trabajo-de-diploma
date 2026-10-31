@@ -33,5 +33,15 @@ namespace DAL_064RB.Negocio_064RB
                     }));
             });
         }
+        public DataTable ConsultarPorEstadoDeSolicitud_064RB(string estadoSolicitud)
+        {
+            var parametros = new List<ParametroBD_064RB> { new("@estado", SqlDbType.VarChar, estadoSolicitud) };
+            return com.Consultar_064RB(
+                @"select o.NumOrden_064RB, o.IdSolicitud_064RB, o.Fecha_064RB, o.MontoPagado_064RB
+                  from OrdenCompra_064RB o
+                  inner join SolicitudCompra_064RB s on s.IdSolicitud_064RB = o.IdSolicitud_064RB
+                  where s.Estado_064RB = @estado
+                  order by o.Fecha_064RB", parametros);
+        }
     }
 }
