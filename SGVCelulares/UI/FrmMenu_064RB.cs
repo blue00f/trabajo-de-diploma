@@ -1,6 +1,7 @@
 ﻿using BLL_064RB.Tecnico_064RB;
 using Servicio_064RB;
 using UI_064RB;
+using UI_064RB.Negocio_064RB;
 
 namespace UI
 {
@@ -68,13 +69,13 @@ namespace UI
         {
             if (!esRelogin) bll_usuario.Logout_064RB();
         }
-        private void submenuGestionUsuarios_Click(object sender, EventArgs e)
+        private void AbrirOEnfocarFormulario<T>() where T : Form, new()
         {
-            Form frm = Application.OpenForms["FrmGestionUsuarios_064RB"];
+            Form frm = Application.OpenForms[typeof(T).Name];
             if (frm == null)
             {
-                FrmGestionUsuarios_064RB frmUsuarios = new FrmGestionUsuarios_064RB();
-                frmUsuarios.ShowDialog();
+                T nuevoForm = new();
+                nuevoForm.ShowDialog();
             }
             else
             {
@@ -83,38 +84,9 @@ namespace UI
                 frm.Focus();
             }
         }
-
-        private void submenuBitacora_Click(object sender, EventArgs e)
-        {
-            Form frm = Application.OpenForms["FrmBitacora_064RB"];
-            if (frm == null)
-            {
-                FrmBitacora_064RB frmBitacora = new FrmBitacora_064RB();
-                frmBitacora.ShowDialog();
-            }
-            else
-            {
-                frm.WindowState = FormWindowState.Normal;
-                frm.BringToFront();
-                frm.Focus();
-            }
-        }
-
-        private void submenuGestionRoles_Click(object sender, EventArgs e)
-        {
-            Form frm = Application.OpenForms["FrmGestionRoles_064RB"];
-            if (frm == null)
-            {
-                FrmGestionRoles_064RB frmRoles = new FrmGestionRoles_064RB();
-                frmRoles.ShowDialog();
-            }
-            else
-            {
-                frm.WindowState = FormWindowState.Normal;
-                frm.BringToFront();
-                frm.Focus();
-            }
-        }
+        private void submenuGestionUsuarios_Click(object sender, EventArgs e) => AbrirOEnfocarFormulario<FrmGestionUsuarios_064RB>();
+        private void submenuBitacora_Click(object sender, EventArgs e) => AbrirOEnfocarFormulario<FrmBitacora_064RB>();
+        private void submenuGestionRoles_Click(object sender, EventArgs e) => AbrirOEnfocarFormulario<FrmGestionRoles_064RB>();
 
         private void submenuGestionRespaldo_Click(object sender, EventArgs e)
         {
@@ -146,176 +118,23 @@ namespace UI
             this.Close();
         }
 
-        private void submenuCambiarClave_Click(object sender, EventArgs e)
-        {
-            Form frm = Application.OpenForms["FrmCambiarClave_064RB"];
-            if (frm == null)
-            {
-                FrmCambiarClave_064RB frmCambiarClave = new FrmCambiarClave_064RB();
-                frmCambiarClave.ShowDialog();
-            }
-            else
-            {
-                frm.WindowState = FormWindowState.Normal;
-                frm.BringToFront();
-                frm.Focus();
-            }
-        }
+        private void submenuCambiarClave_Click(object sender, EventArgs e) => AbrirOEnfocarFormulario<FrmCambiarClave_064RB>();
         private void submenuCerrarSesion_Click(object sender, EventArgs e)
         {
             DialogResult res = MessageBox.Show(bll_idioma.Traducir_064RB("FrmMenu.msgCerrarSesion"), bll_idioma.Traducir_064RB("FrmMenu.msgConfirmacion"), MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (res == DialogResult.Yes) this.Close();
         }
-        private void submenuProductos_Click(object sender, EventArgs e)
-        {
-            Form frm = Application.OpenForms["FrmProductos_064RB"];
-            if (frm == null)
-            {
-                FrmProductos_064RB frmProductos = new();
-                frmProductos.ShowDialog();
-            }
-            else
-            {
-                frm.WindowState = FormWindowState.Normal;
-                frm.BringToFront();
-                frm.Focus();
-            }
-        }
-        private void submenuClientes_Click(object sender, EventArgs e)
-        {
-            Form frm = Application.OpenForms["FrmClientes_064RB"];
-            if (frm == null)
-            {
-                FrmClientes_064RB frmClientes = new();
-                frmClientes.ShowDialog();
-            }
-            else
-            {
-                frm.WindowState = FormWindowState.Normal;
-                frm.BringToFront();
-                frm.Focus();
-            }
-        }
-        private void submenuVenta_Click(object sender, EventArgs e)
-        {
-            Form frm = Application.OpenForms["FrmVenta_064RB"];
-            if (frm == null)
-            {
-                FrmVenta_064RB frmVenta = new();
-                frmVenta.ShowDialog();
-            }
-            else
-            {
-                frm.WindowState = FormWindowState.Normal;
-                frm.BringToFront();
-                frm.Focus();
-            }
-        }
-        private void submenuUnidadCelular_Click(object sender, EventArgs e)
-        {
-            Form frm = Application.OpenForms["FrmUnidadCelular_064RB"];
-            if (frm == null)
-            {
-                FrmUnidadCelular_064RB frmUnidadCelular = new();
-                frmUnidadCelular.ShowDialog();
-            }
-            else
-            {
-                frm.WindowState = FormWindowState.Normal;
-                frm.BringToFront();
-                frm.Focus();
-            }
-        }
-        private void submenuProveedores_Click(object sender, EventArgs e)
-        {
-            Form frm = Application.OpenForms["FrmProveedores_064RB"];
-            if (frm == null)
-            {
-                FrmProveedores_064RB frmProveedores_064RB = new();
-                frmProveedores_064RB.ShowDialog();
-            }
-            else
-            {
-                frm.WindowState = FormWindowState.Normal;
-                frm.BringToFront();
-                frm.Focus();
-            }
-        }
-        private void submenuSolicitarReposicion_Click(object sender, EventArgs e)
-        {
-            Form frm = Application.OpenForms["FrmSolicitarReposicion_064RB"];
-            if (frm == null)
-            {
-                FrmSolicitarReposicion_064RB frmSolicitarReposicion_064RB = new();
-                frmSolicitarReposicion_064RB.ShowDialog();
-            }
-            else
-            {
-                frm.WindowState = FormWindowState.Normal;
-                frm.BringToFront();
-                frm.Focus();
-            }
-        }
-        private void submenuCotizarSolicitud_Click(object sender, EventArgs e)
-        {
-            Form frm = Application.OpenForms["FrmCotizarSolicitud_064RB"];
-            if (frm == null)
-            {
-                FrmCotizarSolicitud_064RB frmCotizarSolicitud_064RB = new();
-                frmCotizarSolicitud_064RB.ShowDialog();
-            }
-            else
-            {
-                frm.WindowState = FormWindowState.Normal;
-                frm.BringToFront();
-                frm.Focus();
-            }
-        }
-        private void submenuEvaluarSolicitud_Click(object sender, EventArgs e)
-        {
-            Form frm = Application.OpenForms["FrmEvaluarSolicitud_064RB"];
-            if (frm == null)
-            {
-                FrmEvaluarSolicitud_064RB frmEvaluarSolicitud_064RB = new();
-                frmEvaluarSolicitud_064RB.ShowDialog();
-            }
-            else
-            {
-                frm.WindowState = FormWindowState.Normal;
-                frm.BringToFront();
-                frm.Focus();
-            }
-        }
-        private void submenuEfectuarPedido_Click(object sender, EventArgs e)
-        {
-            Form frm = Application.OpenForms["FrmEfectuarPedido_064RB"];
-            if (frm == null)
-            {
-                FrmEfectuarPedido_064RB frmEfectuarPedido_064RB = new();
-                frmEfectuarPedido_064RB.ShowDialog();
-            }
-            else
-            {
-                frm.WindowState = FormWindowState.Normal;
-                frm.BringToFront();
-                frm.Focus();
-            }
-        }
-        private void submenuRecibirMercaderia_Click(object sender, EventArgs e)
-        {
-            Form frm = Application.OpenForms["FrmRecibirMercaderia_064RB"];
-            if (frm == null)
-            {
-                FrmRecibirMercaderia_064RB frmRecibirMercaderia_064RB = new();
-                frmRecibirMercaderia_064RB.ShowDialog();
-            }
-            else
-            {
-                frm.WindowState = FormWindowState.Normal;
-                frm.BringToFront();
-                frm.Focus();
-            }
-        }
+        private void submenuProductos_Click(object sender, EventArgs e) => AbrirOEnfocarFormulario<FrmProductos_064RB>();
+        private void submenuClientes_Click(object sender, EventArgs e) => AbrirOEnfocarFormulario<FrmClientes_064RB>();
+        private void submenuVenta_Click(object sender, EventArgs e) => AbrirOEnfocarFormulario<FrmVenta_064RB>();
+        private void submenuUnidadCelular_Click(object sender, EventArgs e) => AbrirOEnfocarFormulario<FrmUnidadCelular_064RB>();
+        private void submenuProveedores_Click(object sender, EventArgs e) => AbrirOEnfocarFormulario<FrmProveedores_064RB>();
+        private void submenuSolicitarReposicion_Click(object sender, EventArgs e) => AbrirOEnfocarFormulario<FrmSolicitarReposicion_064RB>();
+        private void submenuCotizarSolicitud_Click(object sender, EventArgs e) => AbrirOEnfocarFormulario<FrmCotizarSolicitud_064RB>();
+        private void submenuEvaluarSolicitud_Click(object sender, EventArgs e) => AbrirOEnfocarFormulario<FrmEvaluarSolicitud_064RB>();
+        private void submenuEfectuarPedido_Click(object sender, EventArgs e) => AbrirOEnfocarFormulario<FrmEfectuarPedido_064RB>();
+        private void submenuRecibirMercaderia_Click(object sender, EventArgs e) => AbrirOEnfocarFormulario<FrmRecibirMercaderia_064RB>();
+        private void submenuReporteVentas_Click(object sender, EventArgs e) => AbrirOEnfocarFormulario<FrmReporteVentas_064RB>();
         private void CargarIdiomas()
         {
             cargandoIdiomas = true;

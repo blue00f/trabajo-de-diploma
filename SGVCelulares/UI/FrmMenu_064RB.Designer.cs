@@ -46,6 +46,7 @@
             submenuCotizarSolicitud = new ToolStripMenuItem();
             submenuEvaluarSolicitud = new ToolStripMenuItem();
             submenuEfectuarPedido = new ToolStripMenuItem();
+            submenuRecibirMercaderia = new ToolStripMenuItem();
             menuReportes = new ToolStripMenuItem();
             menuAyuda = new ToolStripMenuItem();
             menuSesion = new ToolStripMenuItem();
@@ -62,7 +63,7 @@
             lblHashCommit = new Label();
             lblUltimoCommit = new Label();
             lblRama = new Label();
-            submenuRecibirMercaderia = new ToolStripMenuItem();
+            submenuReporteVentas = new ToolStripMenuItem();
             pnlTopbar.SuspendLayout();
             menuStrip1.SuspendLayout();
             pnlContenido.SuspendLayout();
@@ -194,33 +195,41 @@
             // submenuSolicitarReposicion
             // 
             submenuSolicitarReposicion.Name = "submenuSolicitarReposicion";
-            submenuSolicitarReposicion.Size = new Size(180, 22);
+            submenuSolicitarReposicion.Size = new Size(174, 22);
             submenuSolicitarReposicion.Text = "Solicitar reposición";
             submenuSolicitarReposicion.Click += submenuSolicitarReposicion_Click;
             // 
             // submenuCotizarSolicitud
             // 
             submenuCotizarSolicitud.Name = "submenuCotizarSolicitud";
-            submenuCotizarSolicitud.Size = new Size(180, 22);
+            submenuCotizarSolicitud.Size = new Size(174, 22);
             submenuCotizarSolicitud.Text = "Cotizar solicitud";
             submenuCotizarSolicitud.Click += submenuCotizarSolicitud_Click;
             // 
             // submenuEvaluarSolicitud
             // 
             submenuEvaluarSolicitud.Name = "submenuEvaluarSolicitud";
-            submenuEvaluarSolicitud.Size = new Size(180, 22);
+            submenuEvaluarSolicitud.Size = new Size(174, 22);
             submenuEvaluarSolicitud.Text = "Evaluar solicitud";
             submenuEvaluarSolicitud.Click += submenuEvaluarSolicitud_Click;
             // 
             // submenuEfectuarPedido
             // 
             submenuEfectuarPedido.Name = "submenuEfectuarPedido";
-            submenuEfectuarPedido.Size = new Size(180, 22);
+            submenuEfectuarPedido.Size = new Size(174, 22);
             submenuEfectuarPedido.Text = "Efectuar pedido";
             submenuEfectuarPedido.Click += submenuEfectuarPedido_Click;
             // 
+            // submenuRecibirMercaderia
+            // 
+            submenuRecibirMercaderia.Name = "submenuRecibirMercaderia";
+            submenuRecibirMercaderia.Size = new Size(174, 22);
+            submenuRecibirMercaderia.Text = "Recibir mercadería";
+            submenuRecibirMercaderia.Click += submenuRecibirMercaderia_Click;
+            // 
             // menuReportes
             // 
+            menuReportes.DropDownItems.AddRange(new ToolStripItem[] { submenuReporteVentas });
             menuReportes.Name = "menuReportes";
             menuReportes.Size = new Size(65, 20);
             menuReportes.Text = "Reportes";
@@ -349,12 +358,12 @@
             lblRama.TabIndex = 5;
             lblRama.Text = "Rama actual:";
             // 
-            // submenuRecibirMercaderia
+            // submenuReporteVentas
             // 
-            submenuRecibirMercaderia.Name = "submenuRecibirMercaderia";
-            submenuRecibirMercaderia.Size = new Size(180, 22);
-            submenuRecibirMercaderia.Text = "Recibir mercadería";
-            submenuRecibirMercaderia.Click += submenuRecibirMercaderia_Click;
+            submenuReporteVentas.Name = "submenuReporteVentas";
+            submenuReporteVentas.Size = new Size(180, 22);
+            submenuReporteVentas.Text = "Ventas";
+            submenuReporteVentas.Click += submenuReporteVentas_Click;
             // 
             // FrmMenu_064RB
             // 
@@ -420,5 +429,6 @@
         private ToolStripMenuItem submenuEvaluarSolicitud;
         private ToolStripMenuItem submenuEfectuarPedido;
         private ToolStripMenuItem submenuRecibirMercaderia;
+        private ToolStripMenuItem submenuReporteVentas;
     }
 }
