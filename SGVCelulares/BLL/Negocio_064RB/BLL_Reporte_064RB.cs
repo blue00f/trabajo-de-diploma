@@ -23,10 +23,10 @@ namespace BLL_064RB.Negocio_064RB
         public byte[] GenerarReporteVentas_064RB(DateTime desde, DateTime hasta)
         {
             BE_ReporteVentas_064RB reporte = ObtenerReporteVentas_064RB(desde, hasta);
-            bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB, DateTime.Now, "Generar reporte de ventas", "Baja", 3));
+            bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB, DateTime.Now, "Reportes", "Generar reporte de ventas", (int)Criticidad_064RB.Baja));
             return bll_reporte.Generar_064RB(reporte);
         }
-
+        
         public BE_ReporteVentas_064RB ObtenerReporteVentas_064RB(DateTime desde, DateTime hasta)
         {
             if (hasta.Date < desde.Date) throw new Exception("La fecha hasta no puede ser anterior a la fecha desde.");

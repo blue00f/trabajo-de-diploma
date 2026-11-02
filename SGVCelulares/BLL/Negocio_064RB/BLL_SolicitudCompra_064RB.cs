@@ -49,9 +49,9 @@ namespace BLL_064RB.Negocio_064RB
                 Estado_064RB = EstadoSolicitud_064RB.PendienteDeCompra_064RB,
                 FechaSolicitud_064RB = DateTime.Now
             });
+            bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB, DateTime.Now, "Gestión de reposición", "Solicitar productos", (int)Criticidad_064RB.Media));
             bll_dv.ActualizarDV_064RB("SolicitudCompra_064RB");
-            SER_Usuario_064RB usu = SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB;
-            bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(usu, DateTime.Now, "Solicitudes de compra", "Alta", 3));
+
         }
 
         private Dictionary<string, BE_Producto_064RB> ProductosPorSku_064RB() => bll_producto.Consultar_064RB().ToDictionary(p => p.Sku_064RB);
@@ -84,8 +84,7 @@ namespace BLL_064RB.Negocio_064RB
 
             if (solicitud.Estado_064RB != EstadoSolicitud_064RB.PendienteDeCompra_064RB || !map_solicitud.Cotizar_064RB(solicitud)) throw new Exception("La solicitud seleccionada ya no está pendiente de compra.");
 
-            SER_Usuario_064RB usu = SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB;
-            bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(usu, DateTime.Now, "Solicitudes de compra", "Modificar", 3));
+            bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB, DateTime.Now, "Gestión de reposición", "Cotizar compra", (int)Criticidad_064RB.Media));
             bll_dv.ActualizarDV_064RB("SolicitudCompra_064RB");
         }
 
@@ -120,7 +119,7 @@ namespace BLL_064RB.Negocio_064RB
             if (!map_solicitud.Evaluar_064RB(solicitud)) throw new Exception("La solicitud seleccionada ya no está en estado cotizada.");
 
             SER_Usuario_064RB usu = SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB;
-            bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(usu, DateTime.Now, "Solicitudes de compra", "Modificar", 3));
+            bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB, DateTime.Now, "Gestión de reposición", "Evaluar solicitud", (int)Criticidad_064RB.Media));
             bll_dv.ActualizarDV_064RB("SolicitudCompra_064RB");
         }
 

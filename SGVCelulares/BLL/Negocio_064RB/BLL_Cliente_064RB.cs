@@ -22,14 +22,14 @@ namespace BLL_064RB.Negocio_064RB
             map_cliente.Agregar_064RB(cliente);
 
             SER_Usuario_064RB usu = SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB;
-            bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(usu, DateTime.Now, "Clientes", "Alta", 3));
+            bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(usu, DateTime.Now, "ABM clientes", "Crear cliente", (int)Criticidad_064RB.Media));
             bll_dv.ActualizarDV_064RB("Cliente_064RB");
         }
         public void Borrar_064RB(BE_Cliente_064RB cliente)
         {
             map_cliente.Borrar_064RB(cliente);
             SER_Usuario_064RB usu = SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB;
-            bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(usu, DateTime.Now, "Clientes", "Baja", 3));
+            bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(usu, DateTime.Now, "ABM clientes", "Borrar cliente", (int)Criticidad_064RB.Media));
             bll_dv.ActualizarDV_064RB("Cliente_064RB");
 
         }
@@ -37,7 +37,7 @@ namespace BLL_064RB.Negocio_064RB
         {
             map_cliente.Modificar_064RB(cliente);
             SER_Usuario_064RB usu = SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB;
-            bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(usu, DateTime.Now, "Clientes", "Modificación", 3));
+            bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(usu, DateTime.Now, "ABM clientes", "Modificar cliente", (int)Criticidad_064RB.Media));
             bll_dv.ActualizarDV_064RB("Cliente_064RB");
         }
         public List<BE_Cliente_064RB> Consultar() => map_cliente.Consultar();

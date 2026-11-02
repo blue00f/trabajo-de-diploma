@@ -27,10 +27,8 @@ namespace BLL_064RB.Tecnico_064RB
             string passwordHasheado = SER_Cripto_064RB.Encriptar_064RB(usuario.Password_064RB);
             usuario.Password_064RB = passwordHasheado;
             map_usuario.Agregar_064RB(usuario);
+            bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB, DateTime.Now, "Gestión de usuarios", "Crear usuario", (int)Criticidad_064RB.Media));
             bll_dv.ActualizarDV_064RB("Usuario_064RB");
-            
-            SER_Bitacora_064RB bitacora = new SER_Bitacora_064RB(SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB, DateTime.Now, "Usuarios", "Crear usuario", 2);
-            bll_bitacora.RegistrarBitacora_064RB(bitacora);
         }
         public void Borrar_064RB(SER_Usuario_064RB usuario) => throw new NotImplementedException();
         public void Modificar_064RB(SER_Usuario_064RB usuario)
@@ -53,10 +51,8 @@ namespace BLL_064RB.Tecnico_064RB
             map_usuario.ModificarPassword_064RB(usuario, claveNuevaHasheada);
 
             usuario.Password_064RB = claveNuevaHasheada;
+            bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB, DateTime.Now, "Gestión de usuarios", "Cambiar clave", (int)Criticidad_064RB.Alta));
             bll_dv.ActualizarDV_064RB("Usuario_064RB");
-
-            SER_Bitacora_064RB bitacora = new SER_Bitacora_064RB(usuario, DateTime.Now, "Usuarios", "Cambiar clave", 1);
-            bll_bitacora.RegistrarBitacora_064RB(bitacora);
         }
         public List<SER_Usuario_064RB> Consultar_064RB() => map_usuario.Consultar_064RB();
         public List<object> ConsultarParaGrilla_064RB()
@@ -194,8 +190,7 @@ namespace BLL_064RB.Tecnico_064RB
             sesion.Usuario_064RB = obj;
 
             string evento = esRelogin ? "Relogin" : "Login";
-            SER_Bitacora_064RB bitacora = new SER_Bitacora_064RB(obj, DateTime.Now, "Usuarios", evento, 1);
-            bll_bitacora.RegistrarBitacora_064RB(bitacora);
+            bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB, DateTime.Now, "Autenticación", "Login", (int)Criticidad_064RB.Alta));
 
             return rdo;
         }
@@ -208,8 +203,8 @@ namespace BLL_064RB.Tecnico_064RB
                 usuario.IdIdioma_064RB = bll_idioma.IdiomaActual;
                 map_usuario.ModificarIdioma_064RB(usuario);
                 bll_dv.ActualizarDV_064RB("Usuario_064RB");
-                bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(usuario, DateTime.Now, "Usuarios", "Logout", 2));
-                bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(usuario, DateTime.Now, "Usuarios", "Cambiar Idioma", 3));
+                bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(usuario, DateTime.Now, "Autenticación", "Logout", (int)Criticidad_064RB.Alta));
+                bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(usuario, DateTime.Now, "Configuración", "Cambiar idioma", (int)Criticidad_064RB.Baja));
                 SER_SessionManager_064RB.CerrarSesion_064RB();
             }
             bll_idioma.CambiarIdioma_064RB("es-AR");
@@ -249,10 +244,8 @@ namespace BLL_064RB.Tecnico_064RB
             map_usuario.ReiniciarIntentos_064RB(usuarioAux);
             usuarioAux.CantIntentos_064RB = 0;
 
+            bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB, DateTime.Now, "Gestión de usuarios", "Desbloquear usuario", (int)Criticidad_064RB.Alta));
             bll_dv.ActualizarDV_064RB("Usuario_064RB");
-
-            SER_Bitacora_064RB bitacora = new SER_Bitacora_064RB(SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB, DateTime.Now, "Usuarios", "Desbloquear usuario", 2);
-            bll_bitacora.RegistrarBitacora_064RB(bitacora);
         }
         public void CambiarEstadoActivo_064RB(SER_Usuario_064RB usuario)
         {
@@ -264,13 +257,12 @@ namespace BLL_064RB.Tecnico_064RB
                 bll_dv.ActualizarDV_064RB("Usuario_064RB");
                 if (usuarioAux.Activo_064RB)
                 {
-                    SER_Bitacora_064RB bitacora = new SER_Bitacora_064RB(SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB, DateTime.Now, "Usuarios", "Activar usuario", 3);
-                    
+                    SER_Bitacora_064RB bitacora = new SER_Bitacora_064RB(SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB, DateTime.Now, "Gestión de usuarios", "Activar usuario", (int)Criticidad_064RB.Baja);
                     bll_bitacora.RegistrarBitacora_064RB(bitacora);
                 }
                 else
                 {
-                    SER_Bitacora_064RB bitacora = new SER_Bitacora_064RB(SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB, DateTime.Now, "Usuarios", "Desactivar usuario", 3);
+                    SER_Bitacora_064RB bitacora = new SER_Bitacora_064RB(SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB, DateTime.Now, "Gestión de usuarios", "Desactivar usuario", (int)Criticidad_064RB.Baja);
                     bll_bitacora.RegistrarBitacora_064RB(bitacora);
                 }
             }

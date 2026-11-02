@@ -1,19 +1,24 @@
 ﻿using BE_064RB;
+using BLL_064RB.Tecnico_064RB;
 using QuestPDF.Fluent;
 using QuestPDF.Infrastructure;
+using Servicio_064RB;
 
 namespace BLL_064RB.Negocio_064RB
 {
     public class BLL_Comprobante_064RB
     {
         BLL_Venta_064RB bll_venta;
+        BLL_Bitacora_064RB bll_bitacora;
         public BLL_Comprobante_064RB()
         {
             bll_venta = new();
+            bll_bitacora = new();
         }
         public byte[] Generar_064RB(int numVenta)
         {
             var comprobante = bll_venta.ObtenerComprobante(numVenta);
+            bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB, DateTime.Now, "Gestión de ventas", "Generar comprobante", (int)Criticidad_064RB.Media));
             return GenerarTicket_064RB(comprobante);
         }
         private byte[] GenerarTicket_064RB(BE_Comprobante_064RB c)

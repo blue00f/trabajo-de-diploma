@@ -35,8 +35,7 @@ namespace BLL_064RB.Negocio_064RB
             int numOrden = map_orden.Agregar_064RB(orden);
             if (numOrden == 0) throw new Exception("La solicitud seleccionada ya no está en estado aprobada.");
             orden.NumOrden_064RB = numOrden;
-            SER_Usuario_064RB usu = SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB;
-            bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(usu, DateTime.Now, "Órdenes de compra", "Alta", 3));
+            bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB, DateTime.Now, "Gestión de reposición", "Registrar compra", (int)Criticidad_064RB.Media));
             bll_dv.ActualizarDV_064RB("OrdenCompra_064RB", "SolicitudCompra_064RB");
             return numOrden;
         }

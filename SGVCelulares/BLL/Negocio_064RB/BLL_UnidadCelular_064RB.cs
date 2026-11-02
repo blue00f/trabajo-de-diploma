@@ -20,21 +20,21 @@ namespace BLL_064RB.Negocio_064RB
         {
             map_unidadCelular.Agregar_064RB(unidadC);
             SER_Usuario_064RB usu = SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB;
-            bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(usu, DateTime.Now, "Unidad Celulares", "Alta", 2));
+            bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(usu, DateTime.Now, "ABM unidades de celulares", "Registrar unidad celular", (int)Criticidad_064RB.Media));
             bll_dv.ActualizarDV_064RB("UnidadCelular_064RB");
         }
         public void Borrar_064RB(BE_UnidadCelular_064RB unidadC)
         {
             map_unidadCelular.Borrar_064RB(unidadC);
             SER_Usuario_064RB usu = SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB;
-            bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(usu, DateTime.Now, "Unidad Celulares", "Alta", 2));
+            bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(usu, DateTime.Now, "ABM unidades de celulares", "Borrar unidad celular", (int)Criticidad_064RB.Media));
             bll_dv.ActualizarDV_064RB("UnidadCelular_064RB");
         }
         public void Modificar_064RB(BE_UnidadCelular_064RB unidadC)
         {
             map_unidadCelular.Modificar_064RB(unidadC);
             SER_Usuario_064RB usu = SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB;
-            bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(usu, DateTime.Now, "Unidad Celulares", "Alta", 2));
+            bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(usu, DateTime.Now, "ABM unidades de celulares", "Modificar unidad celular", (int)Criticidad_064RB.Media));
             bll_dv.ActualizarDV_064RB("UnidadCelular_064RB");
         }
         public List<BE_UnidadCelular_064RB> Consultar()

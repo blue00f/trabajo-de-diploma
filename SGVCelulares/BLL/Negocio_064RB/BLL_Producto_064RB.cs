@@ -23,7 +23,7 @@ namespace BLL_064RB.Negocio_064RB
             map_producto.AgregarCelular_064RB(celular);
 
             SER_Usuario_064RB usu = SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB;
-            bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(usu, DateTime.Now, "Productos", "Alta", 3));
+            bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(usu, DateTime.Now, "ABM productos", "Crear producto", (int)Criticidad_064RB.Media));
             bll_dv.ActualizarDV_064RB("Producto_064RB", "Celular_064RB");
 
         }
@@ -33,14 +33,14 @@ namespace BLL_064RB.Negocio_064RB
             if (Consultar_064RB().Any(p => p.Sku_064RB == accesorio.Sku_064RB)) throw new Exception("El accesorio está repetido!");
             map_producto.AgregarAccesorio_064RB(accesorio);
             SER_Usuario_064RB usu = SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB;
-            bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(usu, DateTime.Now, "Productos", "Alta", 3));
+            bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(usu, DateTime.Now, "ABM productos", "Crear producto", (int)Criticidad_064RB.Media));
             bll_dv.ActualizarDV_064RB("Producto_064RB", "Accesorio_064RB");
         }
         public void Borrar_064RB(string sku)
         {
             map_producto.Borrar_064RB(sku);
             SER_Usuario_064RB usu = SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB;
-            bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(usu, DateTime.Now, "Productos", "Baja", 3));
+            bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(usu, DateTime.Now, "ABM productos", "Borrar producto", (int)Criticidad_064RB.Media));
             BE_Producto_064RB producto = ConsultarPorSku_064RB(sku);
             if (producto is BE_Celular_064RB) bll_dv.ActualizarDV_064RB("Producto_064RB", "Celular_064RB");
             if (producto is BE_Accesorio_064RB) bll_dv.ActualizarDV_064RB("Producto_064RB", "Accesorio_064RB");
@@ -50,7 +50,7 @@ namespace BLL_064RB.Negocio_064RB
             if (producto.StockMinimo_064RB < 0) throw new Exception("El stock mínimo no puede ser negativo!");
             map_producto.Modificar_064RB(producto);
             SER_Usuario_064RB usu = SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB;
-            bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(usu, DateTime.Now, "Productos", "Modificar", 3));
+            bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(usu, DateTime.Now, "ABM productos", "Modificar producto", (int)Criticidad_064RB.Media));
             if (producto is BE_Celular_064RB) bll_dv.ActualizarDV_064RB("Producto_064RB", "Celular_064RB");
             if (producto is BE_Accesorio_064RB) bll_dv.ActualizarDV_064RB("Producto_064RB", "Accesorio_064RB");
         }

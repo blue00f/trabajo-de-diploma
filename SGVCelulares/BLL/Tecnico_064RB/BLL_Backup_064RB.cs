@@ -11,13 +11,13 @@ namespace BLL_064RB.Tecnico_064RB
         public void Backup_064RB(string ruta)
         {
             map_backup.Backup_064RB(ruta);
-            SER_Bitacora_064RB bitacora = new SER_Bitacora_064RB(SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB, DateTime.Now, "Respaldo", "Generar backup", 1);
+            SER_Bitacora_064RB bitacora = new SER_Bitacora_064RB(SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB, DateTime.Now, "Gestión de respaldos", "Generar backup", (int)Criticidad_064RB.Alta);
             bll_bitacora.RegistrarBitacora_064RB(bitacora);
         }
         public void Restore_064RB(string ruta)
         {
             map_backup.Restore_064RB(ruta);
-            SER_Bitacora_064RB bitacora = new SER_Bitacora_064RB(SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB, DateTime.Now, "Respaldo", "Generar restore", 1);
+            SER_Bitacora_064RB bitacora = new SER_Bitacora_064RB(SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB, DateTime.Now, "Gestión de respaldos", "Generar restore", (int)Criticidad_064RB.Alta);
             bll_bitacora.RegistrarBitacora_064RB(bitacora);
         }
     }

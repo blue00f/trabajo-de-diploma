@@ -39,7 +39,8 @@ namespace BLL_064RB.Tecnico_064RB
                     bll_dv.ActualizarDV_064RB("Rol_permiso_064RB");
                 }
             }
-            bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB, DateTime.Now, "Roles", "Crear rol", 1));
+            bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB, DateTime.Now, "Gestión de roles", "Crear rol", (int)Criticidad_064RB.Alta));
+            bll_dv.ActualizarDV_064RB("Rol_064RB", "Rol_familia_064RB", "Rol_permiso_064RB");
         }
         private bool ValidarPermisosRepetidos_064RB(List<SER_Componente_064RB> componentes)
         {
@@ -73,8 +74,8 @@ namespace BLL_064RB.Tecnico_064RB
         {
             if (map_rol.EstaEnUso_064RB(rol)) throw new Exception("No se puede borrar: el rol está asignado a uno o más usuarios.");
             map_rol.Borrar_064RB(rol);
+            bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB, DateTime.Now, "Gestión de roles", "Borrar rol", (int)Criticidad_064RB.Alta));
             bll_dv.ActualizarDV_064RB("Rol_064RB", "Rol_familia_064RB", "Rol_permiso_064RB");
-            bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB, DateTime.Now, "Roles", "Borrar rol", 1));
         }
     }
 }

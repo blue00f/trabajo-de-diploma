@@ -64,8 +64,7 @@ namespace BLL_064RB.Negocio_064RB
             }
             int idRemito = map_remito.Agregar_064RB(remito, discrepancia, imeis, cantidadConforme);
             if (idRemito == 0) throw new Exception(yaRecibida);
-            SER_Usuario_064RB usu = SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB;
-            bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(usu, DateTime.Now, "Remitos de compra", "Alta", 3));
+            bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB, DateTime.Now, "Gestión de reposición", "Registrar recepción", (int)Criticidad_064RB.Media));
             bll_dv.ActualizarDV_064RB("SolicitudCompra_064RB", "RemitoCompra_064RB", "Discrepancia_064RB", "UnidadCelular_064RB", "Accesorio_064RB");
         }
 
