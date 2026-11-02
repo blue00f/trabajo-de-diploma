@@ -35,6 +35,8 @@
             grillaUnidadCelular = new DataGridView();
             btnAgregar = new Button();
             cbxCelulares = new ComboBox();
+            lblImei = new Label();
+            txtImei = new TextBox();
             ((System.ComponentModel.ISupportInitialize)grillaUnidadCelular).BeginInit();
             SuspendLayout();
             // 
@@ -115,17 +117,37 @@
             // cbxCelulares
             // 
             cbxCelulares.FormattingEnabled = true;
-            cbxCelulares.Location = new Point(15, 392);
+            cbxCelulares.Location = new Point(12, 442);
             cbxCelulares.Name = "cbxCelulares";
             cbxCelulares.Size = new Size(495, 23);
             cbxCelulares.TabIndex = 12;
+            // 
+            // lblImei
+            // 
+            lblImei.AutoSize = true;
+            lblImei.Font = new Font("Segoe UI", 9F);
+            lblImei.ForeColor = SystemColors.Menu;
+            lblImei.Location = new Point(26, 398);
+            lblImei.Name = "lblImei";
+            lblImei.Size = new Size(30, 15);
+            lblImei.TabIndex = 19;
+            lblImei.Text = "IMEI";
+            // 
+            // txtImei
+            // 
+            txtImei.Location = new Point(86, 395);
+            txtImei.Name = "txtImei";
+            txtImei.Size = new Size(226, 23);
+            txtImei.TabIndex = 18;
             // 
             // FrmUnidadCelular_064RB
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(30, 42, 58);
-            ClientSize = new Size(795, 450);
+            ClientSize = new Size(795, 490);
+            Controls.Add(lblImei);
+            Controls.Add(txtImei);
             Controls.Add(cbxCelulares);
             Controls.Add(btnSalir);
             Controls.Add(lblUnidadCelular);
@@ -150,5 +172,7 @@
         private DataGridView grillaUnidadCelular;
         private Button btnAgregar;
         private ComboBox cbxCelulares;
+        private Label lblImei;
+        private TextBox txtImei;
     }
 }

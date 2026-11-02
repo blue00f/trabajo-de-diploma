@@ -52,12 +52,11 @@ namespace UI_064RB
             {
                 if (cbxCelulares.Items.Count == 0) throw new Exception("No hay celulares");
                 string sku = cbxCelulares.SelectedValue.ToString();
-
-                string imei = Interaction.InputBox("Ingrese el IMEI numérico AA-BBBBBB-CCCCCC-D (ingresar sin guiones)", "Alta unidad celular");
-                if (!ValidarDatos(imei, @"^\d{15}$")) throw new Exception("El formato del IMEI es inválido!");
+                 
+                if (!ValidarDatos(txtImei.Text, @"^\d{15}$")) throw new Exception("El IMEI debe ser un número de 15 dígitos. Por ejemplo: 111111223333334!");
 
                 BE_Celular_064RB celular = bll_producto.ConsultarCelularPorSku_064RB(sku);
-                BE_UnidadCelular_064RB unidadCelular = new BE_UnidadCelular_064RB(imei, "Disponible", celular);
+                BE_UnidadCelular_064RB unidadCelular = new BE_UnidadCelular_064RB(txtImei.Text, "Disponible", celular);
                 bll_unidadCelular.Agregar_064RB(unidadCelular);
                 Mostrar(grillaUnidadCelular, bll_unidadCelular.ConsultarGrilla());
             }
@@ -94,10 +93,9 @@ namespace UI_064RB
                     grillaUnidadCelular.SelectedRows[0].Cells[1].Value.ToString(),
                     bll_producto.ConsultarCelularPorSku_064RB(grillaUnidadCelular.SelectedRows[0].Cells[2].Value.ToString())
                     );
-                string estado = Interaction.InputBox("Ingrese el estado:", "Modificar unidad celular", unidadVieja.Estado_064RB);
                 BE_Celular_064RB celularAAsignar = bll_producto.ConsultarCelularPorSku_064RB(cbxCelulares.SelectedValue.ToString());
 
-                BE_UnidadCelular_064RB unidadNueva = new BE_UnidadCelular_064RB(unidadVieja.Imei_064RB, estado, celularAAsignar);
+                BE_UnidadCelular_064RB unidadNueva = new BE_UnidadCelular_064RB(unidadVieja.Imei_064RB, unidadVieja.Estado_064RB, celularAAsignar);
 
                 bll_unidadCelular.Modificar_064RB(unidadNueva);
                 Mostrar(grillaUnidadCelular, bll_unidadCelular.ConsultarGrilla());

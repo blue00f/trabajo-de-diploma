@@ -38,6 +38,8 @@ namespace UI
             submenuEvaluarSolicitud.Visible = TieneAlgun(usuario, "Evaluar Solicitud");
             submenuEfectuarPedido.Visible = TieneAlgun(usuario, "Efectuar Pedido al Proveedor");
             submenuRecibirMercaderia.Visible = TieneAlgun(usuario, "Recibir Mercadería");
+
+            submenuReporteVentas.Visible = TieneAlgun(usuario, "Generar Reporte de Ventas");
             menuAdmin.Visible = submenuGestionUsuarios.Visible || submenuGestionRoles.Visible || submenuBitacora.Visible || submenuGestionRespaldo.Visible || submenuProductos.Visible || submenuUnidadCelular.Visible || submenuClientes.Visible ||
                 submenuVenta.Visible || submenuProveedores.Visible || submenuSolicitarReposicion.Visible || submenuCotizarSolicitud.Visible || submenuEvaluarSolicitud.Visible || submenuEfectuarPedido.Visible || submenuRecibirMercaderia.Visible;
             menuAdmin.Visible = true;
