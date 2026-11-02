@@ -39,7 +39,7 @@
             submenuBitacora = new ToolStripMenuItem();
             submenuGestionRoles = new ToolStripMenuItem();
             submenuGestionRespaldo = new ToolStripMenuItem();
-            menuVendedor = new ToolStripMenuItem();
+            menuVenta = new ToolStripMenuItem();
             submenuVenta = new ToolStripMenuItem();
             menuStock = new ToolStripMenuItem();
             submenuSolicitarReposicion = new ToolStripMenuItem();
@@ -48,6 +48,7 @@
             submenuEfectuarPedido = new ToolStripMenuItem();
             submenuRecibirMercaderia = new ToolStripMenuItem();
             menuReportes = new ToolStripMenuItem();
+            submenuReporteVentas = new ToolStripMenuItem();
             menuAyuda = new ToolStripMenuItem();
             menuSesion = new ToolStripMenuItem();
             submenuRelogin = new ToolStripMenuItem();
@@ -63,7 +64,7 @@
             lblHashCommit = new Label();
             lblUltimoCommit = new Label();
             lblRama = new Label();
-            submenuReporteVentas = new ToolStripMenuItem();
+            submenuReporteControlStock = new ToolStripMenuItem();
             pnlTopbar.SuspendLayout();
             menuStrip1.SuspendLayout();
             pnlContenido.SuspendLayout();
@@ -129,7 +130,7 @@
             // 
             // menuStrip1
             // 
-            menuStrip1.Items.AddRange(new ToolStripItem[] { menuAdmin, menuVendedor, menuStock, menuReportes, menuAyuda, menuSesion, menuMaestros });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { menuAdmin, menuVenta, menuStock, menuReportes, menuAyuda, menuSesion, menuMaestros });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(960, 24);
@@ -171,17 +172,17 @@
             submenuGestionRespaldo.Text = "Gestión respaldo";
             submenuGestionRespaldo.Click += submenuGestionRespaldo_Click;
             // 
-            // menuVendedor
+            // menuVenta
             // 
-            menuVendedor.DropDownItems.AddRange(new ToolStripItem[] { submenuVenta });
-            menuVendedor.Name = "menuVendedor";
-            menuVendedor.Size = new Size(69, 20);
-            menuVendedor.Text = "Vendedor";
+            menuVenta.DropDownItems.AddRange(new ToolStripItem[] { submenuVenta });
+            menuVenta.Name = "menuVenta";
+            menuVenta.Size = new Size(48, 20);
+            menuVenta.Text = "Venta";
             // 
             // submenuVenta
             // 
             submenuVenta.Name = "submenuVenta";
-            submenuVenta.Size = new Size(146, 22);
+            submenuVenta.Size = new Size(180, 22);
             submenuVenta.Text = "Realizar venta";
             submenuVenta.Click += submenuVenta_Click;
             // 
@@ -229,10 +230,17 @@
             // 
             // menuReportes
             // 
-            menuReportes.DropDownItems.AddRange(new ToolStripItem[] { submenuReporteVentas });
+            menuReportes.DropDownItems.AddRange(new ToolStripItem[] { submenuReporteVentas, submenuReporteControlStock });
             menuReportes.Name = "menuReportes";
             menuReportes.Size = new Size(65, 20);
             menuReportes.Text = "Reportes";
+            // 
+            // submenuReporteVentas
+            // 
+            submenuReporteVentas.Name = "submenuReporteVentas";
+            submenuReporteVentas.Size = new Size(180, 22);
+            submenuReporteVentas.Text = "Ventas";
+            submenuReporteVentas.Click += submenuReporteVentas_Click;
             // 
             // menuAyuda
             // 
@@ -250,21 +258,21 @@
             // submenuRelogin
             // 
             submenuRelogin.Name = "submenuRelogin";
-            submenuRelogin.Size = new Size(149, 22);
+            submenuRelogin.Size = new Size(180, 22);
             submenuRelogin.Text = "Re-login";
             submenuRelogin.Click += submenuRelogin_Click;
             // 
             // submenuCambiarClave
             // 
             submenuCambiarClave.Name = "submenuCambiarClave";
-            submenuCambiarClave.Size = new Size(149, 22);
+            submenuCambiarClave.Size = new Size(180, 22);
             submenuCambiarClave.Text = "Cambiar clave";
             submenuCambiarClave.Click += submenuCambiarClave_Click;
             // 
             // submenuCerrarSesion
             // 
             submenuCerrarSesion.Name = "submenuCerrarSesion";
-            submenuCerrarSesion.Size = new Size(149, 22);
+            submenuCerrarSesion.Size = new Size(180, 22);
             submenuCerrarSesion.Text = "Cerrar sesión";
             submenuCerrarSesion.Click += submenuCerrarSesion_Click;
             // 
@@ -358,12 +366,12 @@
             lblRama.TabIndex = 5;
             lblRama.Text = "Rama actual:";
             // 
-            // submenuReporteVentas
+            // submenuReporteControlStock
             // 
-            submenuReporteVentas.Name = "submenuReporteVentas";
-            submenuReporteVentas.Size = new Size(180, 22);
-            submenuReporteVentas.Text = "Ventas";
-            submenuReporteVentas.Click += submenuReporteVentas_Click;
+            submenuReporteControlStock.Name = "submenuReporteControlStock";
+            submenuReporteControlStock.Size = new Size(180, 22);
+            submenuReporteControlStock.Text = "Control stock";
+            submenuReporteControlStock.Click += submenuReporteControlStock_Click;
             // 
             // FrmMenu_064RB
             // 
@@ -401,9 +409,8 @@
         private ComboBox cboIdioma;
         private Label lblBienvenida;
         private MenuStrip menuStrip1;
-        private ToolStripMenuItem toolStripMenuItem1;
         private ToolStripMenuItem menuAdmin;
-        private ToolStripMenuItem menuVendedor;
+        private ToolStripMenuItem menuVenta;
         private ToolStripMenuItem menuSesion;
         private ToolStripMenuItem submenuGestionUsuarios;
         private ToolStripMenuItem submenuBitacora;
@@ -430,5 +437,6 @@
         private ToolStripMenuItem submenuEfectuarPedido;
         private ToolStripMenuItem submenuRecibirMercaderia;
         private ToolStripMenuItem submenuReporteVentas;
+        private ToolStripMenuItem submenuReporteControlStock;
     }
 }

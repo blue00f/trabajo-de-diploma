@@ -42,5 +42,23 @@ namespace DAL_064RB.Negocio_064RB
                   group by d.SkuProducto_064RB
                   order by Unidades desc", Periodo_064RB(desde, hastaExclusivo));
         }
+
+        public DataTable ConsultarSolicitudes_064RB(DateTime desde, DateTime hastaExclusivo)
+        {
+            return com.Consultar_064RB(
+                @"select s.SkuProducto_064RB as Sku, s.Cantidad_064RB as Cantidad, s.Estado_064RB as Estado,
+                s.FechaSolicitud_064RB as FechaSolicitud, s.MontoTotal_064RB as MontoCotizado,
+                s.CuitProveedor_064RB as Cuit, pr.RazonSocial_064RB as Proveedor,
+                o.Fecha_064RB as FechaOrden, o.MontoPagado_064RB as MontoPagado,
+                r.Estado_064RB as EstadoRemito, r.FechaRecepcion_064RB as FechaRecepcion,
+                isnull(d.CantidadFaltante_064RB, 0) as Faltante, isnull(d.CantidadDanada_064RB, 0) as Danada
+                from SolicitudCompra_064RB s
+                left join Proveedor_064RB pr on pr.Cuit_064RB = s.CuitProveedor_064RB
+                left join OrdenCompra_064RB o on o.IdSolicitud_064RB = s.IdSolicitud_064RB
+                left join RemitoCompra_064RB r on r.NumOrden_064RB = o.NumOrden_064RB
+                left join Discrepancia_064RB d on d.IdRemito_064RB = r.IdRemito_064RB
+                where s.FechaSolicitud_064RB >= @desde and s.FechaSolicitud_064RB < @hasta
+                order by s.FechaSolicitud_064RB", Periodo_064RB(desde, hastaExclusivo));
+        }
     }
 }

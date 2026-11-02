@@ -5,7 +5,7 @@ using QuestPDF.Infrastructure;
 
 namespace BLL_064RB.Negocio_064RB
 {
-    public class BLL_ReporteVentasPdf_064RB
+    public class BLL_ReporteVentasPdf_064RB : BLL_ReportePdf_064RB
     {
         public byte[] Generar_064RB(BE_ReporteVentas_064RB r)
         {
@@ -93,15 +93,6 @@ namespace BLL_064RB.Negocio_064RB
             }).GeneratePdf();
         }
 
-        private void Recuadro_064RB(IContainer contenedor, string titulo, string valor)
-        {
-            contenedor.Border(0.5f).Padding(5).Column(col =>
-            {
-                col.Item().Text(titulo).FontSize(8);
-                col.Item().Text(valor).Bold().FontSize(12);
-            });
-        }
-
         private void TablaVendidos_064RB(IContainer contenedor, List<BE_ReporteProducto_064RB> productos)
         {
             contenedor.Table(tabla =>
@@ -173,36 +164,6 @@ namespace BLL_064RB.Negocio_064RB
                     tabla.Cell().BorderBottom(0.25f).Padding(2).Text(p.StockMinimo_064RB.ToString());
                 }
             });
-        }
-
-        // mediante scottplot se devuelve los graficos en SVG para que questpdf pueda usarlos
-        private string CrearGraficoBarras_064RB(string titulo, string[] etiquetas, double[] valores, bool horizontal)
-        {
-
-            ScottPlot.Plot grafico = new ScottPlot.Plot();
-            grafico.Title(titulo);
-
-            var barras = grafico.Add.Bars(valores);
-            barras.Horizontal = horizontal;
-
-            int paso = (etiquetas.Length + 11) / 12;
-            ScottPlot.Tick[] marcas = new ScottPlot.Tick[etiquetas.Length];
-            for (int i = 0; i < etiquetas.Length; i++)
-            {
-                string texto = (i % paso == 0) ? etiquetas[i] : "";
-                marcas[i] = new ScottPlot.Tick(i, texto);
-            }
-            if (horizontal)
-            {
-                grafico.Axes.Left.TickGenerator = new ScottPlot.TickGenerators.NumericManual(marcas);
-                grafico.Axes.Margins(left: 0);
-            }
-            else
-            {
-                grafico.Axes.Bottom.TickGenerator = new ScottPlot.TickGenerators.NumericManual(marcas);
-                grafico.Axes.Margins(bottom: 0);
-            }
-            return grafico.GetSvgXml(600, 300);
         }
     }
 }

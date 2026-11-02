@@ -47,5 +47,38 @@ namespace MAP_064RB.Negocio_064RB
             }
             return lista;
         }
+        public List<BE_ReporteSolicitud_064RB> ConsultarSolicitudes_064RB(DateTime desde, DateTime hastaExclusivo)
+        {
+            List<BE_ReporteSolicitud_064RB> lista = new List<BE_ReporteSolicitud_064RB>();
+            foreach (DataRow fila in dao_reporte.ConsultarSolicitudes_064RB(desde, hastaExclusivo).Rows)
+            {
+                BE_ReporteSolicitud_064RB s = new BE_ReporteSolicitud_064RB();
+                s.Sku_064RB = fila["Sku"].ToString();
+                s.Cantidad_064RB = Convert.ToInt32(fila["Cantidad"]);
+                s.Estado_064RB = fila["Estado"].ToString();
+                s.FechaSolicitud_064RB = Convert.ToDateTime(fila["FechaSolicitud"]);
+
+                if (fila["MontoCotizado"] != DBNull.Value) s.MontoCotizado_064RB = Convert.ToDecimal(fila["MontoCotizado"]);
+                if (fila["Cuit"] != DBNull.Value)
+                {
+                    s.Cuit_064RB = fila["Cuit"].ToString();
+                    s.Proveedor_064RB = fila["Proveedor"] == DBNull.Value ? s.Cuit_064RB : fila["Proveedor"].ToString();
+                }
+                if (fila["MontoPagado"] != DBNull.Value)
+                {
+                    s.FechaOrden_064RB = Convert.ToDateTime(fila["FechaOrden"]);
+                    s.MontoPagado_064RB = Convert.ToDecimal(fila["MontoPagado"]);
+                }
+                if (fila["FechaRecepcion"] != DBNull.Value)
+                {
+                    s.EstadoRemito_064RB = fila["EstadoRemito"].ToString();
+                    s.FechaRecepcion_064RB = Convert.ToDateTime(fila["FechaRecepcion"]);
+                }
+                s.Faltante_064RB = Convert.ToInt32(fila["Faltante"]);
+                s.Danada_064RB = Convert.ToInt32(fila["Danada"]);
+                lista.Add(s);
+            }
+            return lista;
+        }
     }
 }

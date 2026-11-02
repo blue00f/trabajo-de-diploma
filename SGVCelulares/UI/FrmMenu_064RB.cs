@@ -40,8 +40,9 @@ namespace UI
             submenuRecibirMercaderia.Visible = TieneAlgun(usuario, "Recibir Mercadería");
 
             submenuReporteVentas.Visible = TieneAlgun(usuario, "Generar Reporte de Ventas");
+            submenuReporteControlStock.Visible = TieneAlgun(usuario, "Generar Reporte de Stock");
             menuAdmin.Visible = submenuGestionUsuarios.Visible || submenuGestionRoles.Visible || submenuBitacora.Visible || submenuGestionRespaldo.Visible || submenuProductos.Visible || submenuUnidadCelular.Visible || submenuClientes.Visible ||
-                submenuVenta.Visible || submenuProveedores.Visible || submenuSolicitarReposicion.Visible || submenuCotizarSolicitud.Visible || submenuEvaluarSolicitud.Visible || submenuEfectuarPedido.Visible || submenuRecibirMercaderia.Visible;
+                submenuVenta.Visible || submenuProveedores.Visible || submenuSolicitarReposicion.Visible || submenuCotizarSolicitud.Visible || submenuEvaluarSolicitud.Visible || submenuEfectuarPedido.Visible || submenuRecibirMercaderia.Visible || submenuReporteControlStock.Visible;
             menuAdmin.Visible = true;
 
             try
@@ -137,6 +138,7 @@ namespace UI
         private void submenuEfectuarPedido_Click(object sender, EventArgs e) => AbrirOEnfocarFormulario<FrmEfectuarPedido_064RB>();
         private void submenuRecibirMercaderia_Click(object sender, EventArgs e) => AbrirOEnfocarFormulario<FrmRecibirMercaderia_064RB>();
         private void submenuReporteVentas_Click(object sender, EventArgs e) => AbrirOEnfocarFormulario<FrmReporteVentas_064RB>();
+        private void submenuReporteControlStock_Click(object sender, EventArgs e) => AbrirOEnfocarFormulario<FrmReporteReposicion_064RB>();
         private void CargarIdiomas()
         {
             cargandoIdiomas = true;

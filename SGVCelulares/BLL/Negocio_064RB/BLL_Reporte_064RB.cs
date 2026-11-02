@@ -11,20 +11,27 @@ namespace BLL_064RB.Negocio_064RB
 
         MAP_Reporte_064RB map_reporte;
         BLL_Producto_064RB bll_producto;
-        BLL_ReporteVentasPdf_064RB bll_reporte;
+        BLL_ReporteVentasPdf_064RB bll_reporteVentaPdf;
         BLL_Bitacora_064RB bll_bitacora;
+
+
+        BLL_SolicitudCompra_064RB bll_solicitud;
+        BLL_ReporteReposicionPdf_064RB bll_reporteReposicionPdf;
         public BLL_Reporte_064RB()
         {
             map_reporte = new();
             bll_producto = new();
-            bll_reporte = new();
+            bll_reporteVentaPdf = new();
             bll_bitacora = new();
+
+            bll_solicitud = new();
+            bll_reporteReposicionPdf = new();
         }
         public byte[] GenerarReporteVentas_064RB(DateTime desde, DateTime hasta)
         {
             BE_ReporteVentas_064RB reporte = ObtenerReporteVentas_064RB(desde, hasta);
             bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB, DateTime.Now, "Reportes", "Generar reporte de ventas", (int)Criticidad_064RB.Baja));
-            return bll_reporte.Generar_064RB(reporte);
+            return bll_reporteVentaPdf.Generar_064RB(reporte);
         }
         
         public BE_ReporteVentas_064RB ObtenerReporteVentas_064RB(DateTime desde, DateTime hasta)
@@ -172,6 +179,162 @@ namespace BLL_064RB.Negocio_064RB
                 actual = SiguienteGrupo_064RB(actual, agrupacion);
             }
             return resultado;
+        }
+
+
+        public byte[] GenerarReporteReposicion_064RB(DateTime desde, DateTime hasta)
+        {
+            BE_ReporteReposicion_064RB reporte = ObtenerReporteReposicion_064RB(desde, hasta);
+            return bll_reporteReposicionPdf.Generar_064RB(reporte);
+        }
+
+        public BE_ReporteReposicion_064RB ObtenerReporteReposicion_064RB(DateTime desde, DateTime hasta)
+        {
+            if (hasta.Date < desde.Date) throw new Exception("La fecha hasta no puede ser anterior a la fecha desde.");
+
+            DateTime hastaExclusivo = hasta.Date.AddDays(1);
+            int diasDelPeriodo = (hasta.Date - desde.Date).Days + 1;
+
+            List<BE_ReporteSolicitud_064RB> solicitudes = map_reporte.ConsultarSolicitudes_064RB(desde.Date, hastaExclusivo);
+            if (solicitudes.Count == 0)
+                throw new Exception("No hay solicitudes de compra realizadas en el período seleccionado.");
+
+            Dictionary<string, BE_Producto_064RB> catalogo = ObtenerCatalogo_064RB();
+
+            BE_ReporteReposicion_064RB reporte = new BE_ReporteReposicion_064RB();
+            reporte.Desde_064RB = desde.Date;
+            reporte.Hasta_064RB = hasta.Date;
+            reporte.CantidadSolicitudes_064RB = solicitudes.Count;
+            reporte.Detalle_064RB = solicitudes;
+
+            Dictionary<DateTime, BE_ReporteDia_064RB> porDia = new Dictionary<DateTime, BE_ReporteDia_064RB>();
+            Dictionary<string, BE_ReporteProveedor_064RB> porProveedor = new Dictionary<string, BE_ReporteProveedor_064RB>();
+            Dictionary<string, BE_ReporteProductoReposicion_064RB> porProducto = new Dictionary<string, BE_ReporteProductoReposicion_064RB>();
+
+            foreach (BE_ReporteSolicitud_064RB s in solicitudes)
+            {
+                // descripción del producto, para el detalle
+                if (catalogo.ContainsKey(s.Sku_064RB))
+                    s.Descripcion_064RB = catalogo[s.Sku_064RB].Marca_064RB + " " + catalogo[s.Sku_064RB].Modelo_064RB;
+                else
+                    s.Descripcion_064RB = s.Sku_064RB;
+
+                // totales
+                reporte.UnidadesSolicitadas_064RB += s.Cantidad_064RB;
+                if (s.MontoPagado_064RB.HasValue) reporte.MontoPagado_064RB += s.MontoPagado_064RB.Value;
+
+                // por estado
+                if (!reporte.SolicitudesPorEstado_064RB.ContainsKey(s.Estado_064RB))
+                    reporte.SolicitudesPorEstado_064RB.Add(s.Estado_064RB, 0);
+                reporte.SolicitudesPorEstado_064RB[s.Estado_064RB]++;
+
+                // por día (en este reporte, "Ventas" de BE_ReporteDia cuenta solicitudes)
+                DateTime dia = s.FechaSolicitud_064RB.Date;
+                if (!porDia.ContainsKey(dia))
+                {
+                    BE_ReporteDia_064RB nuevoDia = new BE_ReporteDia_064RB();
+                    nuevoDia.Fecha_064RB = dia;
+                    porDia.Add(dia, nuevoDia);
+                }
+                porDia[dia].Ventas_064RB++;
+
+                // unidades recibidas en condiciones conformes (solo cuando ya se recibió)
+                int recibidasConformes = 0;
+                if (s.Estado_064RB == EstadoSolicitud_064RB.Recibida_064RB)
+                    recibidasConformes = s.Cantidad_064RB - s.Faltante_064RB - s.Danada_064RB;
+
+                // por producto
+                if (!porProducto.ContainsKey(s.Sku_064RB))
+                {
+                    BE_ReporteProductoReposicion_064RB nuevoProducto = new BE_ReporteProductoReposicion_064RB();
+                    nuevoProducto.Sku_064RB = s.Sku_064RB;
+                    nuevoProducto.Descripcion_064RB = s.Descripcion_064RB;
+                    porProducto.Add(s.Sku_064RB, nuevoProducto);
+                }
+                BE_ReporteProductoReposicion_064RB producto = porProducto[s.Sku_064RB];
+                producto.Solicitudes_064RB++;
+                producto.UnidadesSolicitadas_064RB += s.Cantidad_064RB;
+                producto.UnidadesRecibidas_064RB += recibidasConformes;
+
+                // por proveedor (solo las solicitudes que llegaron a orden de compra)
+                if (s.MontoPagado_064RB.HasValue && s.Cuit_064RB != null)
+                {
+                    if (!porProveedor.ContainsKey(s.Cuit_064RB))
+                    {
+                        BE_ReporteProveedor_064RB nuevoProveedor = new BE_ReporteProveedor_064RB();
+                        nuevoProveedor.Cuit_064RB = s.Cuit_064RB;
+                        nuevoProveedor.RazonSocial_064RB = s.Proveedor_064RB ?? s.Cuit_064RB;
+                        porProveedor.Add(s.Cuit_064RB, nuevoProveedor);
+                    }
+                    BE_ReporteProveedor_064RB proveedor = porProveedor[s.Cuit_064RB];
+                    proveedor.Ordenes_064RB++;
+                    proveedor.MontoPagado_064RB += s.MontoPagado_064RB.Value;
+                    if (s.FechaRecepcion_064RB.HasValue && s.FechaOrden_064RB.HasValue)
+                    {
+                        proveedor.Recibidas_064RB++;
+                        proveedor.DiasDemoraTotal_064RB += (s.FechaRecepcion_064RB.Value.Date - s.FechaOrden_064RB.Value.Date).Days;
+                    }
+                    if (s.EstadoRemito_064RB == EstadoRemito_064RB.NoConforme_064RB) proveedor.RemitosNoConformes_064RB++;
+                    proveedor.Faltantes_064RB += s.Faltante_064RB;
+                    proveedor.Danadas_064RB += s.Danada_064RB;
+                }
+            }
+
+            if (reporte.SolicitudesPorEstado_064RB.ContainsKey(EstadoSolicitud_064RB.PendienteDeRecepcion_064RB))
+                reporte.PendientesDeRecepcion_064RB = reporte.SolicitudesPorEstado_064RB[EstadoSolicitud_064RB.PendienteDeRecepcion_064RB];
+
+            // solicitudes en el tiempo, agrupadas como en el reporte de ventas
+            reporte.Agrupacion_064RB = ElegirAgrupacion_064RB(diasDelPeriodo);
+            reporte.SolicitudesPorPeriodo_064RB = Agrupar_064RB(new List<BE_ReporteDia_064RB>(porDia.Values), desde.Date, hasta.Date, reporte.Agrupacion_064RB);
+
+            // proveedores: demora promedio y orden por monto pagado
+            foreach (BE_ReporteProveedor_064RB proveedor in porProveedor.Values)
+            {
+                if (proveedor.Recibidas_064RB > 0)
+                    proveedor.DemoraPromedioDias_064RB = Math.Round((double)proveedor.DiasDemoraTotal_064RB / proveedor.Recibidas_064RB, 1);
+            }
+            reporte.Proveedores_064RB = porProveedor.Values.OrderByDescending(p => p.MontoPagado_064RB).ToList();
+
+            // productos: stock actual contra el mínimo
+            foreach (BE_ReporteProductoReposicion_064RB item in porProducto.Values)
+            {
+                if (catalogo.ContainsKey(item.Sku_064RB))
+                {
+                    BE_Producto_064RB productoCatalogo = catalogo[item.Sku_064RB];
+                    item.StockActual_064RB = bll_producto.ObtenerStock_064RB(productoCatalogo);
+                    item.StockMinimo_064RB = productoCatalogo.StockMinimo_064RB;
+                }
+                item.Estado_064RB = EstadoDeStock_064RB(item.StockActual_064RB, item.StockMinimo_064RB);
+            }
+            reporte.Productos_064RB = porProducto.Values.OrderByDescending(p => p.UnidadesSolicitadas_064RB).ToList();
+
+            // lo que hoy necesita reposición: es el mismo listado de CU-NEG-4
+            foreach (BE_Producto_064RB p in bll_solicitud.ConsultarProductosAReponer_064RB())
+            {
+                BE_ReporteProducto_064RB item = new BE_ReporteProducto_064RB();
+                item.Sku_064RB = p.Sku_064RB;
+                CompletarProducto_064RB(item, p);
+                reporte.ProductosAReponerHoy_064RB.Add(item);
+            }
+
+            return reporte;
+        }
+
+        private Dictionary<string, BE_Producto_064RB> ObtenerCatalogo_064RB()
+        {
+            Dictionary<string, BE_Producto_064RB> catalogo = new Dictionary<string, BE_Producto_064RB>();
+            foreach (BE_Producto_064RB p in bll_producto.Consultar_064RB())
+            {
+                catalogo.Add(p.Sku_064RB, p);
+            }
+            return catalogo;
+        }
+
+        private string EstadoDeStock_064RB(int stock, int minimo)
+        {
+            if (stock == 0) return "Sin stock";
+            if (stock < minimo) return "Bajo el mínimo";
+            return "Normal";
         }
     }
 }
