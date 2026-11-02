@@ -143,7 +143,7 @@ create table Producto_064RB (
     Descripcion_064RB varchar(100),
     StockMinimo_064RB int not null default 0,
     constraint pk_producto_064RB primary key (Sku_064RB),
-    constraint chk_producto_stockminimo check (StockMinimo_064RB >= 0),
+    constraint chk_producto_stockminimo check (StockMinimo_064RB >= 0)
 );
 go
 go
