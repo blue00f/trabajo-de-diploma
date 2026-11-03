@@ -28,7 +28,7 @@ namespace DAL_064RB.Negocio_064RB
             {
                 new("@dni", SqlDbType.VarChar, dni)
             };
-            com.Ejecutar_064RB("DELETE FROM Cliente_064RB WHERE Dni_064RB=@dni;", parametros);
+            com.Ejecutar_064RB("UPDATE Cliente_064RB SET Activo_064RB=0 WHERE Dni_064RB=@dni", parametros);
         }
         public void Modificar_064RB(string dni, string nombre, string apellido, string telefono, string email, DateTime fechaNacimiento)
         {
@@ -45,7 +45,7 @@ namespace DAL_064RB.Negocio_064RB
         }
         public DataTable Consultar_064RB()
         {
-            return com.Consultar_064RB("select * from Cliente_064RB");
+            return com.Consultar_064RB("select * from Cliente_064RB WHERE Activo_064RB=1");
         }
         public DataTable ConsultarPorDni_064RB(string dni)
         {
@@ -53,7 +53,7 @@ namespace DAL_064RB.Negocio_064RB
             {
                 new("@dni", SqlDbType.VarChar, dni)
             };
-            return com.Consultar_064RB("SELECT * FROM Cliente_064RB WHERE Dni_064RB=@dni", parametros);
+            return com.Consultar_064RB("SELECT * FROM Cliente_064RB WHERE Dni_064RB=@dni AND Activo_064RB=1", parametros);
         }
     }
 }

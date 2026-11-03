@@ -41,7 +41,7 @@ namespace BLL_064RB.Negocio_064RB
         public BE_Cliente_064RB AsociarCliente_064RB(BE_Venta_064RB venta, string dni)
         {
             venta.Cliente_064RB = null;
-            var cliente = bll_cliente.ConsultarPorDni_064RB(dni) ?? throw new Exception("No existe un cliente registrado con el DNI ingresado!");
+            var cliente = bll_cliente.ConsultarPorDni_064RB(dni);
             venta.Cliente_064RB = cliente;
             return cliente;
         }

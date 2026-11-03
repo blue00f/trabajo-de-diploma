@@ -37,13 +37,13 @@ namespace BLL_064RB.Negocio_064RB
             bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(usu, DateTime.Now, "ABM unidades de celulares", "Modificar unidad celular", (int)Criticidad_064RB.Media));
             bll_dv.ActualizarDV_064RB("UnidadCelular_064RB");
         }
-        public List<BE_UnidadCelular_064RB> Consultar()
+        public List<BE_UnidadCelular_064RB> Consultar_064RB()
         {
             return map_unidadCelular.Consultar_064RB();
         }
-        public List<object> ConsultarGrilla()
+        public List<object> ConsultarGrilla_064RB()
         {
-            var c = from u in Consultar()
+            var c = from u in Consultar_064RB()
                     select new
                     {
                         IMEI = u.Imei_064RB,

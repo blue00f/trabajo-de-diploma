@@ -36,6 +36,7 @@ namespace MAP_064RB.Negocio_064RB
         public BE_Cliente_064RB ConsultarPorDni_064RB(string dni)
         {
             DataTable dt = dao_cliente.ConsultarPorDni_064RB(dni);
+            if (dt.Rows.Count == 0) throw new Exception("No hay cliente asociado a este DNI!");
             return Mapear_064RB(dt.Rows[0]);
         }
         private BE_Cliente_064RB Mapear_064RB(DataRow fila)

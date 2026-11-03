@@ -25,7 +25,7 @@ namespace DAL_064RB.Negocio_064RB
             {
                 new("@imei", SqlDbType.VarChar, imei)
             };
-            com.Ejecutar_064RB("DELETE FROM UnidadCelular_064RB WHERE Imei_064RB=@imei;", parametros);
+            com.Ejecutar_064RB("update UnidadCelular_064RB set Activo_064RB=0 where Imei_064RB=@imei", parametros);
         }
         public void Modificar_064RB(string estado, string sku, string imei)
         {
@@ -39,7 +39,7 @@ namespace DAL_064RB.Negocio_064RB
         }
         public DataTable Consultar_064RB()
         {
-            return com.Consultar_064RB("select * from UnidadCelular_064RB");
+            return com.Consultar_064RB("select * from UnidadCelular_064RB where Activo_064RB=1");
         }
     }
 }

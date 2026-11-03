@@ -61,7 +61,7 @@ namespace DAL_064RB.Negocio_064RB
             {
                 new("@sku", SqlDbType.VarChar, sku)
             };
-            com.Ejecutar_064RB("delete from Producto_064RB where Sku_064RB=@sku", parametros);
+            com.Ejecutar_064RB("update Producto_064RB set Activo_064RB=0 where Sku_064RB=@sku", parametros);
         }
         public void ModificarCelular_064RB(string sku, string marca, string modelo, decimal precio, string descripcion, int stockMinimo, string almacenamiento, string color)
         {
@@ -110,12 +110,12 @@ namespace DAL_064RB.Negocio_064RB
         public DataTable ConsultarCelulares_064RB()
         {
             return com.Consultar_064RB("select p.Sku_064RB, p.Marca_064RB, p.Modelo_064RB, p.Precio_064RB, p.Descripcion_064RB, p.StockMinimo_064RB, c.Almacenamiento_064RB, c.Color_064RB from Producto_064RB p" +
-                " inner join Celular_064RB c on p.Sku_064RB = c.Sku_064RB");
+                " inner join Celular_064RB c on p.Sku_064RB = c.Sku_064RB where p.Activo_064RB=1");
         }
         public DataTable ConsultarAccesorios_064RB()
         {
             return com.Consultar_064RB("select p.Sku_064RB, p.Marca_064RB, p.Modelo_064RB, p.Precio_064RB, p.Descripcion_064RB, p.StockMinimo_064RB, a.Categoria_064RB, a.Stock_064RB from Producto_064RB p" +
-                " inner join Accesorio_064RB a on p.Sku_064RB = a.Sku_064RB");
+                " inner join Accesorio_064RB a on p.Sku_064RB = a.Sku_064RB where p.Activo_064RB=1");
         }
         public DataTable ConsultarCelularPorSku_064RB(string sku)
         {

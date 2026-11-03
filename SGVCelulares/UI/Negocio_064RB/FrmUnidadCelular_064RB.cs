@@ -34,7 +34,7 @@ namespace UI_064RB
             cbxCelulares.DataSource = bll_producto.ConsultarCelulares_064RB();
             cbxCelulares.DisplayMember = "TextoVisual";
             cbxCelulares.ValueMember = "SKU";
-            Mostrar(grillaUnidadCelular, bll_unidadCelular.ConsultarGrilla());
+            Mostrar(grillaUnidadCelular, bll_unidadCelular.ConsultarGrilla_064RB());
         }
         private void Mostrar(DataGridView grilla, object datos)
         {
@@ -58,7 +58,7 @@ namespace UI_064RB
                 BE_Celular_064RB celular = bll_producto.ConsultarCelularPorSku_064RB(sku);
                 BE_UnidadCelular_064RB unidadCelular = new BE_UnidadCelular_064RB(txtImei.Text, "Disponible", celular);
                 bll_unidadCelular.Agregar_064RB(unidadCelular);
-                Mostrar(grillaUnidadCelular, bll_unidadCelular.ConsultarGrilla());
+                Mostrar(grillaUnidadCelular, bll_unidadCelular.ConsultarGrilla_064RB());
             }
             catch (Exception ex)
             {
@@ -75,7 +75,7 @@ namespace UI_064RB
                 BE_UnidadCelular_064RB unidadCelular = new BE_UnidadCelular_064RB(imei);
 
                 bll_unidadCelular.Borrar_064RB(unidadCelular);
-                Mostrar(grillaUnidadCelular, bll_unidadCelular.ConsultarGrilla());
+                Mostrar(grillaUnidadCelular, bll_unidadCelular.ConsultarGrilla_064RB());
             }
             catch (Exception ex)
             {
@@ -98,7 +98,7 @@ namespace UI_064RB
                 BE_UnidadCelular_064RB unidadNueva = new BE_UnidadCelular_064RB(unidadVieja.Imei_064RB, unidadVieja.Estado_064RB, celularAAsignar);
 
                 bll_unidadCelular.Modificar_064RB(unidadNueva);
-                Mostrar(grillaUnidadCelular, bll_unidadCelular.ConsultarGrilla());
+                Mostrar(grillaUnidadCelular, bll_unidadCelular.ConsultarGrilla_064RB());
             }
             catch (Exception ex)
             {
