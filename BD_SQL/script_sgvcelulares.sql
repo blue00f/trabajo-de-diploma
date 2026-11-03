@@ -131,6 +131,7 @@ create table Cliente_064RB (
     Telefono_064RB varchar(20),
     Email_064RB varchar(100),
     FechaNacimiento_064RB date not null,
+    Activo_064RB bit not null default 1,
     constraint pk_cliente_064RB primary key (Dni_064RB)
 );
 go
@@ -142,6 +143,7 @@ create table Producto_064RB (
     Precio_064RB decimal(18, 2) not null,
     Descripcion_064RB varchar(100),
     StockMinimo_064RB int not null default 0,
+    Activo_064RB bit not null default 1,
     constraint pk_producto_064RB primary key (Sku_064RB),
     constraint chk_producto_stockminimo check (StockMinimo_064RB >= 0)
 );
@@ -169,6 +171,7 @@ create table UnidadCelular_064RB (
     Imei_064RB varchar(15) not null,
     Estado_064RB varchar(50) not null,
     SkuCelular_064RB varchar(50) not null,
+    Activo_064RB bit not null default 1,
     constraint pk_unidadcelular_064RB primary key (Imei_064RB),
     constraint fk_unidadcelular_producto_064RB foreign key (SkuCelular_064RB) references Celular_064RB(Sku_064RB)
 );
