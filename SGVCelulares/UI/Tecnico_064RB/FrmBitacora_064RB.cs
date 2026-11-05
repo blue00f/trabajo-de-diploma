@@ -57,7 +57,8 @@ namespace UI
                 "Bitácora",
                 new[]
                 {
-                    "Auditar bitácora"
+                    "Auditar bitácora",
+                    "Restaurar accesorio"
                 }
             },
             {
@@ -164,7 +165,7 @@ namespace UI
         private void MostrarTodosLosEventos()
         {
             cbxModulo.Items.AddRange(new string[] { "Autenticación", "Gestión de usuarios", "Configuración", "Gestión de roles", "Bitácora", "Gestión de respaldos", "ABM clientes", "ABM productos", "ABM proveedores", "ABM unidades de celulares", "Gestión de ventas", "Gestión de reposición", "Reportes" });
-            cbxEvento.Items.AddRange(new string[] { "Login", "Logout", "Cambiar clave", "Crear usuario", "Desbloquear usuario", "Modificar usuario", "Activar usuario", "Desactivar usuario", "Cambiar idioma","Crear rol", "Modificar rol", "Borrar rol", "Crear familia", "Borrar familia", "Auditar bitácora", "Generar backup", "Generar restore", "Crear cliente", "Modificar cliente", "Borrar cliente", "Crear producto", "Modificar producto", "Borrar producto", "Crear proveedor", "Modificar proveedor", "Borrar proveedor", "Registrar unidad celular", "Modificar unidad celular", "Borrar unidad celular", "Registrar venta", "Generar comprobante de venta", "Solicitar productos", "Cotizar compra", "Evaluar solicitud", "Registrar compra", "Registrar recepción", "Generar reporte de ventas", "Generar reporte de stock" });
+            cbxEvento.Items.AddRange(new string[] { "Login", "Logout", "Cambiar clave", "Crear usuario", "Desbloquear usuario", "Modificar usuario", "Activar usuario", "Desactivar usuario", "Cambiar idioma","Crear rol", "Modificar rol", "Borrar rol", "Crear familia", "Borrar familia", "Auditar bitácora", "Restaurar accesorio", "Generar backup", "Generar restore", "Crear cliente", "Modificar cliente", "Borrar cliente", "Crear producto", "Modificar producto", "Borrar producto", "Crear proveedor", "Modificar proveedor", "Borrar proveedor", "Registrar unidad celular", "Modificar unidad celular", "Borrar unidad celular", "Registrar venta", "Generar comprobante de venta", "Solicitar productos", "Cotizar compra", "Evaluar solicitud", "Registrar compra", "Registrar recepción", "Generar reporte de ventas", "Generar reporte de stock" });
         }
 
         private void ActualizarTxt()

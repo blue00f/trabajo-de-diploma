@@ -68,7 +68,7 @@ namespace BLL_064RB.Negocio_064RB
             venta.NumVenta_064RB = map_venta.Agregar_064RB(venta);
 
             SER_Usuario_064RB usu = SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB;
-            bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(usu, DateTime.Now, "Ventas", "Alta", 1));
+            bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(usu, DateTime.Now, "Gestión de ventas", "Registrar venta", (int)Criticidad_064RB.Media));
             bll_dv.ActualizarDV_064RB("Venta_064RB", "DetalleVenta_064RB", "UnidadCelular_064RB", "DetalleVenta_Imeis_064RB", "Accesorio_064RB");
             return venta.NumVenta_064RB;
         }

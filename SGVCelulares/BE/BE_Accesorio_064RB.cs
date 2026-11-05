@@ -9,6 +9,11 @@
             Categoria_064RB = categoria;
             Stock_064RB = stock;
         }
-        
+        public BE_Accesorio_064RB(string sku, string marca, string modelo, decimal precio, string descripcion, int stockMinimo, bool activo, string categoria, int stock) : base(sku, marca, modelo, precio, descripcion, stockMinimo, activo)
+        {
+            Categoria_064RB = categoria;
+            Stock_064RB = stock;
+        }
+
     }
 }

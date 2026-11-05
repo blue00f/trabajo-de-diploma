@@ -66,6 +66,7 @@
             lblHashCommit = new Label();
             lblUltimoCommit = new Label();
             lblRama = new Label();
+            accesoriosCopiaToolStripMenuItem = new ToolStripMenuItem();
             pnlTopbar.SuspendLayout();
             menuStrip1.SuspendLayout();
             pnlContenido.SuspendLayout();
@@ -298,7 +299,7 @@
             // 
             // menuMaestros
             // 
-            menuMaestros.DropDownItems.AddRange(new ToolStripItem[] { submenuProductos, submenuUnidadCelular, submenuClientes, submenuProveedores });
+            menuMaestros.DropDownItems.AddRange(new ToolStripItem[] { submenuProductos, submenuUnidadCelular, submenuClientes, submenuProveedores, accesoriosCopiaToolStripMenuItem });
             menuMaestros.Name = "menuMaestros";
             menuMaestros.Size = new Size(67, 20);
             menuMaestros.Text = "Maestros";
@@ -306,28 +307,28 @@
             // submenuProductos
             // 
             submenuProductos.Name = "submenuProductos";
-            submenuProductos.Size = new Size(177, 22);
+            submenuProductos.Size = new Size(180, 22);
             submenuProductos.Text = "Productos";
             submenuProductos.Click += submenuProductos_Click;
             // 
             // submenuUnidadCelular
             // 
             submenuUnidadCelular.Name = "submenuUnidadCelular";
-            submenuUnidadCelular.Size = new Size(177, 22);
+            submenuUnidadCelular.Size = new Size(180, 22);
             submenuUnidadCelular.Text = "Unidades de celular";
             submenuUnidadCelular.Click += submenuUnidadCelular_Click;
             // 
             // submenuClientes
             // 
             submenuClientes.Name = "submenuClientes";
-            submenuClientes.Size = new Size(177, 22);
+            submenuClientes.Size = new Size(180, 22);
             submenuClientes.Text = "Clientes";
             submenuClientes.Click += submenuClientes_Click;
             // 
             // submenuProveedores
             // 
             submenuProveedores.Name = "submenuProveedores";
-            submenuProveedores.Size = new Size(177, 22);
+            submenuProveedores.Size = new Size(180, 22);
             submenuProveedores.Text = "Proveedores";
             submenuProveedores.Click += submenuProveedores_Click;
             // 
@@ -385,6 +386,13 @@
             lblRama.Size = new Size(94, 20);
             lblRama.TabIndex = 5;
             lblRama.Text = "Rama actual:";
+            // 
+            // accesoriosCopiaToolStripMenuItem
+            // 
+            accesoriosCopiaToolStripMenuItem.Name = "accesoriosCopiaToolStripMenuItem";
+            accesoriosCopiaToolStripMenuItem.Size = new Size(180, 22);
+            accesoriosCopiaToolStripMenuItem.Text = "Accesorios Copia";
+            accesoriosCopiaToolStripMenuItem.Click += accesoriosCopiaToolStripMenuItem_Click;
             // 
             // FrmMenu_064RB
             // 
@@ -452,5 +460,6 @@
         private ToolStripMenuItem submenuReporteVentas;
         private ToolStripMenuItem submenuReporteControlStock;
         private Label lblRol;
+        private ToolStripMenuItem accesoriosCopiaToolStripMenuItem;
     }
 }

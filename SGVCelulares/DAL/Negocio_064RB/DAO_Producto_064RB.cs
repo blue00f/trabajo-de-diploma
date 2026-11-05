@@ -87,25 +87,18 @@ namespace DAL_064RB.Negocio_064RB
         }
         public void ModificarAccesorio_064RB(string sku, string marca, string modelo, decimal precio, string descripcion, int stockMinimo, string categoria, int stock)
         {
-            var comandos = new List<(string, List<ParametroBD_064RB>)>
+            var parametros = new List<ParametroBD_064RB>
             {
-                ("update Producto_064RB set Marca_064RB=@marca, Modelo_064RB=@modelo, Precio_064RB=@precio, Descripcion_064RB=@descripcion, StockMinimo_064RB=@stockMinimo where Sku_064RB=@sku",
-                    new List<ParametroBD_064RB> {
-                        new("@sku", SqlDbType.VarChar, sku),
-                        new("@marca", SqlDbType.VarChar, marca),
-                        new("@modelo", SqlDbType.VarChar, modelo),
-                        new("@precio", SqlDbType.Decimal, precio),
-                        new("@descripcion", SqlDbType.VarChar, descripcion),
-                        new("@stockMinimo", SqlDbType.Int, stockMinimo)
-                    }),
-                ("update Accesorio_064RB set Categoria_064RB=@categoria, Stock_064RB=@stock where Sku_064RB=@sku",
-                    new List<ParametroBD_064RB> {
-                        new("@sku", SqlDbType.VarChar, sku),
-                        new("@categoria", SqlDbType.VarChar, categoria),
-                        new("@stock", SqlDbType.VarChar, stock)
-                    })
+                new("@sku", SqlDbType.VarChar, sku),
+                new("@marca", SqlDbType.VarChar, marca),
+                new("@modelo", SqlDbType.VarChar, modelo),
+                new("@precio", SqlDbType.Decimal, precio),
+                new("@descripcion", SqlDbType.VarChar, descripcion),
+                new("@stockMinimo", SqlDbType.Int, stockMinimo),
+                new("@categoria", SqlDbType.VarChar, categoria),
+                new("@stock", SqlDbType.Int, stock)
             };
-            com.EjecutarTransaccion_064RB(comandos);
+            com.EjecutarProcedimiento_064RB("pa_accesorio_modificar_064RB", parametros);
         }
         public DataTable ConsultarCelulares_064RB()
         {
