@@ -24,7 +24,12 @@ namespace UI_064RB
             grillaClientes.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             grillaClientes.MultiSelect = false;
             grillaClientes.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            Mostrar(grillaClientes, bll_cliente.Consultar());
+
+            btnAgregar.Enabled = SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB.Rol_064RB.TienePermiso("Crear Cliente");
+            btnBorrar.Enabled = SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB.Rol_064RB.TienePermiso("Borrar Cliente");
+            btnModificar.Enabled = SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB.Rol_064RB.TienePermiso("Modificar Cliente");
+
+            Mostrar(grillaClientes, bll_cliente.Consultar_064RB());
         }
         private void Mostrar(DataGridView grilla, object datos)
         {
@@ -61,7 +66,7 @@ namespace UI_064RB
 
                 BE_Cliente_064RB cliente = new BE_Cliente_064RB(dni, nombre, apellido, telefono, email, fechaNacimiento);
                 bll_cliente.Agregar_064RB(cliente);
-                Mostrar(grillaClientes, bll_cliente.Consultar());
+                Mostrar(grillaClientes, bll_cliente.Consultar_064RB());
             }
             catch (Exception ex)
             {
@@ -76,7 +81,7 @@ namespace UI_064RB
                 if (grillaClientes.Rows.Count == 0) throw new Exception("No hay clientes para borrar!");
                 BE_Cliente_064RB cliente = grillaClientes.SelectedRows[0].DataBoundItem as BE_Cliente_064RB;
                 bll_cliente.Borrar_064RB(cliente);
-                Mostrar(grillaClientes, bll_cliente.Consultar());
+                Mostrar(grillaClientes, bll_cliente.Consultar_064RB());
             }
             catch (Exception ex)
             {
@@ -108,7 +113,7 @@ namespace UI_064RB
 
                 BE_Cliente_064RB clienteNuevo = new BE_Cliente_064RB(clienteViejo.Dni_064RB, nombre, apellido, telefono, email, fechaNacimiento);
                 bll_cliente.Modificar_064RB(clienteNuevo);
-                Mostrar(grillaClientes, bll_cliente.Consultar());
+                Mostrar(grillaClientes, bll_cliente.Consultar_064RB());
             }
             catch (Exception ex)
             {

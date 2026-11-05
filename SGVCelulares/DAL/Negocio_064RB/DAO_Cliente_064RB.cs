@@ -43,10 +43,8 @@ namespace DAL_064RB.Negocio_064RB
             };
             com.Ejecutar_064RB("UPDATE Cliente_064RB SET Nombre_064RB=@nombre,Apellido_064RB=@apellido,Telefono_064RB=@telefono,Email_064RB=@email,FechaNacimiento_064RB=@fechaNacimiento WHERE Dni_064RB=@dni", parametros);
         }
-        public DataTable Consultar_064RB()
-        {
-            return com.Consultar_064RB("select * from Cliente_064RB WHERE Activo_064RB=1");
-        }
+        public DataTable Consultar_064RB() => com.Consultar_064RB("select * from Cliente_064RB WHERE Activo_064RB=1");
+        public DataTable ConsultarTodos_064RB() => com.Consultar_064RB("select * from Cliente_064RB");
         public DataTable ConsultarPorDni_064RB(string dni)
         {
             var parametros = new List<ParametroBD_064RB>

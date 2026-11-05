@@ -38,7 +38,6 @@
             lblClienteTitulo = new Label();
             lblCliente = new Label();
             lblFormaPago = new Label();
-            label1 = new Label();
             cbxFormaPago = new ComboBox();
             lblProductos = new Label();
             lblSubtotalTitulo = new Label();
@@ -69,6 +68,7 @@
             btnCancelar = new Button();
             backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             lblUltimaVenta = new Label();
+            lblUltimaVentaTexto = new Label();
             ((System.ComponentModel.ISupportInitialize)grillaProductos).BeginInit();
             ((System.ComponentModel.ISupportInitialize)grillaDetalleVenta).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nudCantidad).BeginInit();
@@ -103,7 +103,7 @@
             btnAgregarProducto.BackColor = Color.FromArgb(45, 60, 82);
             btnAgregarProducto.FlatStyle = FlatStyle.Popup;
             btnAgregarProducto.ForeColor = SystemColors.Menu;
-            btnAgregarProducto.Location = new Point(438, 464);
+            btnAgregarProducto.Location = new Point(610, 464);
             btnAgregarProducto.Name = "btnAgregarProducto";
             btnAgregarProducto.Size = new Size(177, 36);
             btnAgregarProducto.TabIndex = 9;
@@ -119,7 +119,7 @@
             grillaProductos.Location = new Point(12, 56);
             grillaProductos.Name = "grillaProductos";
             grillaProductos.ReadOnly = true;
-            grillaProductos.Size = new Size(961, 267);
+            grillaProductos.Size = new Size(1025, 267);
             grillaProductos.TabIndex = 8;
             // 
             // btnBuscarCliente
@@ -129,7 +129,7 @@
             btnBuscarCliente.ForeColor = SystemColors.Menu;
             btnBuscarCliente.Location = new Point(1212, 584);
             btnBuscarCliente.Name = "btnBuscarCliente";
-            btnBuscarCliente.Size = new Size(108, 36);
+            btnBuscarCliente.Size = new Size(132, 36);
             btnBuscarCliente.TabIndex = 7;
             btnBuscarCliente.Text = "Buscar cliente";
             btnBuscarCliente.UseVisualStyleBackColor = false;
@@ -186,21 +186,11 @@
             lblFormaPago.TabIndex = 18;
             lblFormaPago.Text = "Forma de pago";
             // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.ForeColor = SystemColors.Menu;
-            label1.Location = new Point(1000, 715);
-            label1.Name = "label1";
-            label1.Size = new Size(118, 21);
-            label1.TabIndex = 19;
-            label1.Text = "Forma de pago:";
-            // 
             // cbxFormaPago
             // 
+            cbxFormaPago.DropDownStyle = ComboBoxStyle.DropDownList;
             cbxFormaPago.FormattingEnabled = true;
-            cbxFormaPago.Location = new Point(1000, 739);
+            cbxFormaPago.Location = new Point(1000, 710);
             cbxFormaPago.Name = "cbxFormaPago";
             cbxFormaPago.Size = new Size(199, 23);
             cbxFormaPago.TabIndex = 20;
@@ -291,7 +281,7 @@
             lblSku.AutoSize = true;
             lblSku.Font = new Font("Segoe UI", 10F);
             lblSku.ForeColor = SystemColors.Menu;
-            lblSku.Location = new Point(72, 345);
+            lblSku.Location = new Point(15, 326);
             lblSku.Name = "lblSku";
             lblSku.Size = new Size(37, 19);
             lblSku.TabIndex = 28;
@@ -299,14 +289,14 @@
             // 
             // txtSku
             // 
-            txtSku.Location = new Point(120, 345);
+            txtSku.Location = new Point(15, 346);
             txtSku.Name = "txtSku";
             txtSku.Size = new Size(174, 23);
             txtSku.TabIndex = 29;
             // 
             // txtMarca
             // 
-            txtMarca.Location = new Point(120, 383);
+            txtMarca.Location = new Point(15, 405);
             txtMarca.Name = "txtMarca";
             txtMarca.Size = new Size(174, 23);
             txtMarca.TabIndex = 31;
@@ -316,7 +306,7 @@
             lblMarca.AutoSize = true;
             lblMarca.Font = new Font("Segoe UI", 10F);
             lblMarca.ForeColor = SystemColors.Menu;
-            lblMarca.Location = new Point(58, 383);
+            lblMarca.Location = new Point(15, 383);
             lblMarca.Name = "lblMarca";
             lblMarca.Size = new Size(50, 19);
             lblMarca.TabIndex = 30;
@@ -324,7 +314,7 @@
             // 
             // txtModelo
             // 
-            txtModelo.Location = new Point(120, 422);
+            txtModelo.Location = new Point(15, 464);
             txtModelo.Name = "txtModelo";
             txtModelo.Size = new Size(174, 23);
             txtModelo.TabIndex = 33;
@@ -334,7 +324,7 @@
             lblModelo.AutoSize = true;
             lblModelo.Font = new Font("Segoe UI", 10F);
             lblModelo.ForeColor = SystemColors.Menu;
-            lblModelo.Location = new Point(48, 422);
+            lblModelo.Location = new Point(15, 443);
             lblModelo.Name = "lblModelo";
             lblModelo.Size = new Size(59, 19);
             lblModelo.TabIndex = 32;
@@ -342,7 +332,7 @@
             // 
             // txtCategoria
             // 
-            txtCategoria.Location = new Point(441, 422);
+            txtCategoria.Location = new Point(253, 464);
             txtCategoria.Name = "txtCategoria";
             txtCategoria.Size = new Size(174, 23);
             txtCategoria.TabIndex = 39;
@@ -352,7 +342,7 @@
             lblCategoria.AutoSize = true;
             lblCategoria.Font = new Font("Segoe UI", 10F);
             lblCategoria.ForeColor = SystemColors.Menu;
-            lblCategoria.Location = new Point(358, 426);
+            lblCategoria.Location = new Point(253, 443);
             lblCategoria.Name = "lblCategoria";
             lblCategoria.Size = new Size(71, 19);
             lblCategoria.TabIndex = 38;
@@ -360,7 +350,7 @@
             // 
             // txtAlmacenamiento
             // 
-            txtAlmacenamiento.Location = new Point(441, 383);
+            txtAlmacenamiento.Location = new Point(253, 409);
             txtAlmacenamiento.Name = "txtAlmacenamiento";
             txtAlmacenamiento.Size = new Size(174, 23);
             txtAlmacenamiento.TabIndex = 37;
@@ -370,7 +360,7 @@
             lblAlmacenamiento.AutoSize = true;
             lblAlmacenamiento.Font = new Font("Segoe UI", 10F);
             lblAlmacenamiento.ForeColor = SystemColors.Menu;
-            lblAlmacenamiento.Location = new Point(312, 384);
+            lblAlmacenamiento.Location = new Point(253, 387);
             lblAlmacenamiento.Name = "lblAlmacenamiento";
             lblAlmacenamiento.Size = new Size(114, 19);
             lblAlmacenamiento.TabIndex = 36;
@@ -378,7 +368,7 @@
             // 
             // txtColor
             // 
-            txtColor.Location = new Point(441, 345);
+            txtColor.Location = new Point(253, 348);
             txtColor.Name = "txtColor";
             txtColor.Size = new Size(174, 23);
             txtColor.TabIndex = 35;
@@ -388,7 +378,7 @@
             lblColor.AutoSize = true;
             lblColor.Font = new Font("Segoe UI", 10F);
             lblColor.ForeColor = SystemColors.Menu;
-            lblColor.Location = new Point(384, 346);
+            lblColor.Location = new Point(253, 326);
             lblColor.Name = "lblColor";
             lblColor.Size = new Size(45, 19);
             lblColor.TabIndex = 34;
@@ -399,7 +389,7 @@
             lblTipo.AutoSize = true;
             lblTipo.Font = new Font("Segoe UI", 10F);
             lblTipo.ForeColor = SystemColors.Menu;
-            lblTipo.Location = new Point(679, 385);
+            lblTipo.Location = new Point(487, 387);
             lblTipo.Name = "lblTipo";
             lblTipo.Size = new Size(38, 19);
             lblTipo.TabIndex = 42;
@@ -407,7 +397,7 @@
             // 
             // txtPrecioMax
             // 
-            txtPrecioMax.Location = new Point(723, 343);
+            txtPrecioMax.Location = new Point(487, 348);
             txtPrecioMax.Name = "txtPrecioMax";
             txtPrecioMax.Size = new Size(174, 23);
             txtPrecioMax.TabIndex = 41;
@@ -417,7 +407,7 @@
             lblPrecioMax.AutoSize = true;
             lblPrecioMax.Font = new Font("Segoe UI", 10F);
             lblPrecioMax.ForeColor = SystemColors.Menu;
-            lblPrecioMax.Location = new Point(639, 343);
+            lblPrecioMax.Location = new Point(487, 326);
             lblPrecioMax.Name = "lblPrecioMax";
             lblPrecioMax.Size = new Size(78, 19);
             lblPrecioMax.TabIndex = 40;
@@ -426,7 +416,7 @@
             // cbxTipo
             // 
             cbxTipo.FormattingEnabled = true;
-            cbxTipo.Location = new Point(723, 381);
+            cbxTipo.Location = new Point(487, 409);
             cbxTipo.Name = "cbxTipo";
             cbxTipo.Size = new Size(174, 23);
             cbxTipo.TabIndex = 43;
@@ -436,9 +426,9 @@
             btnFiltrar.BackColor = Color.FromArgb(45, 60, 82);
             btnFiltrar.FlatStyle = FlatStyle.Popup;
             btnFiltrar.ForeColor = SystemColors.Menu;
-            btnFiltrar.Location = new Point(120, 464);
+            btnFiltrar.Location = new Point(793, 420);
             btnFiltrar.Name = "btnFiltrar";
-            btnFiltrar.Size = new Size(174, 36);
+            btnFiltrar.Size = new Size(174, 38);
             btnFiltrar.TabIndex = 44;
             btnFiltrar.Text = "Filtrar";
             btnFiltrar.UseVisualStyleBackColor = false;
@@ -446,9 +436,9 @@
             // 
             // nudCantidad
             // 
-            nudCantidad.Location = new Point(441, 506);
+            nudCantidad.Location = new Point(613, 506);
             nudCantidad.Name = "nudCantidad";
-            nudCantidad.Size = new Size(174, 23);
+            nudCantidad.Size = new Size(354, 23);
             nudCantidad.TabIndex = 45;
             // 
             // btnQuitarProducto
@@ -456,7 +446,7 @@
             btnQuitarProducto.BackColor = Color.FromArgb(45, 60, 82);
             btnQuitarProducto.FlatStyle = FlatStyle.Popup;
             btnQuitarProducto.ForeColor = SystemColors.Menu;
-            btnQuitarProducto.Location = new Point(621, 464);
+            btnQuitarProducto.Location = new Point(793, 464);
             btnQuitarProducto.Name = "btnQuitarProducto";
             btnQuitarProducto.Size = new Size(174, 36);
             btnQuitarProducto.TabIndex = 46;
@@ -482,18 +472,30 @@
             lblUltimaVenta.AutoSize = true;
             lblUltimaVenta.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblUltimaVenta.ForeColor = SystemColors.Menu;
-            lblUltimaVenta.Location = new Point(1000, 347);
+            lblUltimaVenta.Location = new Point(845, 350);
             lblUltimaVenta.Name = "lblUltimaVenta";
             lblUltimaVenta.Size = new Size(16, 21);
             lblUltimaVenta.TabIndex = 48;
             lblUltimaVenta.Text = "-";
+            // 
+            // lblUltimaVentaTexto
+            // 
+            lblUltimaVentaTexto.AutoSize = true;
+            lblUltimaVentaTexto.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblUltimaVentaTexto.ForeColor = SystemColors.Menu;
+            lblUltimaVentaTexto.Location = new Point(700, 348);
+            lblUltimaVentaTexto.Name = "lblUltimaVentaTexto";
+            lblUltimaVentaTexto.Size = new Size(101, 21);
+            lblUltimaVentaTexto.TabIndex = 49;
+            lblUltimaVentaTexto.Text = "Última venta:";
             // 
             // FrmVenta_064RB
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(30, 42, 58);
-            ClientSize = new Size(1408, 844);
+            ClientSize = new Size(1360, 844);
+            Controls.Add(lblUltimaVentaTexto);
             Controls.Add(lblUltimaVenta);
             Controls.Add(btnCancelar);
             Controls.Add(btnQuitarProducto);
@@ -523,7 +525,6 @@
             Controls.Add(lblSubtotal);
             Controls.Add(lblProductos);
             Controls.Add(cbxFormaPago);
-            Controls.Add(label1);
             Controls.Add(lblFormaPago);
             Controls.Add(lblCliente);
             Controls.Add(lblClienteTitulo);
@@ -555,7 +556,6 @@
         private Label lblClienteTitulo;
         private Label lblCliente;
         private Label lblFormaPago;
-        private Label label1;
         private ComboBox cbxFormaPago;
         private Label lblProductos;
         private Label lblSubtotalTitulo;
@@ -586,5 +586,6 @@
         private Button btnCancelar;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private Label lblUltimaVenta;
+        private Label lblUltimaVentaTexto;
     }
 }

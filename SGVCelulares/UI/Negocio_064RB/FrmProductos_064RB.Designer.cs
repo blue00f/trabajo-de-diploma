@@ -175,7 +175,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(30, 42, 58);
-            ClientSize = new Size(1122, 500);
+            ClientSize = new Size(1122, 481);
             Controls.Add(lblStockMinimo);
             Controls.Add(nudStockMinimo);
             Controls.Add(groupBox1);

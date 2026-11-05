@@ -37,9 +37,8 @@ namespace DAL_064RB.Negocio_064RB
             };
             com.Ejecutar_064RB("UPDATE UnidadCelular_064RB SET Estado_064RB=@estado, SkuCelular_064RB=@sku WHERE Imei_064RB=@imei", parametros);
         }
-        public DataTable Consultar_064RB()
-        {
-            return com.Consultar_064RB("select * from UnidadCelular_064RB where Activo_064RB=1");
-        }
+        public DataTable Consultar_064RB() => com.Consultar_064RB("select * from UnidadCelular_064RB where Activo_064RB=1");
+        public DataTable ConsultarTodos_064RB() => com.Consultar_064RB("select * from UnidadCelular_064RB");
+
     }
 }

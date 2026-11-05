@@ -66,6 +66,31 @@ namespace MAP_064RB.Negocio_064RB
             }
             return productos;
         }
+        public List<BE_Producto_064RB> ConsultarTodos_064RB()
+        {
+            DataTable dtC = dao_producto.ConsultarCelularesTodos_064RB();
+            DataTable dtA = dao_producto.ConsultarAccesoriosTodos_064RB();
+            DataTable dtUc = dao_unidadCelular.ConsultarTodos_064RB();
+            var unidadesPorSku = MapearUnidadesPorSku_064RB(dtUc);
+            List<BE_Producto_064RB> productos = new();
+
+            foreach (DataRow fila in dtC.Rows)
+            {
+                BE_Celular_064RB celular = MapearCelular_064RB(fila);
+                celular.UnidadCelulares_064RB = unidadesPorSku.ContainsKey(celular.Sku_064RB) ? unidadesPorSku[celular.Sku_064RB] : new List<BE_UnidadCelular_064RB>();
+                foreach (BE_UnidadCelular_064RB unidad in celular.UnidadCelulares_064RB)
+                {
+                    unidad.Celular_064RB = celular;
+                }
+                productos.Add(celular);
+            }
+            foreach (DataRow fila in dtA.Rows)
+            {
+                productos.Add(MapearAccesorio_064RB(fila));
+            }
+            return productos;
+        }
+
         private BE_Celular_064RB MapearCelular_064RB(DataRow fila)
         {
             return new BE_Celular_064RB(

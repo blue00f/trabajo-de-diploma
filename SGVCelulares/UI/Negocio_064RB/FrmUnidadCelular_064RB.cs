@@ -1,6 +1,8 @@
 ﻿using BE_064RB;
 using BLL_064RB.Negocio_064RB;
+using BLL_064RB.Tecnico_064RB;
 using Microsoft.VisualBasic;
+using Servicio_064RB;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,13 +16,16 @@ using System.Windows.Forms;
 
 namespace UI_064RB
 {
-    public partial class FrmUnidadCelular_064RB : Form
+    public partial class FrmUnidadCelular_064RB : Form, IObservadorIdioma_064RB
     {
         BLL_UnidadCelular_064RB bll_unidadCelular;
         BLL_Producto_064RB bll_producto;
+        BLL_Idioma_064RB bll_idioma = new();
         public FrmUnidadCelular_064RB()
         {
             InitializeComponent();
+            bll_idioma.Suscribir_064RB(this);
+            ActualizarIdioma_064RB();
         }
 
         private void FrmUnidadCelular_064RB_Load(object sender, EventArgs e)
@@ -31,6 +36,11 @@ namespace UI_064RB
             bll_unidadCelular = new();
             bll_producto = new();
 
+
+            btnAgregar.Enabled = SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB.Rol_064RB.TienePermiso("Crear Unidad Celular");
+            btnBorrar.Enabled = SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB.Rol_064RB.TienePermiso("Borrar Unidad Celular");
+            btnModificar.Enabled = SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB.Rol_064RB.TienePermiso("Modificar Unidad Celular");
+
             cbxCelulares.DataSource = bll_producto.ConsultarCelulares_064RB();
             cbxCelulares.DisplayMember = "TextoVisual";
             cbxCelulares.ValueMember = "SKU";
@@ -40,6 +50,7 @@ namespace UI_064RB
         {
             grilla.DataSource = null;
             grilla.DataSource = datos;
+            TraducirColumnas(grillaUnidadCelular);
         }
         private bool ValidarDatos(string texto, string expresionRegular)
         {
@@ -106,5 +117,26 @@ namespace UI_064RB
             }
         }
         private void btnSalir_Click(object sender, EventArgs e) => this.Close();
+
+        public void ActualizarIdioma_064RB()
+        {
+            this.Text = bll_idioma.Traducir_064RB("FrmUnidadCelular.Form");
+            lblUnidadCelular.Text = bll_idioma.Traducir_064RB("FrmUnidadCelular.lblUnidadCelular");
+            btnAgregar.Text = bll_idioma.Traducir_064RB("FrmUnidadCelular.btnAgregar");
+            btnBorrar.Text = bll_idioma.Traducir_064RB("FrmUnidadCelular.btnBorrar");
+            btnModificar.Text = bll_idioma.Traducir_064RB("FrmUnidadCelular.btnModificar");
+            btnSalir.Text = bll_idioma.Traducir_064RB("FrmUnidadCelular.btnSalir");
+            lblImei.Text = bll_idioma.Traducir_064RB("FrmUnidadCelular.lblImei");
+        }
+        private void TraducirColumnas(DataGridView grilla)
+        {
+            if (grilla.Columns.Count == 0) return;
+            grilla.Columns[0].HeaderText = bll_idioma.Traducir_064RB("FrmUnidadCelular.colImei");
+            grilla.Columns[1].HeaderText = bll_idioma.Traducir_064RB("FrmUnidadCelular.colEstado");
+            grilla.Columns[2].HeaderText = bll_idioma.Traducir_064RB("FrmUnidadCelular.colSku");
+            grilla.Columns[3].HeaderText = bll_idioma.Traducir_064RB("FrmUnidadCelular.colMarca");
+            grilla.Columns[4].HeaderText = bll_idioma.Traducir_064RB("FrmUnidadCelular.colModelo");
+            grilla.Columns[5].HeaderText = bll_idioma.Traducir_064RB("FrmUnidadCelular.colPrecio");
+        }
     }
 }

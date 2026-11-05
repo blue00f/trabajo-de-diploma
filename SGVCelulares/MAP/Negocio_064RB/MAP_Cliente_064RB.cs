@@ -23,9 +23,19 @@ namespace MAP_064RB.Negocio_064RB
         {
             dao_cliente.Modificar_064RB(cliente.Dni_064RB, cliente.Nombre_064RB, cliente.Apellido_064RB, cliente.Telefono_064RB, cliente.Email_064RB, cliente.FechaNacimiento_064RB);
         }
-        public List<BE_Cliente_064RB> Consultar()
+        public List<BE_Cliente_064RB> Consultar_064RB()
         {
             DataTable dt = dao_cliente.Consultar_064RB();
+            List<BE_Cliente_064RB> lista = new();
+            foreach (DataRow fila in dt.Rows)
+            {
+                lista.Add(Mapear_064RB(fila));
+            }
+            return lista;
+        }
+        public List<BE_Cliente_064RB> ConsultarTodos_064RB()
+        {
+            DataTable dt = dao_cliente.ConsultarTodos_064RB();
             List<BE_Cliente_064RB> lista = new();
             foreach (DataRow fila in dt.Rows)
             {
@@ -48,7 +58,7 @@ namespace MAP_064RB.Negocio_064RB
                 Convert.ToString(fila[3]),
                 Convert.ToString(fila[4]),
                 Convert.ToDateTime(fila[5])
-            );
+                );
         }
     }
 }

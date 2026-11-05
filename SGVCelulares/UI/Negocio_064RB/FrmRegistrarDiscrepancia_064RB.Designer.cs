@@ -52,7 +52,7 @@
             // 
             // txtCantidadFaltante
             // 
-            txtCantidadFaltante.Location = new Point(262, 71);
+            txtCantidadFaltante.Location = new Point(158, 71);
             txtCantidadFaltante.Name = "txtCantidadFaltante";
             txtCantidadFaltante.Size = new Size(115, 23);
             txtCantidadFaltante.TabIndex = 20;
@@ -85,7 +85,7 @@
             // 
             // txtCantidadDanada
             // 
-            txtCantidadDanada.Location = new Point(262, 100);
+            txtCantidadDanada.Location = new Point(12, 71);
             txtCantidadDanada.Name = "txtCantidadDanada";
             txtCantidadDanada.Size = new Size(115, 23);
             txtCantidadDanada.TabIndex = 22;
@@ -104,7 +104,7 @@
             lblCantidadFaltante.AutoSize = true;
             lblCantidadFaltante.Font = new Font("Segoe UI", 9F);
             lblCantidadFaltante.ForeColor = SystemColors.Menu;
-            lblCantidadFaltante.Location = new Point(158, 74);
+            lblCantidadFaltante.Location = new Point(158, 53);
             lblCantidadFaltante.Name = "lblCantidadFaltante";
             lblCantidadFaltante.Size = new Size(98, 15);
             lblCantidadFaltante.TabIndex = 24;
@@ -115,7 +115,7 @@
             lblCantidadDanada.AutoSize = true;
             lblCantidadDanada.Font = new Font("Segoe UI", 9F);
             lblCantidadDanada.ForeColor = SystemColors.Menu;
-            lblCantidadDanada.Location = new Point(158, 103);
+            lblCantidadDanada.Location = new Point(12, 53);
             lblCantidadDanada.Name = "lblCantidadDanada";
             lblCantidadDanada.Size = new Size(97, 15);
             lblCantidadDanada.TabIndex = 25;

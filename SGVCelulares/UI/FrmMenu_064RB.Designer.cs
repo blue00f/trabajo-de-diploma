@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             pnlTopbar = new Panel();
+            lblRol = new Label();
             lblBienvenida = new Label();
             cboIdioma = new ComboBox();
             lblTituloTopbar = new Label();
@@ -49,6 +50,7 @@
             submenuRecibirMercaderia = new ToolStripMenuItem();
             menuReportes = new ToolStripMenuItem();
             submenuReporteVentas = new ToolStripMenuItem();
+            submenuReporteControlStock = new ToolStripMenuItem();
             menuAyuda = new ToolStripMenuItem();
             menuSesion = new ToolStripMenuItem();
             submenuRelogin = new ToolStripMenuItem();
@@ -64,7 +66,6 @@
             lblHashCommit = new Label();
             lblUltimoCommit = new Label();
             lblRama = new Label();
-            submenuReporteControlStock = new ToolStripMenuItem();
             pnlTopbar.SuspendLayout();
             menuStrip1.SuspendLayout();
             pnlContenido.SuspendLayout();
@@ -73,6 +74,7 @@
             // pnlTopbar
             // 
             pnlTopbar.BackColor = Color.FromArgb(21, 32, 48);
+            pnlTopbar.Controls.Add(lblRol);
             pnlTopbar.Controls.Add(lblBienvenida);
             pnlTopbar.Controls.Add(cboIdioma);
             pnlTopbar.Controls.Add(lblTituloTopbar);
@@ -83,6 +85,17 @@
             pnlTopbar.Name = "pnlTopbar";
             pnlTopbar.Size = new Size(960, 81);
             pnlTopbar.TabIndex = 0;
+            // 
+            // lblRol
+            // 
+            lblRol.AutoSize = true;
+            lblRol.Font = new Font("Segoe UI", 11F);
+            lblRol.ForeColor = Color.FromArgb(226, 232, 240);
+            lblRol.Location = new Point(473, 44);
+            lblRol.Name = "lblRol";
+            lblRol.Size = new Size(31, 20);
+            lblRol.TabIndex = 5;
+            lblRol.Text = "Rol";
             // 
             // lblBienvenida
             // 
@@ -182,7 +195,7 @@
             // submenuVenta
             // 
             submenuVenta.Name = "submenuVenta";
-            submenuVenta.Size = new Size(180, 22);
+            submenuVenta.Size = new Size(146, 22);
             submenuVenta.Text = "Realizar venta";
             submenuVenta.Click += submenuVenta_Click;
             // 
@@ -238,9 +251,16 @@
             // submenuReporteVentas
             // 
             submenuReporteVentas.Name = "submenuReporteVentas";
-            submenuReporteVentas.Size = new Size(180, 22);
+            submenuReporteVentas.Size = new Size(145, 22);
             submenuReporteVentas.Text = "Ventas";
             submenuReporteVentas.Click += submenuReporteVentas_Click;
+            // 
+            // submenuReporteControlStock
+            // 
+            submenuReporteControlStock.Name = "submenuReporteControlStock";
+            submenuReporteControlStock.Size = new Size(145, 22);
+            submenuReporteControlStock.Text = "Control stock";
+            submenuReporteControlStock.Click += submenuReporteControlStock_Click;
             // 
             // menuAyuda
             // 
@@ -258,21 +278,21 @@
             // submenuRelogin
             // 
             submenuRelogin.Name = "submenuRelogin";
-            submenuRelogin.Size = new Size(180, 22);
+            submenuRelogin.Size = new Size(149, 22);
             submenuRelogin.Text = "Re-login";
             submenuRelogin.Click += submenuRelogin_Click;
             // 
             // submenuCambiarClave
             // 
             submenuCambiarClave.Name = "submenuCambiarClave";
-            submenuCambiarClave.Size = new Size(180, 22);
+            submenuCambiarClave.Size = new Size(149, 22);
             submenuCambiarClave.Text = "Cambiar clave";
             submenuCambiarClave.Click += submenuCambiarClave_Click;
             // 
             // submenuCerrarSesion
             // 
             submenuCerrarSesion.Name = "submenuCerrarSesion";
-            submenuCerrarSesion.Size = new Size(180, 22);
+            submenuCerrarSesion.Size = new Size(149, 22);
             submenuCerrarSesion.Text = "Cerrar sesión";
             submenuCerrarSesion.Click += submenuCerrarSesion_Click;
             // 
@@ -366,13 +386,6 @@
             lblRama.TabIndex = 5;
             lblRama.Text = "Rama actual:";
             // 
-            // submenuReporteControlStock
-            // 
-            submenuReporteControlStock.Name = "submenuReporteControlStock";
-            submenuReporteControlStock.Size = new Size(180, 22);
-            submenuReporteControlStock.Text = "Control stock";
-            submenuReporteControlStock.Click += submenuReporteControlStock_Click;
-            // 
             // FrmMenu_064RB
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
@@ -438,5 +451,6 @@
         private ToolStripMenuItem submenuRecibirMercaderia;
         private ToolStripMenuItem submenuReporteVentas;
         private ToolStripMenuItem submenuReporteControlStock;
+        private Label lblRol;
     }
 }

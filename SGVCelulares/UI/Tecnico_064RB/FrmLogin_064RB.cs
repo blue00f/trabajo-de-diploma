@@ -21,6 +21,7 @@ namespace UI
         {
             txtPassword.UseSystemPasswordChar = true;
             bll_usuario = new BLL_Usuario_064RB();
+            cboIdioma_SelectedIndexChanged(this, e);
         }
         public void RestringirProximoLoginA(string nombreUsuario)
         {

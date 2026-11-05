@@ -47,6 +47,10 @@
             btnAgregarImei = new Button();
             lstImeis = new ListBox();
             btnQuitarImei = new Button();
+            lblDiscrepanciaTexto = new Label();
+            lblCantidadConformeTexto = new Label();
+            lblCantidadPedidaTexto = new Label();
+            lblProductoTexto = new Label();
             ((System.ComponentModel.ISupportInitialize)grillaOrdenes).BeginInit();
             SuspendLayout();
             // 
@@ -124,7 +128,7 @@
             btnRegistrarDiscrepancia.BackColor = Color.FromArgb(45, 60, 82);
             btnRegistrarDiscrepancia.FlatStyle = FlatStyle.Popup;
             btnRegistrarDiscrepancia.ForeColor = SystemColors.Menu;
-            btnRegistrarDiscrepancia.Location = new Point(899, 202);
+            btnRegistrarDiscrepancia.Location = new Point(899, 256);
             btnRegistrarDiscrepancia.Name = "btnRegistrarDiscrepancia";
             btnRegistrarDiscrepancia.Size = new Size(200, 35);
             btnRegistrarDiscrepancia.TabIndex = 20;
@@ -137,7 +141,7 @@
             lblProducto.AutoSize = true;
             lblProducto.Font = new Font("Segoe UI", 9F);
             lblProducto.ForeColor = SystemColors.Menu;
-            lblProducto.Location = new Point(899, 68);
+            lblProducto.Location = new Point(1043, 59);
             lblProducto.Name = "lblProducto";
             lblProducto.Size = new Size(56, 15);
             lblProducto.TabIndex = 29;
@@ -148,7 +152,7 @@
             lblCantidadPedida.AutoSize = true;
             lblCantidadPedida.Font = new Font("Segoe UI", 9F);
             lblCantidadPedida.ForeColor = SystemColors.Menu;
-            lblCantidadPedida.Location = new Point(899, 101);
+            lblCantidadPedida.Location = new Point(1043, 91);
             lblCantidadPedida.Name = "lblCantidadPedida";
             lblCantidadPedida.Size = new Size(94, 15);
             lblCantidadPedida.TabIndex = 30;
@@ -159,7 +163,7 @@
             lblDiscrepancia.AutoSize = true;
             lblDiscrepancia.Font = new Font("Segoe UI", 9F);
             lblDiscrepancia.ForeColor = SystemColors.Menu;
-            lblDiscrepancia.Location = new Point(899, 172);
+            lblDiscrepancia.Location = new Point(1043, 162);
             lblDiscrepancia.Name = "lblDiscrepancia";
             lblDiscrepancia.Size = new Size(74, 15);
             lblDiscrepancia.TabIndex = 32;
@@ -170,7 +174,7 @@
             lblCantidadConforme.AutoSize = true;
             lblCantidadConforme.Font = new Font("Segoe UI", 9F);
             lblCantidadConforme.ForeColor = SystemColors.Menu;
-            lblCantidadConforme.Location = new Point(899, 139);
+            lblCantidadConforme.Location = new Point(1043, 129);
             lblCantidadConforme.Name = "lblCantidadConforme";
             lblCantidadConforme.Size = new Size(110, 15);
             lblCantidadConforme.TabIndex = 31;
@@ -192,7 +196,7 @@
             lblDatosRecepcion.AutoSize = true;
             lblDatosRecepcion.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblDatosRecepcion.ForeColor = SystemColors.Menu;
-            lblDatosRecepcion.Location = new Point(899, 10);
+            lblDatosRecepcion.Location = new Point(908, 9);
             lblDatosRecepcion.Name = "lblDatosRecepcion";
             lblDatosRecepcion.Size = new Size(200, 30);
             lblDatosRecepcion.TabIndex = 34;
@@ -203,7 +207,7 @@
             lblImei.AutoSize = true;
             lblImei.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblImei.ForeColor = SystemColors.Menu;
-            lblImei.Location = new Point(1118, 10);
+            lblImei.Location = new Point(1216, 9);
             lblImei.Name = "lblImei";
             lblImei.Size = new Size(58, 30);
             lblImei.TabIndex = 35;
@@ -214,7 +218,7 @@
             lblImeis.AutoSize = true;
             lblImeis.Font = new Font("Segoe UI", 9F);
             lblImeis.ForeColor = SystemColors.Menu;
-            lblImeis.Location = new Point(1118, 60);
+            lblImeis.Location = new Point(1216, 59);
             lblImeis.Name = "lblImeis";
             lblImeis.Size = new Size(105, 15);
             lblImeis.TabIndex = 37;
@@ -222,7 +226,7 @@
             // 
             // txtImei
             // 
-            txtImei.Location = new Point(1118, 78);
+            txtImei.Location = new Point(1216, 77);
             txtImei.Name = "txtImei";
             txtImei.Size = new Size(216, 23);
             txtImei.TabIndex = 36;
@@ -233,7 +237,7 @@
             btnAgregarImei.BackColor = Color.FromArgb(45, 60, 82);
             btnAgregarImei.FlatStyle = FlatStyle.Popup;
             btnAgregarImei.ForeColor = SystemColors.Menu;
-            btnAgregarImei.Location = new Point(1118, 119);
+            btnAgregarImei.Location = new Point(1216, 118);
             btnAgregarImei.Name = "btnAgregarImei";
             btnAgregarImei.Size = new Size(105, 35);
             btnAgregarImei.TabIndex = 38;
@@ -245,7 +249,7 @@
             // 
             lstImeis.FormattingEnabled = true;
             lstImeis.ItemHeight = 15;
-            lstImeis.Location = new Point(1118, 172);
+            lstImeis.Location = new Point(1216, 171);
             lstImeis.Name = "lstImeis";
             lstImeis.Size = new Size(216, 139);
             lstImeis.TabIndex = 39;
@@ -255,7 +259,7 @@
             btnQuitarImei.BackColor = Color.FromArgb(45, 60, 82);
             btnQuitarImei.FlatStyle = FlatStyle.Popup;
             btnQuitarImei.ForeColor = SystemColors.Menu;
-            btnQuitarImei.Location = new Point(1229, 119);
+            btnQuitarImei.Location = new Point(1327, 118);
             btnQuitarImei.Name = "btnQuitarImei";
             btnQuitarImei.Size = new Size(105, 35);
             btnQuitarImei.TabIndex = 40;
@@ -263,12 +267,60 @@
             btnQuitarImei.UseVisualStyleBackColor = false;
             btnQuitarImei.Click += btnQuitarImei_Click;
             // 
+            // lblDiscrepanciaTexto
+            // 
+            lblDiscrepanciaTexto.AutoSize = true;
+            lblDiscrepanciaTexto.Font = new Font("Segoe UI", 9F);
+            lblDiscrepanciaTexto.ForeColor = SystemColors.Menu;
+            lblDiscrepanciaTexto.Location = new Point(908, 162);
+            lblDiscrepanciaTexto.Name = "lblDiscrepanciaTexto";
+            lblDiscrepanciaTexto.Size = new Size(74, 15);
+            lblDiscrepanciaTexto.TabIndex = 44;
+            lblDiscrepanciaTexto.Text = "Discrepancia";
+            // 
+            // lblCantidadConformeTexto
+            // 
+            lblCantidadConformeTexto.AutoSize = true;
+            lblCantidadConformeTexto.Font = new Font("Segoe UI", 9F);
+            lblCantidadConformeTexto.ForeColor = SystemColors.Menu;
+            lblCantidadConformeTexto.Location = new Point(908, 129);
+            lblCantidadConformeTexto.Name = "lblCantidadConformeTexto";
+            lblCantidadConformeTexto.Size = new Size(110, 15);
+            lblCantidadConformeTexto.TabIndex = 43;
+            lblCantidadConformeTexto.Text = "Cantidad conforme";
+            // 
+            // lblCantidadPedidaTexto
+            // 
+            lblCantidadPedidaTexto.AutoSize = true;
+            lblCantidadPedidaTexto.Font = new Font("Segoe UI", 9F);
+            lblCantidadPedidaTexto.ForeColor = SystemColors.Menu;
+            lblCantidadPedidaTexto.Location = new Point(908, 91);
+            lblCantidadPedidaTexto.Name = "lblCantidadPedidaTexto";
+            lblCantidadPedidaTexto.Size = new Size(94, 15);
+            lblCantidadPedidaTexto.TabIndex = 42;
+            lblCantidadPedidaTexto.Text = "Cantidad pedida";
+            // 
+            // lblProductoTexto
+            // 
+            lblProductoTexto.AutoSize = true;
+            lblProductoTexto.Font = new Font("Segoe UI", 9F);
+            lblProductoTexto.ForeColor = SystemColors.Menu;
+            lblProductoTexto.Location = new Point(908, 59);
+            lblProductoTexto.Name = "lblProductoTexto";
+            lblProductoTexto.Size = new Size(56, 15);
+            lblProductoTexto.TabIndex = 41;
+            lblProductoTexto.Text = "Producto";
+            // 
             // FrmRecibirMercaderia_064RB
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(30, 42, 58);
-            ClientSize = new Size(1354, 435);
+            ClientSize = new Size(1442, 435);
+            Controls.Add(lblDiscrepanciaTexto);
+            Controls.Add(lblCantidadConformeTexto);
+            Controls.Add(lblCantidadPedidaTexto);
+            Controls.Add(lblProductoTexto);
             Controls.Add(btnQuitarImei);
             Controls.Add(lstImeis);
             Controls.Add(btnAgregarImei);
@@ -316,5 +368,9 @@
         private Button btnAgregarImei;
         private ListBox lstImeis;
         private Button btnQuitarImei;
+        private Label lblDiscrepanciaTexto;
+        private Label lblCantidadConformeTexto;
+        private Label lblCantidadPedidaTexto;
+        private Label lblProductoTexto;
     }
 }

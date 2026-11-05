@@ -112,10 +112,20 @@ namespace DAL_064RB.Negocio_064RB
             return com.Consultar_064RB("select p.Sku_064RB, p.Marca_064RB, p.Modelo_064RB, p.Precio_064RB, p.Descripcion_064RB, p.StockMinimo_064RB, c.Almacenamiento_064RB, c.Color_064RB from Producto_064RB p" +
                 " inner join Celular_064RB c on p.Sku_064RB = c.Sku_064RB where p.Activo_064RB=1");
         }
+        public DataTable ConsultarCelularesTodos_064RB()
+        {
+            return com.Consultar_064RB("select p.Sku_064RB, p.Marca_064RB, p.Modelo_064RB, p.Precio_064RB, p.Descripcion_064RB, p.StockMinimo_064RB, c.Almacenamiento_064RB, c.Color_064RB from Producto_064RB p" +
+                " inner join Celular_064RB c on p.Sku_064RB = c.Sku_064RB");
+        }
         public DataTable ConsultarAccesorios_064RB()
         {
             return com.Consultar_064RB("select p.Sku_064RB, p.Marca_064RB, p.Modelo_064RB, p.Precio_064RB, p.Descripcion_064RB, p.StockMinimo_064RB, a.Categoria_064RB, a.Stock_064RB from Producto_064RB p" +
                 " inner join Accesorio_064RB a on p.Sku_064RB = a.Sku_064RB where p.Activo_064RB=1");
+        }
+        public DataTable ConsultarAccesoriosTodos_064RB()
+        {
+            return com.Consultar_064RB("select p.Sku_064RB, p.Marca_064RB, p.Modelo_064RB, p.Precio_064RB, p.Descripcion_064RB, p.StockMinimo_064RB, a.Categoria_064RB, a.Stock_064RB from Producto_064RB p" +
+                " inner join Accesorio_064RB a on p.Sku_064RB = a.Sku_064RB");
         }
         public DataTable ConsultarCelularPorSku_064RB(string sku)
         {

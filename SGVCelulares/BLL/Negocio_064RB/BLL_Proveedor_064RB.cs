@@ -18,7 +18,7 @@ namespace BLL_064RB.Negocio_064RB
         }
         public void Agregar_064RB(BE_Proveedor_064RB proveedor)
         { 
-            if (Consultar_064RB().Any(p => p.Cuit_064RB == proveedor.Cuit_064RB)) throw new Exception("El proveedor está repetido!");
+            if (map_proveedor.ConsultarTodos_064RB().Any(p => p.Cuit_064RB == proveedor.Cuit_064RB)) throw new Exception("El proveedor está repetido!");
             map_proveedor.Agregar_064RB(proveedor);
             bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB, DateTime.Now, "ABM proveedores", "Crear proveedor", (int)Criticidad_064RB.Media));
             bll_dv.ActualizarDV_064RB("Proveedor_064RB");
@@ -35,7 +35,7 @@ namespace BLL_064RB.Negocio_064RB
             bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB, DateTime.Now, "ABM proveedores", "Modificar proveedor", (int)Criticidad_064RB.Media));
             bll_dv.ActualizarDV_064RB("Proveedor_064RB");
         }
-        public List<BE_Proveedor_064RB> Consultar_064RB() => map_proveedor.Consultar();
+        public List<BE_Proveedor_064RB> Consultar_064RB() => map_proveedor.Consultar_064RB();
         public List<object> ConsultarGrilla_064RB()
         {
             var consulta = from s in Consultar_064RB()

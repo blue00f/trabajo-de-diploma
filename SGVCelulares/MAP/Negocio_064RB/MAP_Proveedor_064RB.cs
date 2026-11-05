@@ -14,10 +14,20 @@ namespace MAP_064RB.Negocio_064RB
         public void Agregar_064RB(BE_Proveedor_064RB proveedor) => dao_proveedor.Agregar_064B(proveedor.Cuit_064RB, proveedor.RazonSocial_064RB);
         public void Borrar_064RB(BE_Proveedor_064RB proveedor) => dao_proveedor.Borrar_064RB(proveedor.Cuit_064RB);
         public void Modificar_064RB(BE_Proveedor_064RB proveedor) => dao_proveedor.Modificar_064RB(proveedor.Cuit_064RB, proveedor.RazonSocial_064RB);
-        public List<BE_Proveedor_064RB> Consultar()
+        public List<BE_Proveedor_064RB> Consultar_064RB()
         {
             List<BE_Proveedor_064RB> lista = new();
             DataTable dt = dao_proveedor.Consultar_064RB();
+            foreach (DataRow fila in dt.Rows)
+            {
+                lista.Add(Mapear_064RB(fila));
+            }
+            return lista;
+        }
+        public List<BE_Proveedor_064RB> ConsultarTodos_064RB()
+        {
+            List<BE_Proveedor_064RB> lista = new();
+            DataTable dt = dao_proveedor.ConsultarTodos_064RB();
             foreach (DataRow fila in dt.Rows)
             {
                 lista.Add(Mapear_064RB(fila));

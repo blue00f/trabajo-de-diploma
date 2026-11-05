@@ -1,5 +1,6 @@
 ﻿using BE_064RB;
 using BLL_064RB.Negocio_064RB;
+using BLL_064RB.Tecnico_064RB;
 using Servicio_064RB;
 using System;
 using System.Collections.Generic;
@@ -13,24 +14,27 @@ using System.Windows.Forms;
 
 namespace UI_064RB
 {
-    public partial class FrmRegistrarDiscrepancia_064RB : Form
+    public partial class FrmRegistrarDiscrepancia_064RB : Form, IObservadorIdioma_064RB
     {
         BLL_Discrepancia_064RB bll_discrepancia;
         BE_RemitoCompra_064RB remito;
         BE_Discrepancia_064RB? discrepanciaActual;
+        BLL_Idioma_064RB bll_idioma = new();
         public BE_Discrepancia_064RB? DiscrepanciaCargada_064RB { get; private set; }
         public FrmRegistrarDiscrepancia_064RB(BE_RemitoCompra_064RB remito, BE_Discrepancia_064RB? discrepanciaActual)
         {
             InitializeComponent();
             this.remito = remito;
             this.discrepanciaActual = discrepanciaActual;
+            bll_idioma.Suscribir_064RB(this);
+            ActualizarIdioma_064RB();
         }
 
         private void FrmRegistrarDiscrepancia_064RB_Load(object sender, EventArgs e)
         {
             btnAceptar.Enabled = TienePermiso("Registrar Discrepancia");
             bll_discrepancia = new();
-            lblCantidadPedida.Text = $"Cantidad pedida: {remito.OrdenCompra_064RB.SolicitudCompra_064RB.Cantidad_064RB}";
+            lblCantidadPedida.Text = $"{bll_idioma.Traducir_064RB("FrmRegistrarDiscrepancia.lblCantidadPedida")}: {remito.OrdenCompra_064RB.SolicitudCompra_064RB.Cantidad_064RB}";
             if (discrepanciaActual != null)
             {
                 txtCantidadFaltante.Text = discrepanciaActual.CantidadFaltante_064RB.ToString();
@@ -65,6 +69,17 @@ namespace UI_064RB
                     return true;
             }
             return false;
+        }
+
+        public void ActualizarIdioma_064RB()
+        {
+            this.Text = bll_idioma.Traducir_064RB("FrmRegistrarDiscrepancia.Form");
+            lblCantidadFaltante.Text = bll_idioma.Traducir_064RB("FrmRegistrarDiscrepancia.lblCantidadFaltante");
+            lblCantidadDanada.Text = bll_idioma.Traducir_064RB("FrmRegistrarDiscrepancia.lblCantidadDanada");
+            lblObservaciones.Text = bll_idioma.Traducir_064RB("FrmRegistrarDiscrepancia.lblObservaciones");
+            btnAceptar.Text = bll_idioma.Traducir_064RB("FrmRegistrarDiscrepancia.btnAceptar");
+            btnCancelar.Text = bll_idioma.Traducir_064RB("FrmRegistrarDiscrepancia.btnCancelar");
+
         }
     }
 }

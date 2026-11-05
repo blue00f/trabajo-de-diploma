@@ -1,4 +1,6 @@
 ﻿using BLL_064RB.Negocio_064RB;
+using BLL_064RB.Tecnico_064RB;
+using Servicio_064RB;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,12 +14,15 @@ using System.Windows.Forms;
 
 namespace UI_064RB.Negocio_064RB
 {
-    public partial class FrmReporteVentas_064RB : Form
+    public partial class FrmReporteVentas_064RB : Form, IObservadorIdioma_064RB
     {
         BLL_Reporte_064RB bll_reporte;
+        BLL_Idioma_064RB bll_idioma = new();
         public FrmReporteVentas_064RB()
         {
             InitializeComponent();
+            bll_idioma.Suscribir_064RB(this);
+            ActualizarIdioma_064RB();
         }
         private void FrmReporteVentas_064RB_Load(object sender, EventArgs e)
         {
@@ -47,5 +52,14 @@ namespace UI_064RB.Negocio_064RB
             }
         }
         private void btnSalir_Click(object sender, EventArgs e) => this.Close();
+
+        public void ActualizarIdioma_064RB()
+        {
+            this.Text = bll_idioma.Traducir_064RB("FrmReporteVentas.Form");
+            lblDesde.Text = bll_idioma.Traducir_064RB("FrmReporte.lblDesde");
+            lblHasta.Text = bll_idioma.Traducir_064RB("FrmReporte.lblHasta");
+            btnGenerar.Text = bll_idioma.Traducir_064RB("FrmReporte.btnGenerar");
+            btnSalir.Text = bll_idioma.Traducir_064RB("FrmReporte.btnSalir");
+        }
     }
 }

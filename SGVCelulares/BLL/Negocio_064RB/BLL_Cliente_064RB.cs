@@ -18,9 +18,8 @@ namespace BLL_064RB.Negocio_064RB
         }
         public void Agregar_064RB(BE_Cliente_064RB cliente)
         {
-            if (Consultar().Any(c => c.Dni_064RB == cliente.Dni_064RB)) throw new Exception("El cliente está repetido!");
+            if (map_cliente.ConsultarTodos_064RB().Any(c => c.Dni_064RB == cliente.Dni_064RB)) throw new Exception("El cliente está repetido!");
             map_cliente.Agregar_064RB(cliente);
-
             SER_Usuario_064RB usu = SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB;
             bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(usu, DateTime.Now, "ABM clientes", "Crear cliente", (int)Criticidad_064RB.Media));
             bll_dv.ActualizarDV_064RB("Cliente_064RB");
@@ -40,7 +39,7 @@ namespace BLL_064RB.Negocio_064RB
             bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(usu, DateTime.Now, "ABM clientes", "Modificar cliente", (int)Criticidad_064RB.Media));
             bll_dv.ActualizarDV_064RB("Cliente_064RB");
         }
-        public List<BE_Cliente_064RB> Consultar() => map_cliente.Consultar();
+        public List<BE_Cliente_064RB> Consultar_064RB() => map_cliente.Consultar_064RB();
         public BE_Cliente_064RB ConsultarPorDni_064RB(string dni) => map_cliente.ConsultarPorDni_064RB(dni);
     }
 }

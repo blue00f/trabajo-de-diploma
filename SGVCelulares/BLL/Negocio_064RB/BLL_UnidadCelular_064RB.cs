@@ -18,6 +18,7 @@ namespace BLL_064RB.Negocio_064RB
         }
         public void Agregar_064RB(BE_UnidadCelular_064RB unidadC)
         {
+            if (map_unidadCelular.ConsultarTodos_064RB().Any(u => u.Imei_064RB == unidadC.Imei_064RB)) throw new Exception("El código IMEI está repetido!");
             map_unidadCelular.Agregar_064RB(unidadC);
             SER_Usuario_064RB usu = SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB;
             bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(usu, DateTime.Now, "ABM unidades de celulares", "Registrar unidad celular", (int)Criticidad_064RB.Media));

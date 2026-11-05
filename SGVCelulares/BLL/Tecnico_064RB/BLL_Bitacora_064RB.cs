@@ -26,6 +26,7 @@ namespace BLL_064RB.Tecnico_064RB
                            select new
                            {
                                Usuario = b.Usuario_064RB.NombreUsuario_064RB,
+                               Rol = b.Usuario_064RB.Rol_064RB.ToString(),
                                Fecha = b.Fecha_064RB.ToShortDateString(),
                                Hora = b.Fecha_064RB.ToString("HH:mm"),
                                Modulo = b.Modulo_064RB,
@@ -40,6 +41,7 @@ namespace BLL_064RB.Tecnico_064RB
                            select new
                            {
                                Usuario = b.Usuario_064RB.NombreUsuario_064RB,
+                               Rol = b.Usuario_064RB.Rol_064RB.ToString(),
                                Fecha = b.Fecha_064RB.ToShortDateString(),
                                Hora = b.Fecha_064RB.ToString("HH:mm"),
                                Modulo = b.Modulo_064RB,
@@ -86,6 +88,7 @@ namespace BLL_064RB.Tecnico_064RB
                             select new
                            {
                                 Usuario = bit.Usuario_064RB.NombreUsuario_064RB,
+                                Rol = bit.Usuario_064RB.Rol_064RB.ToString(),
                                 Fecha = bit.Fecha_064RB.ToShortDateString(),
                                 Hora = bit.Fecha_064RB.ToString("HH:mm"),
                                 Modulo = bit.Modulo_064RB,

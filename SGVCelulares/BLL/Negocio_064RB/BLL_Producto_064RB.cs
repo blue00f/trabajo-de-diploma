@@ -19,7 +19,7 @@ namespace BLL_064RB.Negocio_064RB
         public void AgregarCelular_064RB(BE_Celular_064RB celular)
         {
             if (celular.StockMinimo_064RB < 0) throw new Exception("El stock mínimo no puede ser negativo!");
-            if (Consultar_064RB().Any(p => p.Sku_064RB == celular.Sku_064RB)) throw new Exception("El celular está repetido!");
+            if (map_producto.ConsultarTodos_064RB().Any(p => p.Sku_064RB == celular.Sku_064RB)) throw new Exception("El celular está repetido!");
             map_producto.AgregarCelular_064RB(celular);
 
             SER_Usuario_064RB usu = SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB;
@@ -30,7 +30,7 @@ namespace BLL_064RB.Negocio_064RB
         public void AgregarAccesorio_064RB(BE_Accesorio_064RB accesorio)
         {
             if (accesorio.StockMinimo_064RB < 0) throw new Exception("El stock mínimo no puede ser negativo!");
-            if (Consultar_064RB().Any(p => p.Sku_064RB == accesorio.Sku_064RB)) throw new Exception("El accesorio está repetido!");
+            if (map_producto.ConsultarTodos_064RB().Any(p => p.Sku_064RB == accesorio.Sku_064RB)) throw new Exception("El accesorio está repetido!");
             map_producto.AgregarAccesorio_064RB(accesorio);
             SER_Usuario_064RB usu = SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB;
             bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(usu, DateTime.Now, "ABM productos", "Crear producto", (int)Criticidad_064RB.Media));

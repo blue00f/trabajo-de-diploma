@@ -15,21 +15,22 @@ namespace MAP_064RB.Negocio_064RB
             map_producto = new();
         }
 
-        public void Agregar_064RB(BE_UnidadCelular_064RB unidadC)
-        {
-            dao_unidadCelular.Agregar_064RB(unidadC.Imei_064RB, unidadC.Estado_064RB, unidadC.Celular_064RB.Sku_064RB);
-        }
-        public void Borrar_064RB(BE_UnidadCelular_064RB unidadC)
-        {
-            dao_unidadCelular.Borrar_064RB(unidadC.Imei_064RB);
-        }
-        public void Modificar_064RB(BE_UnidadCelular_064RB unidadC)
-        {
-            dao_unidadCelular.Modificar_064RB(unidadC.Estado_064RB, unidadC.Celular_064RB.Sku_064RB, unidadC.Imei_064RB);
-        }
+        public void Agregar_064RB(BE_UnidadCelular_064RB unidadC) => dao_unidadCelular.Agregar_064RB(unidadC.Imei_064RB, unidadC.Estado_064RB, unidadC.Celular_064RB.Sku_064RB);
+        public void Borrar_064RB(BE_UnidadCelular_064RB unidadC) => dao_unidadCelular.Borrar_064RB(unidadC.Imei_064RB);
+        public void Modificar_064RB(BE_UnidadCelular_064RB unidadC) => dao_unidadCelular.Modificar_064RB(unidadC.Estado_064RB, unidadC.Celular_064RB.Sku_064RB, unidadC.Imei_064RB);
         public List<BE_UnidadCelular_064RB> Consultar_064RB()
         {
             DataTable dt = dao_unidadCelular.Consultar_064RB();
+            List<BE_UnidadCelular_064RB> lista = new();
+            foreach (DataRow f in dt.Rows)
+            {
+                lista.Add(Mapear_064RB(f));
+            }
+            return lista;
+        }
+        public List<BE_UnidadCelular_064RB> ConsultarTodos_064RB()
+        {
+            DataTable dt = dao_unidadCelular.ConsultarTodos_064RB();
             List<BE_UnidadCelular_064RB> lista = new();
             foreach (DataRow f in dt.Rows)
             {

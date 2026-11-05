@@ -32,9 +32,8 @@ namespace DAL_064RB.Negocio_064RB
             };
             com.Ejecutar_064RB("UPDATE Proveedor_064RB SET RazonSocial_064RB=@razonSocial WHERE Cuit_064RB=@cuit", parametros);
         }
-        public DataTable Consultar_064RB()
-        {
-            return com.Consultar_064RB("select * from Proveedor_064RB where Activo_064RB=1");
-        }
+        public DataTable Consultar_064RB() => com.Consultar_064RB("select * from Proveedor_064RB where Activo_064RB=1");
+        public DataTable ConsultarTodos_064RB() => com.Consultar_064RB("select * from Proveedor_064RB");
+
     }
 }

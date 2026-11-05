@@ -26,11 +26,9 @@ namespace UI_064RB
             Mostrar(grillaProductos, bll_producto.ConsultarGrilla_064RB());
             radCelular.Checked = true;
 
-            SER_Usuario_064RB usuario = SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB;
-
-            btnAgregar.Enabled = usuario.Rol_064RB.TienePermiso("Crear Producto");
-            btnBorrar.Enabled = usuario.Rol_064RB.TienePermiso("Borrar Producto");
-            btnModificar.Enabled = usuario.Rol_064RB.TienePermiso("Modificar Producto");
+            btnAgregar.Enabled = SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB.Rol_064RB.TienePermiso("Crear Producto");
+            btnBorrar.Enabled = SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB.Rol_064RB.TienePermiso("Borrar Producto");
+            btnModificar.Enabled = SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB.Rol_064RB.TienePermiso("Modificar Producto");
         }
         private void Mostrar(DataGridView grilla, object datos)
         {
@@ -172,6 +170,7 @@ namespace UI_064RB
         {
             this.Text = bll_idioma.Traducir_064RB("FrmProductos.Form");
             lblProductos.Text = bll_idioma.Traducir_064RB("FrmProductos.lblProductos");
+            lblStockMinimo.Text = bll_idioma.Traducir_064RB("FrmProductos.lblStockMinimo");
             btnAgregar.Text = bll_idioma.Traducir_064RB("FrmProductos.btnAgregar");
             btnBorrar.Text = bll_idioma.Traducir_064RB("FrmProductos.btnBorrar");
             btnModificar.Text = bll_idioma.Traducir_064RB("FrmProductos.btnModificar");

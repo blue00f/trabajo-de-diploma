@@ -198,18 +198,6 @@ namespace UI
             grilla.DataSource = datos;
             TraducirColumnas(grilla);
         }
-
-        private void TraducirColumnas(DataGridView grilla)
-        {
-            if (grilla.Columns.Count == 0) return;
-
-            grilla.Columns["Usuario"].HeaderText = bll_idioma.Traducir_064RB("FrmBitacora.colUsuario");
-            grilla.Columns["Fecha"].HeaderText = bll_idioma.Traducir_064RB("FrmBitacora.colFecha");
-            grilla.Columns["Hora"].HeaderText = bll_idioma.Traducir_064RB("FrmBitacora.colHora");
-            grilla.Columns["Modulo"].HeaderText = bll_idioma.Traducir_064RB("FrmBitacora.colModulo");
-            grilla.Columns["Evento"].HeaderText = bll_idioma.Traducir_064RB("FrmBitacora.colEvento");
-            grilla.Columns["Criticidad"].HeaderText = bll_idioma.Traducir_064RB("FrmBitacora.colCriticidad");
-        }
         private void btnSalir_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -307,7 +295,6 @@ namespace UI
                 {
                     GuardarPdf(columnasVisibles, filas, saveDialog);
                     AbrirPdf(saveDialog.FileName);
-                    MessageBox.Show("PDF generado correctamente!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             catch (Exception ex)
@@ -324,7 +311,7 @@ namespace UI
                     page.Margin(20);
                     page.Header()
                         .Text("Reporte de Bitácora")
-                        .FontSize(18)
+                        .FontSize(11)
                         .Bold();
 
                     page.Content().Table(table =>
@@ -388,7 +375,18 @@ namespace UI
             btnSalir.Text = bll_idioma.Traducir_064RB("FrmBitacora.btnSalir");
             TraducirColumnas(grillaBitacora);
         }
+        private void TraducirColumnas(DataGridView grilla)
+        {
+            if (grilla.Columns.Count == 0) return;
 
+            grilla.Columns["Usuario"].HeaderText = bll_idioma.Traducir_064RB("FrmBitacora.colUsuario");
+            grilla.Columns["Rol"].HeaderText = bll_idioma.Traducir_064RB("FrmBitacora.colRol");
+            grilla.Columns["Fecha"].HeaderText = bll_idioma.Traducir_064RB("FrmBitacora.colFecha");
+            grilla.Columns["Hora"].HeaderText = bll_idioma.Traducir_064RB("FrmBitacora.colHora");
+            grilla.Columns["Modulo"].HeaderText = bll_idioma.Traducir_064RB("FrmBitacora.colModulo");
+            grilla.Columns["Evento"].HeaderText = bll_idioma.Traducir_064RB("FrmBitacora.colEvento");
+            grilla.Columns["Criticidad"].HeaderText = bll_idioma.Traducir_064RB("FrmBitacora.colCriticidad");
+        }
         protected override void OnFormClosed(FormClosedEventArgs e)
         {
             bll_idioma.Desuscribir_064RB(this);

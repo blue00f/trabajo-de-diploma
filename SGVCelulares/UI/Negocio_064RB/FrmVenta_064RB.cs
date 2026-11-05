@@ -1,6 +1,8 @@
 ﻿using BE_064RB;
 using BLL_064RB.Negocio_064RB;
+using BLL_064RB.Tecnico_064RB;
 using Microsoft.VisualBasic;
+using Servicio_064RB;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,9 +16,10 @@ using System.Windows.Forms;
 
 namespace UI_064RB
 {
-    public partial class FrmVenta_064RB : Form
+    public partial class FrmVenta_064RB : Form, IObservadorIdioma_064RB
     {
         int ultimaVentaRegistrada = 0;
+        BLL_Idioma_064RB bll_idioma = new();
         BLL_Comprobante_064RB bll_comprobante;
 
         BLL_Producto_064RB bll_productos;
@@ -26,6 +29,8 @@ namespace UI_064RB
         public FrmVenta_064RB()
         {
             InitializeComponent();
+            bll_idioma.Suscribir_064RB(this);
+            ActualizarIdioma_064RB();
         }
 
         private void FrmVenta_064RB_Load(object sender, EventArgs e)
@@ -47,6 +52,9 @@ namespace UI_064RB
                     grilla.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill; ;
                 }
             }
+
+            btnProcesarPago.Enabled = SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB.Rol_064RB.TienePermiso("Procesar Pago");
+            btnEmitirComprobante.Enabled = SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB.Rol_064RB.TienePermiso("Emitir Comprobante de Venta");
             cbxFormaPago.Items.AddRange(BLL_Venta_064RB.FormasPago);
             cbxTipo.Items.Add("Celular");
             cbxTipo.Items.Add("Accesorio");
@@ -56,6 +64,7 @@ namespace UI_064RB
         {
             grilla.DataSource = null;
             grilla.DataSource = datos;
+            TraducirGrillaProducto(grillaProductos);
         }
 
         private void btnBuscarCliente_Click(object sender, EventArgs e)
@@ -108,6 +117,7 @@ namespace UI_064RB
             grillaDetalleVenta.DataSource = null;
             grillaDetalleVenta.DataSource = bll_detalle.ConsultarGrilla_064RB(venta.Detalle_064RB);
             lblSubtotal.Text = venta.MontoTotal_064RB.ToString("C2");
+            TraducirGrillaDetalle(grillaDetalleVenta);
         }
         private void btnFiltrar_Click(object sender, EventArgs e)
         {
@@ -171,7 +181,7 @@ namespace UI_064RB
             btnProcesarPago.Enabled = true;
             btnCancelar.Enabled = !pagado;
             btnEmitirComprobante.Enabled = ultimaVentaRegistrada != 0;
-            lblUltimaVenta.Text = ultimaVentaRegistrada != 0 ? $"Última venta registrada: N° {ultimaVentaRegistrada}" : "";
+            lblUltimaVenta.Text = ultimaVentaRegistrada != 0 ? $"{ultimaVentaRegistrada}" : "";
         }
         private void btnCancelar_Click(object sender, EventArgs e)
         {
@@ -216,5 +226,59 @@ namespace UI_064RB
             }
         }
         private void btnSalir_Click(object sender, EventArgs e) => this.Close();
+
+        public void ActualizarIdioma_064RB()
+        {
+            this.Text = bll_idioma.Traducir_064RB("FrmVenta.Form");
+            lblProductos.Text = bll_idioma.Traducir_064RB("FrmVenta.lblProductos");
+            lblSku.Text = bll_idioma.Traducir_064RB("FrmVenta.lblSku");
+            lblMarca.Text = bll_idioma.Traducir_064RB("FrmVenta.lblMarca");
+            lblModelo.Text = bll_idioma.Traducir_064RB("FrmVenta.lblModelo");
+            lblColor.Text = bll_idioma.Traducir_064RB("FrmVenta.lblColor");
+            lblAlmacenamiento.Text = bll_idioma.Traducir_064RB("FrmVenta.lblAlmacenamiento");
+            lblCategoria.Text = bll_idioma.Traducir_064RB("FrmVenta.lblCategoria");
+            lblPrecioMax.Text = bll_idioma.Traducir_064RB("FrmVenta.lblPrecioMax");
+            lblTipo.Text = bll_idioma.Traducir_064RB("FrmVenta.lblTipo");
+            btnFiltrar.Text = bll_idioma.Traducir_064RB("FrmVenta.btnFiltrar");
+            btnAgregarProducto.Text = bll_idioma.Traducir_064RB("FrmVenta.btnAgregarProducto");
+            btnQuitarProducto.Text = bll_idioma.Traducir_064RB("FrmVenta.btnQuitarProducto");
+            lblDetalleVenta.Text = bll_idioma.Traducir_064RB("FrmVenta.lblDetalleVenta");
+            btnProcesarPago.Text = bll_idioma.Traducir_064RB("FrmVenta.btnProcesarPago");
+            btnEmitirComprobante.Text = bll_idioma.Traducir_064RB("FrmVenta.btnEmitirComprobante");
+            btnCancelar.Text = bll_idioma.Traducir_064RB("FrmVenta.btnCancelar");
+            btnSalir.Text = bll_idioma.Traducir_064RB("FrmVenta.btnSalir");
+            lblSubtotalTitulo.Text = bll_idioma.Traducir_064RB("FrmVenta.lblSubtotalTitulo");
+            lblSeccionCliente.Text = bll_idioma.Traducir_064RB("FrmVenta.lblSeccionCliente");
+            lblDni.Text = bll_idioma.Traducir_064RB("FrmVenta.lblDni");
+            lblClienteTitulo.Text = bll_idioma.Traducir_064RB("FrmVenta.lblClienteTitulo");
+            lblFormaPago.Text = bll_idioma.Traducir_064RB("FrmVenta.lblFormaPago");
+            lblUltimaVentaTexto.Text = bll_idioma.Traducir_064RB("FrmVenta.lblUltimaVentaTexto");
+            btnBuscarCliente.Text = bll_idioma.Traducir_064RB("FrmVenta.btnBuscar");
+        }
+        private void TraducirGrillaProducto(DataGridView grilla)
+        {
+            if (grilla.Columns.Count == 0) return;
+            grilla.Columns["SKU"].HeaderText = bll_idioma.Traducir_064RB("FrmVenta.colSku");
+            grilla.Columns["Marca"].HeaderText = bll_idioma.Traducir_064RB("FrmVenta.colMarca");
+            grilla.Columns["Modelo"].HeaderText = bll_idioma.Traducir_064RB("FrmVenta.colModelo");
+            grilla.Columns["Precio"].HeaderText = bll_idioma.Traducir_064RB("FrmVenta.colPrecio");
+            grilla.Columns["Descripcion"].HeaderText = bll_idioma.Traducir_064RB("FrmVenta.colDescripcion");
+            grilla.Columns["Tipo"].HeaderText = bll_idioma.Traducir_064RB("FrmVenta.colTipo");
+            grilla.Columns["Almacenamiento"].HeaderText = bll_idioma.Traducir_064RB("FrmVenta.colAlmacenamiento");
+            grilla.Columns["Color"].HeaderText = bll_idioma.Traducir_064RB("FrmVenta.colColor");
+            grilla.Columns["Categoria"].HeaderText = bll_idioma.Traducir_064RB("FrmVenta.colCategoria");
+            grilla.Columns["Stock"].HeaderText = bll_idioma.Traducir_064RB("FrmVenta.colStock");
+            grilla.Columns["StockMinimo"].HeaderText = bll_idioma.Traducir_064RB("FrmVenta.colStockMinimo");
+        }
+        private void TraducirGrillaDetalle(DataGridView grilla)
+        {
+            if (grilla.Columns.Count == 0) return;
+            grilla.Columns["SKU"].HeaderText = bll_idioma.Traducir_064RB("FrmVenta.colSkuDetalle");
+            grilla.Columns["Marca"].HeaderText = bll_idioma.Traducir_064RB("FrmVenta.colMarcaDetalle");
+            grilla.Columns["Modelo"].HeaderText = bll_idioma.Traducir_064RB("FrmVenta.colModeloDetalle");
+            grilla.Columns["Cantidad"].HeaderText = bll_idioma.Traducir_064RB("FrmVenta.colCantidadDetalle");
+            grilla.Columns["PrecioUnitario"].HeaderText = bll_idioma.Traducir_064RB("FrmVenta.colPrecioUnitarioDetalle");
+            grilla.Columns["Subtotal"].HeaderText = bll_idioma.Traducir_064RB("FrmVenta.colSubtotalDetalle");
+        }
     }
 }

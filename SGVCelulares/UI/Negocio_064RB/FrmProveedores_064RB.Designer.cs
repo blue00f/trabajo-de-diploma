@@ -117,7 +117,7 @@
             // 
             // txtCuit
             // 
-            txtCuit.Location = new Point(130, 398);
+            txtCuit.Location = new Point(148, 398);
             txtCuit.Name = "txtCuit";
             txtCuit.Size = new Size(196, 23);
             txtCuit.TabIndex = 12;
@@ -146,7 +146,7 @@
             // 
             // txtRazonSocial
             // 
-            txtRazonSocial.Location = new Point(130, 439);
+            txtRazonSocial.Location = new Point(148, 439);
             txtRazonSocial.Name = "txtRazonSocial";
             txtRazonSocial.Size = new Size(196, 23);
             txtRazonSocial.TabIndex = 18;
@@ -156,7 +156,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(30, 42, 58);
-            ClientSize = new Size(693, 520);
+            ClientSize = new Size(690, 492);
             Controls.Add(lblRazonSocial);
             Controls.Add(txtRazonSocial);
             Controls.Add(lblCuit);
