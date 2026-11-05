@@ -278,6 +278,199 @@ create table Discrepancia_064RB (
     constraint chk_discrepancia_observaciones_064RB check (LEN(LTRIM(RTRIM(Observaciones_064RB))) > 0)
 );
 go
+go
+CREATE TABLE Accesorio_C_064RB (
+    Id_064RB int identity(1,1) not null,
+    Sku_064RB varchar(50) not null,
+    Marca_064RB varchar(50) not null,
+    Modelo_064RB varchar(50) not null,
+    Precio_064RB decimal(18,2) not null,
+    Descripcion_064RB varchar(100),
+    StockMinimo_064RB int not null,
+    Categoria_064RB varchar(100) not null,
+    Stock_064RB int not null,
+    ActivoProducto_064RB bit not null,
+    FechaHora_064RB datetime not null default GETDATE(),
+    Act_064RB bit NOT NULL default 1,
+    constraint PK_Accesorio_C_064RB primary key (Id_064RB),
+    constraint FK_Accesorio_C_Accesorio_064RB foreign key (Sku_064RB) references Accesorio_064RB(Sku_064RB),
+    constraint CK_Accesorio_C_Stock_064RB check (Stock_064RB >= 0),
+    constraint CK_Accesorio_C_StockMinimo_064RB check (StockMinimo_064RB >= 0),
+    constraint CK_Accesorio_C_Precio_064RB check (Precio_064RB >= 0),
+);
+go
+go
+create unique index ux_accesorio_c_activo_064RB on Accesorio_C_064RB (Sku_064RB) where Act_064RB = 1;
+go
+-- Trigger de producto
+go
+create trigger tr_producto_actualizado_064RB
+on Producto_064RB
+after update
+as
+begin
+    set nocount on;
+    -- Permite omitir la auditoría durante una restauración
+    if TRY_CONVERT(bit, SESSION_CONTEXT(N'omitir_auditoria_accesorio')) = 1 return;
+    if TRY_CONVERT(bit, SESSION_CONTEXT(N'omitir_auditoria_producto')) = 1 return;
+    declare @Cambios table (
+        Sku_064RB varchar(50) primary key
+    );
+    -- Identificar accesorios cuyos atributos comunes cambiaron
+    insert into @Cambios (Sku_064RB)
+    select i.Sku_064RB from inserted i
+    inner join deleted d on d.Sku_064RB = i.Sku_064RB
+    inner join Accesorio_064RB a on a.Sku_064RB = i.Sku_064RB
+    where exists (
+        select i.Marca_064RB, i.Modelo_064RB, i.Precio_064RB, i.Descripcion_064RB, i.StockMinimo_064RB, i.Activo_064RB
+        except
+        select d.Marca_064RB, d.Modelo_064RB, d.Precio_064RB, d.Descripcion_064RB, d.StockMinimo_064RB, d.Activo_064RB
+    );
+    -- Desactivar la versión histórica anterior
+    update h set Act_064RB = 0 from Accesorio_C_064RB h
+    inner join @Cambios c on c.Sku_064RB = h.Sku_064RB
+    where h.Act_064RB = 1;
+    -- Registrar la nueva versión
+    insert into Accesorio_C_064RB (Sku_064RB, Marca_064RB, Modelo_064RB, Precio_064RB, Descripcion_064RB, StockMinimo_064RB, Categoria_064RB, Stock_064RB, ActivoProducto_064RB, FechaHora_064RB, Act_064RB)
+    select i.Sku_064RB, i.Marca_064RB, i.Modelo_064RB, i.Precio_064RB, i.Descripcion_064RB, i.StockMinimo_064RB, a.Categoria_064RB, a.Stock_064RB, i.Activo_064RB, GETDATE(), 1
+    from inserted i
+    inner join Accesorio_064RB a on a.Sku_064RB = i.Sku_064RB
+    inner join @Cambios c on c.Sku_064RB = i.Sku_064RB;
+end;
+go
+
+-- Trigger de Accesorio
+go
+create trigger tr_accesorio_actualizado_064RB
+on Accesorio_064RB
+after insert, update
+as
+begin
+    set nocount on;
+    -- Permite omitir la auditoría durante una restauración
+    if TRY_CONVERT(bit, SESSION_CONTEXT(N'omitir_auditoria_accesorio')) = 1 return;
+    declare @Cambios table (
+        Sku_064RB varchar(50) primary key
+    );
+    -- Identificar accesorios nuevos o con modificaciones reales
+    insert into @Cambios (Sku_064RB)
+    select i.Sku_064RB from inserted i
+    left join deleted d on d.Sku_064RB = i.Sku_064RB
+    where d.Sku_064RB is null or exists (
+        select i.Categoria_064RB, i.Stock_064RB
+        except
+        select d.Categoria_064RB, d.Stock_064RB
+    );
+    -- Desactivar la versión histórica anterior
+    update h set Act_064RB = 0 from Accesorio_C_064RB h
+    inner join @Cambios c on c.Sku_064RB = h.Sku_064RB
+    where h.Act_064RB = 1;
+    -- Registrar la nueva versión
+    insert into Accesorio_C_064RB (Sku_064RB, Marca_064RB, Modelo_064RB, Precio_064RB, Descripcion_064RB, StockMinimo_064RB, Categoria_064RB, Stock_064RB, ActivoProducto_064RB, FechaHora_064RB, Act_064RB)
+    select p.Sku_064RB, p.Marca_064RB, p.Modelo_064RB, p.Precio_064RB, p.Descripcion_064RB, p.StockMinimo_064RB, i.Categoria_064RB, i.Stock_064RB, p.Activo_064RB, GETDATE(), 1
+    from inserted i
+    inner join Producto_064RB p on p.Sku_064RB = i.Sku_064RB
+    inner join @Cambios c on c.Sku_064RB = i.Sku_064RB;
+end;
+go
+
+go
+create trigger tr_accesorio_c_restaurar_064RB
+on Accesorio_C_064RB
+after update
+as
+begin
+    set nocount on;
+    -- Evitar recursividad durante una restauración
+    if TRY_CONVERT(bit, SESSION_CONTEXT(N'omitir_restauracion_accesorio')) = 1 return;
+    -- Detectar las versiones que pasaron de inactivas a activas
+    declare @Versiones table (
+        Id_064RB int primary key
+    );
+    insert into @Versiones (Id_064RB)
+    select i.Id_064RB from inserted i
+    inner join deleted d on d.Id_064RB = i.Id_064RB
+    where d.Act_064RB = 0 and i.Act_064RB = 1;
+    if not exists (select 1 from @Versiones) return;
+    begin try
+        exec sys.sp_set_session_context @key = N'omitir_auditoria_accesorio', @value = 1;
+        exec sys.sp_set_session_context @key = N'omitir_auditoria_producto', @value = 1;
+        -- Evitar que los cambios internos vuelvan a disparar este trigger de restauración
+        exec sys.sp_set_session_context @key = N'omitir_restauracion_accesorio', @value = 1;
+        -- Restaurar los atributos generales del producto
+        update p set Marca_064RB = h.Marca_064RB, Modelo_064RB = h.Modelo_064RB, Precio_064RB = h.Precio_064RB, Descripcion_064RB = h.Descripcion_064RB, StockMinimo_064RB = h.StockMinimo_064RB, Activo_064RB = h.ActivoProducto_064RB
+        from Producto_064RB p
+        inner join inserted i on i.Sku_064RB = p.Sku_064RB
+        inner join @Versiones v on v.Id_064RB = i.Id_064RB
+        inner join Accesorio_C_064RB h on h.Id_064RB = i.Id_064RB;
+        -- Restaurar los atributos propios del accesorio
+        update a set Categoria_064RB = h.Categoria_064RB, Stock_064RB = h.Stock_064RB
+        from Accesorio_064RB a
+        inner join inserted i on i.Sku_064RB = a.Sku_064RB
+        inner join @Versiones v on v.Id_064RB = i.Id_064RB
+        inner join Accesorio_C_064RB h on h.Id_064RB = i.Id_064RB;
+        -- Restablecer los contextos
+        exec sys.sp_set_session_context @key = N'omitir_auditoria_accesorio', @value = NULL;
+        exec sys.sp_set_session_context @key = N'omitir_auditoria_producto', @value = NULL;
+        exec sys.sp_set_session_context @key = N'omitir_restauracion_accesorio', @value = NULL;
+    end try
+    begin catch
+        exec sys.sp_set_session_context @key = N'omitir_auditoria_accesorio', @value = NULL;
+        exec sys.sp_set_session_context @key = N'omitir_auditoria_producto', @value = NULL;
+        exec sys.sp_set_session_context @key = N'omitir_restauracion_accesorio', @value = NULL;
+        throw;
+    end catch;
+end;
+go
+-- Procedimiento almacenado para modificar accesorio
+go
+create procedure pa_accesorio_modificar_064RB
+    @Sku varchar(50),
+    @Marca varchar(50),
+    @Modelo varchar(50),
+    @Precio decimal(18,2),
+    @Descripcion varchar(100),
+    @StockMinimo int,
+    @Categoria varchar(100),
+    @Stock int
+as
+begin
+    set nocount on;
+    set XACT_ABORT on;
+    begin try
+        begin transaction;
+        -- Comprobar si cambiaron los atributos propios del accesorio
+        if exists (
+            select 1 from Accesorio_064RB a where a.Sku_064RB = @Sku
+              and exists (select @Categoria, @Stock except select a.Categoria_064RB, a.Stock_064RB)
+        )
+        begin
+            exec sys.sp_set_session_context @key = N'omitir_auditoria_producto', @value = 1;
+        end
+        else
+        begin
+            exec sys.sp_set_session_context @key = N'omitir_auditoria_producto', @value = NULL;
+        end;
+        -- Modificar Producto
+        update Producto_064RB
+        set Marca_064RB = @Marca, Modelo_064RB = @Modelo, Precio_064RB = @Precio, Descripcion_064RB = @Descripcion, StockMinimo_064RB = @StockMinimo
+        where Sku_064RB = @Sku;
+        -- Habilitar nuevamente la auditoría de Producto
+        exec sys.sp_set_session_context @key = N'omitir_auditoria_producto', @value = NULL;
+        -- Modificar Accesorio
+        update Accesorio_064RB
+        set Categoria_064RB = @Categoria, Stock_064RB = @Stock
+        where Sku_064RB = @Sku;
+        commit transaction;
+    end try
+    begin catch
+        exec sys.sp_set_session_context @key = N'omitir_auditoria_producto', @value = NULL;
+        if XACT_STATE() <> 0 rollback transaction;
+        throw;
+    end catch;
+end;
+go
+
 --
 -- INSERT iniciales
 --
@@ -354,84 +547,3 @@ VALUES('12345678','Bruno','Roca','admin@sgv.com','admin',LOWER(CONVERT(VARCHAR(6
 INSERT INTO Rol_permiso_064RB (IdRol_064RB, IdPermiso_064RB)
 SELECT 1, IdPermiso_064RB
 FROM Permiso_064RB;
-
--- Prueba de inconsistencia
--- insert into Rol_064RB(Nombre_064RB) values ('test');
-
---
--- Consultas SELECT
---
-
-select * from Idioma_064RB;
-select * from Usuario_064RB;
-select * from Bitacora_064RB;
-select * from Permiso_064RB;
-select * from Rol_064RB;
-select * from Familia_064RB;
-select * from DV_064RB;
-select * from DV_Registro_064RB;
-
--- CONSULTAS TEST PARA ARMAR EL COMPOSITE
--- Consulto a una familia determinada
-select IdFamilia_064RB, Nombre_064RB from Familia_064RB where IdFamilia_064RB = 1;
-
--- Consulto los permisos de una familia determinada
-select p.IdPermiso_064RB, p.Nombre_064RB from Permiso_064RB p
-inner join Permiso_familia_064RB pf
-on p.IdPermiso_064RB = pf.IdPermiso_064RB
-where pf.IdFamilia_064RB = 1;
-
--- Consulto las familias hijas de una familia determinada (familia padre)
-select f.IdFamilia_064RB, f.Nombre_064RB from Familia_064RB f 
-inner join Familia_familia_064RB ff
-on f.IdFamilia_064RB = ff.IdFamiliaHija_064RB
-where ff.IdFamiliaPadre_064RB = 1;
-
-
-
-/*
-    usuarios test:
-        admin
-        Admin!123
-*/
-
-
-select * from Producto_064RB;
-select * from Accesorio_064RB;
-select * from Celular_064RB;
-select * from Cliente_064RB;
-select * from Venta_064RB;
-select * from UnidadCelular_064RB;
-select * from DetalleVenta_064RB;
-select * from DetalleVenta_Imeis_064RB;
-
-select * from Proveedor_064RB;
-select * from SolicitudCompra_064RB;
-select * from OrdenCompra_064RB;
-select * from RemitoCompra_064RB;
-select * from Discrepancia_064RB;
-
--- consultar celular
-select p.Sku_064RB, p.Marca_064RB, p.Modelo_064RB, p.Precio_064RB, p.Descripcion_064RB, c.Almacenamiento_064RB, c.Color_064RB from Producto_064RB p
-inner join Celular_064RB c
-on p.Sku_064RB = c.Sku_064RB
-
--- consultar accesorio
-select p.Sku_064RB, p.Marca_064RB, p.Modelo_064RB, p.Precio_064RB, p.Descripcion_064RB, a.Categoria_064RB, a.Stock_064RB from Producto_064RB p
-inner join Accesorio_064RB a
-on p.Sku_064RB = a.Sku_064RB
-
--- consultar unidad celulares por accesorio
-select * from UnidadCelular_064RB;
-
--- consultar celular por sku
-select p.Sku_064RB, p.Marca_064RB, p.Modelo_064RB, p.Precio_064RB, p.Descripcion_064RB, c.Almacenamiento_064RB, c.Color_064RB
-from Producto_064RB p
-inner join Celular_064RB c on p.Sku_064RB = c.Sku_064RB
-where c.Sku_064RB='CEL001'
-
--- consultar accesorio por sku
-select p.Sku_064RB, p.Marca_064RB, p.Modelo_064RB, p.Precio_064RB, p.Descripcion_064RB, a.Categoria_064RB, a.Stock_064RB
-from Producto_064RB p
-inner join Accesorio_064RB a on p.Sku_064RB = a.Sku_064RB
-where a.Sku_064RB='ACC001'
