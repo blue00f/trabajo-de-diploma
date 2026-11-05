@@ -321,16 +321,20 @@ values
 ('Borrar Proveedor'),
 ('Modificar Proveedor'),
 
-('Generar Reporte de Ventas'),
-('Generar Reporte de Stock'),
-
 ('Realizar Venta'),
+('Procesar Pago'),
+('Emitir Comprobante de Venta'),
+
 ('Solicitar Reposicion'),
 ('Cotizar Solicitud'),
 ('Evaluar Solicitud'),
 ('Efectuar Pedido al Proveedor'),
+
 ('Recibir Mercadería'),
-('Registrar Discrepancia');
+('Registrar Discrepancia'),
+
+('Generar Reporte de Ventas'),
+('Generar Reporte de Stock');
 
 insert into Idioma_064RB (IdIdioma_064RB, Nombre_064RB)
 values
