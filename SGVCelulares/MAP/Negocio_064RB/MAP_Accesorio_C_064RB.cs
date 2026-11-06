@@ -14,12 +14,12 @@ namespace MAP_064RB.Negocio_064RB
             var lista = new List<BE_Accesorio_C_064RB>();
             foreach (DataRow dr in dt.Rows)
             {
-                lista.Add(Mapear(dr));
+                lista.Add(Mapear_064RB(dr));
             }
             return lista;
         }
         public void Activar_064RB(int id) => dao_accesorio_c.Activar_064RB(id);
-        private BE_Accesorio_C_064RB Mapear(DataRow fila)
+        private BE_Accesorio_C_064RB Mapear_064RB(DataRow fila)
         {
             return new BE_Accesorio_C_064RB
             (

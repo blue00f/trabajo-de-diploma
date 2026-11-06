@@ -50,7 +50,7 @@ namespace BLL_064RB.Negocio_064RB
             SER_Usuario_064RB usu = SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB;
             bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(usu, DateTime.Now, "ABM productos", "Modificar producto", (int)Criticidad_064RB.Media));
             if (producto is BE_Celular_064RB) bll_dv.ActualizarDV_064RB("Producto_064RB", "Celular_064RB");
-            if (producto is BE_Accesorio_064RB) bll_dv.ActualizarDV_064RB("Producto_064RB", "Accesorio_064RB");
+            if (producto is BE_Accesorio_064RB) bll_dv.ActualizarDV_064RB("Producto_064RB", "Accesorio_064RB", "Accesorio_C_064RB");
         }
         public List<BE_Producto_064RB> Consultar_064RB() => map_producto.Consultar_064RB();
         private List<object> ProyectarGrilla_064RB(IEnumerable<BE_Producto_064RB> productos)
