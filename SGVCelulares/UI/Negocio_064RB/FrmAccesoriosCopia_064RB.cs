@@ -39,7 +39,6 @@ namespace UI_064RB.Negocio_064RB
         {
             try
             {
-                if (grillaAccesorios.Rows.Count == 0) throw new Exception("No hay filas para filtrar!");
                 DateTime? fechaInicio, fechaFin;
                 ObtenerFechas(out fechaInicio, out fechaFin);
                 if (fechaInicio > fechaFin) throw new Exception("La fecha de inicio no puede ser mayor a la fecha de fin!!");

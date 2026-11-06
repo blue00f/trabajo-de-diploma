@@ -37,6 +37,7 @@ namespace UI
             bool puedeGestionarUnidades = TieneAlgun(usuario, "Crear Unidad Celular", "Borrar Unidad Celular", "Modificar Unidad Celular");
             bool puedeGestionarClientes = TieneAlgun(usuario, "Crear Cliente", "Borrar Cliente", "Modificar Cliente");
             bool puedeGestionarProveedores = TieneAlgun(usuario, "Crear Proveedor", "Borrar Proveedor", "Modificar Proveedor");
+            bool puedeAuditarCambios = TieneAlgun(usuario, "Modificar Accesorio Copia");
 
             // VENTA
             bool puedeRealizarVenta = TieneAlgun(usuario, "Realizar Venta");
@@ -61,6 +62,7 @@ namespace UI
             submenuUnidadCelular.Visible = puedeGestionarUnidades;
             submenuClientes.Visible = puedeGestionarClientes;
             submenuProveedores.Visible = puedeGestionarProveedores;
+            submenuAccesoriosCopia.Visible = puedeAuditarCambios;
 
             submenuVenta.Visible = puedeRealizarVenta;
 
@@ -83,7 +85,8 @@ namespace UI
                 puedeGestionarProductos ||
                 puedeGestionarUnidades ||
                 puedeGestionarClientes ||
-                puedeGestionarProveedores;
+                puedeGestionarProveedores ||
+                puedeAuditarCambios;
 
             menuVenta.Visible = puedeRealizarVenta;
 

@@ -61,12 +61,12 @@
             submenuUnidadCelular = new ToolStripMenuItem();
             submenuClientes = new ToolStripMenuItem();
             submenuProveedores = new ToolStripMenuItem();
+            submenuAccesoriosCopia = new ToolStripMenuItem();
             pnlSidebar = new Panel();
             pnlContenido = new Panel();
             lblHashCommit = new Label();
             lblUltimoCommit = new Label();
             lblRama = new Label();
-            accesoriosCopiaToolStripMenuItem = new ToolStripMenuItem();
             pnlTopbar.SuspendLayout();
             menuStrip1.SuspendLayout();
             pnlContenido.SuspendLayout();
@@ -299,7 +299,7 @@
             // 
             // menuMaestros
             // 
-            menuMaestros.DropDownItems.AddRange(new ToolStripItem[] { submenuProductos, submenuUnidadCelular, submenuClientes, submenuProveedores, accesoriosCopiaToolStripMenuItem });
+            menuMaestros.DropDownItems.AddRange(new ToolStripItem[] { submenuProductos, submenuUnidadCelular, submenuClientes, submenuProveedores, submenuAccesoriosCopia });
             menuMaestros.Name = "menuMaestros";
             menuMaestros.Size = new Size(67, 20);
             menuMaestros.Text = "Maestros";
@@ -331,6 +331,13 @@
             submenuProveedores.Size = new Size(180, 22);
             submenuProveedores.Text = "Proveedores";
             submenuProveedores.Click += submenuProveedores_Click;
+            // 
+            // submenuAccesoriosCopia
+            // 
+            submenuAccesoriosCopia.Name = "submenuAccesoriosCopia";
+            submenuAccesoriosCopia.Size = new Size(180, 22);
+            submenuAccesoriosCopia.Text = "Accesorios Copia";
+            submenuAccesoriosCopia.Click += accesoriosCopiaToolStripMenuItem_Click;
             // 
             // pnlSidebar
             // 
@@ -386,13 +393,6 @@
             lblRama.Size = new Size(94, 20);
             lblRama.TabIndex = 5;
             lblRama.Text = "Rama actual:";
-            // 
-            // accesoriosCopiaToolStripMenuItem
-            // 
-            accesoriosCopiaToolStripMenuItem.Name = "accesoriosCopiaToolStripMenuItem";
-            accesoriosCopiaToolStripMenuItem.Size = new Size(180, 22);
-            accesoriosCopiaToolStripMenuItem.Text = "Accesorios Copia";
-            accesoriosCopiaToolStripMenuItem.Click += accesoriosCopiaToolStripMenuItem_Click;
             // 
             // FrmMenu_064RB
             // 
@@ -460,6 +460,6 @@
         private ToolStripMenuItem submenuReporteVentas;
         private ToolStripMenuItem submenuReporteControlStock;
         private Label lblRol;
-        private ToolStripMenuItem accesoriosCopiaToolStripMenuItem;
+        private ToolStripMenuItem submenuAccesoriosCopia;
     }
 }
