@@ -247,7 +247,7 @@
   "FrmRecibirMercaderia.btnAgregarImei": "Add IMEI",
   "FrmRecibirMercaderia.btnQuitarImei": "Remove IMEI",
   "FrmRecibirMercaderia.mensajeSinDiscrepancia": "No Discrepancy",
-  "FrmRecibirMercaderia.mensajeFaltanes": "missing",
+  "FrmRecibirMercaderia.mensajeFaltantes": "missing",
   "FrmRecibirMercaderia.mensajeDanadas": "damaged",
   "FrmRecibirMercaderia.mensaje1": "IMEIs entered",
   "FrmRecibirMercaderia.mensaje2": "of",
