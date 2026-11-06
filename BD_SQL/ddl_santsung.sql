@@ -291,12 +291,12 @@ CREATE TABLE Accesorio_C_064RB (
     Stock_064RB int not null,
     ActivoProducto_064RB bit not null,
     FechaHora_064RB datetime not null default GETDATE(),
-    Act_064RB bit NOT NULL default 1,
-    constraint PK_Accesorio_C_064RB primary key (Id_064RB),
-    constraint FK_Accesorio_C_Accesorio_064RB foreign key (Sku_064RB) references Accesorio_064RB(Sku_064RB),
-    constraint CK_Accesorio_C_Stock_064RB check (Stock_064RB >= 0),
-    constraint CK_Accesorio_C_StockMinimo_064RB check (StockMinimo_064RB >= 0),
-    constraint CK_Accesorio_C_Precio_064RB check (Precio_064RB >= 0),
+    Act_064RB bit not null default 1,
+    constraint pk_accesorio_c_064RB primary key (Id_064RB),
+    constraint fk_accesorio_c_accesorio_064RB foreign key (Sku_064RB) references Accesorio_064RB(Sku_064RB),
+    constraint chk_accesorio_c_stock_064RB check (Stock_064RB >= 0),
+    constraint chk_accesorio_c_stockMinimo_064RB check (StockMinimo_064RB >= 0),
+    constraint chk_accesorio_c_precio_064RB check (Precio_064RB >= 0),
 );
 go
 go
@@ -331,7 +331,7 @@ begin
     inner join @Cambios c on c.Sku_064RB = h.Sku_064RB
     where h.Act_064RB = 1;
     -- Registrar la nueva versión
-    insert into Accesorio_C_064RB (Sku_064RB, Marca_064RB, Modelo_064RB, Precio_064RB, Descripcion_064RB, StockMinimo_064RB, Categoria_064RB, Stock_064RB, ActivoProducto_064RB, FechaHora_064RB, Act_064RB)
+    insert into Accesorio_C_064RB (Sku_064RB, Marca_064RB, Modelo_064RB, Precio_064RB, Descripcion_064RB, StockMinimo_064RB,Categoria_064RB, Stock_064RB, ActivoProducto_064RB, FechaHora_064RB, Act_064RB)
     select i.Sku_064RB, i.Marca_064RB, i.Modelo_064RB, i.Precio_064RB, i.Descripcion_064RB, i.StockMinimo_064RB, a.Categoria_064RB, a.Stock_064RB, i.Activo_064RB, GETDATE(), 1
     from inserted i
     inner join Accesorio_064RB a on a.Sku_064RB = i.Sku_064RB
@@ -381,15 +381,13 @@ after update
 as
 begin
     set nocount on;
-    -- Evitar recursividad durante una restauración
+    -- Evitar BUCLE durante una restauración
     if TRY_CONVERT(bit, SESSION_CONTEXT(N'omitir_restauracion_accesorio')) = 1 return;
     -- Detectar las versiones que pasaron de inactivas a activas
     declare @Versiones table (
         Id_064RB int primary key
     );
-    insert into @Versiones (Id_064RB)
-    select i.Id_064RB from inserted i
-    inner join deleted d on d.Id_064RB = i.Id_064RB
+    insert into @Versiones (Id_064RB) select i.Id_064RB from inserted i inner join deleted d on d.Id_064RB = i.Id_064RB
     where d.Act_064RB = 0 and i.Act_064RB = 1;
     if not exists (select 1 from @Versiones) return;
     begin try
@@ -527,7 +525,8 @@ values
 ('Registrar Discrepancia'),
 
 ('Generar Reporte de Ventas'),
-('Generar Reporte de Stock');
+('Generar Reporte de Stock'),
+('Modificar Accesorio Copia');
 
 insert into Idioma_064RB (IdIdioma_064RB, Nombre_064RB)
 values
