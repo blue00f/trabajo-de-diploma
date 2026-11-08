@@ -146,6 +146,7 @@ namespace UI_064RB
         {
             try
             {
+                if (grillaClientes.Rows.Count == 0) throw new Exception("No hay clientes para serializar!");
                 List<BE_Cliente_064RB> clientes = ObtenerClientesGrilla();
                 saveFileDialog.Filter = "Archivos XML (*.xml)|*.xml";
                 saveFileDialog.FileName = "";
