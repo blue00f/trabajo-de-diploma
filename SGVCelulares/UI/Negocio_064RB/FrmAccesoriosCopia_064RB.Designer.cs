@@ -30,7 +30,7 @@
         {
             lblSku = new Label();
             txtSku = new TextBox();
-            lblSolicitudesReposicion = new Label();
+            lblAuditoriaCambios = new Label();
             btnSalir = new Button();
             grillaAccesorios = new DataGridView();
             btnAplicar = new Button();
@@ -65,16 +65,16 @@
             txtSku.Size = new Size(151, 23);
             txtSku.TabIndex = 29;
             // 
-            // lblSolicitudesReposicion
+            // lblAuditoriaCambios
             // 
-            lblSolicitudesReposicion.AutoSize = true;
-            lblSolicitudesReposicion.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblSolicitudesReposicion.ForeColor = SystemColors.Menu;
-            lblSolicitudesReposicion.Location = new Point(12, 24);
-            lblSolicitudesReposicion.Name = "lblSolicitudesReposicion";
-            lblSolicitudesReposicion.Size = new Size(393, 30);
-            lblSolicitudesReposicion.TabIndex = 28;
-            lblSolicitudesReposicion.Text = "Bitácora de cambios - Accesorios copia";
+            lblAuditoriaCambios.AutoSize = true;
+            lblAuditoriaCambios.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblAuditoriaCambios.ForeColor = SystemColors.Menu;
+            lblAuditoriaCambios.Location = new Point(12, 24);
+            lblAuditoriaCambios.Name = "lblAuditoriaCambios";
+            lblAuditoriaCambios.Size = new Size(393, 30);
+            lblAuditoriaCambios.TabIndex = 28;
+            lblAuditoriaCambios.Text = "Bitácora de cambios - Accesorios copia";
             // 
             // btnSalir
             // 
@@ -233,7 +233,7 @@
             Controls.Add(btnLimpiar);
             Controls.Add(lblSku);
             Controls.Add(txtSku);
-            Controls.Add(lblSolicitudesReposicion);
+            Controls.Add(lblAuditoriaCambios);
             Controls.Add(btnSalir);
             Controls.Add(grillaAccesorios);
             Controls.Add(btnAplicar);
@@ -249,7 +249,7 @@
 
         private Label lblSku;
         private TextBox txtSku;
-        private Label lblSolicitudesReposicion;
+        private Label lblAuditoriaCambios;
         private Button btnSalir;
         private DataGridView grillaAccesorios;
         private Button btnAplicar;

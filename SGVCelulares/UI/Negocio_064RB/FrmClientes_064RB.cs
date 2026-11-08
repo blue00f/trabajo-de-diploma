@@ -126,29 +126,7 @@ namespace UI_064RB
         }
 
         private void btnSalir_Click(object sender, EventArgs e) => this.Close();
-
-        public void ActualizarIdioma_064RB()
-        {
-            this.Text = bll_idioma.Traducir_064RB("FrmClientes.Form");
-            lblClientes.Text = bll_idioma.Traducir_064RB("FrmClientes.lblClientes");
-            btnAgregar.Text = bll_idioma.Traducir_064RB("FrmClientes.btnAgregar");
-            btnBorrar.Text = bll_idioma.Traducir_064RB("FrmClientes.btnBorrar");
-            btnModificar.Text = bll_idioma.Traducir_064RB("FrmClientes.btnModificar");
-            btnSalir.Text = bll_idioma.Traducir_064RB("FrmClientes.btnSalir");
-            TraducirColumnas(grillaClientes);
-        }
-        private void TraducirColumnas(DataGridView grilla)
-        {
-            if (grilla.Columns.Count == 0) return;
-            grilla.Columns["Dni_064RB"].HeaderText = bll_idioma.Traducir_064RB("FrmClientes.colDni");
-            grilla.Columns["Nombre_064RB"].HeaderText = bll_idioma.Traducir_064RB("FrmClientes.colNombre");
-            grilla.Columns["Apellido_064RB"].HeaderText = bll_idioma.Traducir_064RB("FrmClientes.colApellido");
-            grilla.Columns["Telefono_064RB"].HeaderText = bll_idioma.Traducir_064RB("FrmClientes.colTelefono");
-            grilla.Columns["Email_064RB"].HeaderText = bll_idioma.Traducir_064RB("FrmClientes.colEmail");
-            grilla.Columns["FechaNacimiento_064RB"].HeaderText = bll_idioma.Traducir_064RB("FrmClientes.colFechaNacimiento");
-        }
-
-        private void btnAplicar_Click(object sender, EventArgs e)
+        private void btnFiltrar_Click(object sender, EventArgs e)
         {
             Mostrar(bll_cliente.ConsultarFiltrado_064RB(txtDni.Text, txtNombre.Text, txtApellido.Text, txtCorreo.Text, txtTelefono.Text));
         }
@@ -187,6 +165,7 @@ namespace UI_064RB
             try
             {
                 openFileDialog.Filter = "Archivos XML (*.xml)|*.xml";
+                openFileDialog.FileName = "";
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     List<BE_Cliente_064RB> clientes = bll_deserializador.DeserealizarXml_064RB(openFileDialog.FileName);
@@ -212,6 +191,36 @@ namespace UI_064RB
                 }
             }
             return clientes;
+        }
+        public void ActualizarIdioma_064RB()
+        {
+            this.Text = bll_idioma.Traducir_064RB("FrmClientes.Form");
+            lblClientes.Text = bll_idioma.Traducir_064RB("FrmClientes.lblClientes");
+            btnAgregar.Text = bll_idioma.Traducir_064RB("FrmClientes.btnAgregar");
+            btnBorrar.Text = bll_idioma.Traducir_064RB("FrmClientes.btnBorrar");
+            btnModificar.Text = bll_idioma.Traducir_064RB("FrmClientes.btnModificar");
+            btnSalir.Text = bll_idioma.Traducir_064RB("FrmClientes.btnSalir");
+            btnFiltrar.Text = bll_idioma.Traducir_064RB("FrmClientes.btnFiltrar");
+            btnActualizar.Text = bll_idioma.Traducir_064RB("FrmClientes.btnActualizar");
+            btnSerializar.Text = bll_idioma.Traducir_064RB("FrmClientes.btnSerializar");
+            btnDeserializar.Text = bll_idioma.Traducir_064RB("FrmClientes.btnDeserializar");
+            gbFiltros.Text = bll_idioma.Traducir_064RB("FrmClientes.gbFiltros");
+            lblDni.Text = bll_idioma.Traducir_064RB("FrmClientes.lblDni");
+            lblNombre.Text = bll_idioma.Traducir_064RB("FrmClientes.lblNombre");
+            lblApellido.Text = bll_idioma.Traducir_064RB("FrmClientes.lblApellido");
+            lblCorreo.Text = bll_idioma.Traducir_064RB("FrmClientes.lblCorreo");
+            lblTelefono.Text = bll_idioma.Traducir_064RB("FrmClientes.lblTelefono");
+            TraducirColumnas(grillaClientes);
+        }
+        private void TraducirColumnas(DataGridView grilla)
+        {
+            if (grilla.Columns.Count == 0) return;
+            grilla.Columns["Dni_064RB"].HeaderText = bll_idioma.Traducir_064RB("FrmClientes.colDni");
+            grilla.Columns["Nombre_064RB"].HeaderText = bll_idioma.Traducir_064RB("FrmClientes.colNombre");
+            grilla.Columns["Apellido_064RB"].HeaderText = bll_idioma.Traducir_064RB("FrmClientes.colApellido");
+            grilla.Columns["Telefono_064RB"].HeaderText = bll_idioma.Traducir_064RB("FrmClientes.colTelefono");
+            grilla.Columns["Email_064RB"].HeaderText = bll_idioma.Traducir_064RB("FrmClientes.colEmail");
+            grilla.Columns["FechaNacimiento_064RB"].HeaderText = bll_idioma.Traducir_064RB("FrmClientes.colFechaNacimiento");
         }
     }
 }

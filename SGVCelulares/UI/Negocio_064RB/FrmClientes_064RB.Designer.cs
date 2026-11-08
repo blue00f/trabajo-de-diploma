@@ -44,7 +44,7 @@
             txtNombre = new TextBox();
             lblTelefono = new Label();
             txtTelefono = new TextBox();
-            btnAplicar = new Button();
+            btnFiltrar = new Button();
             gbFiltros = new GroupBox();
             btnSerializar = new Button();
             btnDeserializar = new Button();
@@ -60,7 +60,7 @@
             btnSalir.BackColor = Color.FromArgb(45, 60, 82);
             btnSalir.FlatStyle = FlatStyle.Popup;
             btnSalir.ForeColor = SystemColors.Menu;
-            btnSalir.Location = new Point(356, 324);
+            btnSalir.Location = new Point(502, 324);
             btnSalir.Name = "btnSalir";
             btnSalir.Size = new Size(95, 35);
             btnSalir.TabIndex = 11;
@@ -113,7 +113,7 @@
             grillaClientes.Location = new Point(12, 51);
             grillaClientes.Name = "grillaClientes";
             grillaClientes.ReadOnly = true;
-            grillaClientes.Size = new Size(768, 267);
+            grillaClientes.Size = new Size(896, 267);
             grillaClientes.TabIndex = 7;
             // 
             // btnAgregar
@@ -219,23 +219,23 @@
             txtTelefono.Size = new Size(151, 23);
             txtTelefono.TabIndex = 50;
             // 
-            // btnAplicar
+            // btnFiltrar
             // 
-            btnAplicar.BackColor = Color.FromArgb(45, 60, 82);
-            btnAplicar.FlatStyle = FlatStyle.Popup;
-            btnAplicar.ForeColor = SystemColors.Menu;
-            btnAplicar.Location = new Point(396, 96);
-            btnAplicar.Name = "btnAplicar";
-            btnAplicar.Size = new Size(151, 41);
-            btnAplicar.TabIndex = 52;
-            btnAplicar.Text = "Aplicar filtros";
-            btnAplicar.UseVisualStyleBackColor = false;
-            btnAplicar.Click += btnAplicar_Click;
+            btnFiltrar.BackColor = Color.FromArgb(45, 60, 82);
+            btnFiltrar.FlatStyle = FlatStyle.Popup;
+            btnFiltrar.ForeColor = SystemColors.Menu;
+            btnFiltrar.Location = new Point(396, 96);
+            btnFiltrar.Name = "btnFiltrar";
+            btnFiltrar.Size = new Size(151, 41);
+            btnFiltrar.TabIndex = 52;
+            btnFiltrar.Text = "Aplicar filtros";
+            btnFiltrar.UseVisualStyleBackColor = false;
+            btnFiltrar.Click += btnFiltrar_Click;
             // 
             // gbFiltros
             // 
             gbFiltros.Controls.Add(txtDni);
-            gbFiltros.Controls.Add(btnAplicar);
+            gbFiltros.Controls.Add(btnFiltrar);
             gbFiltros.Controls.Add(lblDni);
             gbFiltros.Controls.Add(lblTelefono);
             gbFiltros.Controls.Add(txtCorreo);
@@ -260,7 +260,7 @@
             btnSerializar.ForeColor = SystemColors.Menu;
             btnSerializar.Location = new Point(625, 460);
             btnSerializar.Name = "btnSerializar";
-            btnSerializar.Size = new Size(155, 41);
+            btnSerializar.Size = new Size(283, 41);
             btnSerializar.TabIndex = 53;
             btnSerializar.Text = "Serializar";
             btnSerializar.UseVisualStyleBackColor = false;
@@ -273,7 +273,7 @@
             btnDeserializar.ForeColor = SystemColors.Menu;
             btnDeserializar.Location = new Point(625, 525);
             btnDeserializar.Name = "btnDeserializar";
-            btnDeserializar.Size = new Size(155, 41);
+            btnDeserializar.Size = new Size(283, 41);
             btnDeserializar.TabIndex = 54;
             btnDeserializar.Text = "Deserializar";
             btnDeserializar.UseVisualStyleBackColor = false;
@@ -286,7 +286,7 @@
             btnActualizar.ForeColor = SystemColors.Menu;
             btnActualizar.Location = new Point(625, 390);
             btnActualizar.Name = "btnActualizar";
-            btnActualizar.Size = new Size(155, 41);
+            btnActualizar.Size = new Size(283, 41);
             btnActualizar.TabIndex = 55;
             btnActualizar.Text = "Actualizar";
             btnActualizar.UseVisualStyleBackColor = false;
@@ -301,7 +301,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(30, 42, 58);
-            ClientSize = new Size(814, 599);
+            ClientSize = new Size(920, 599);
             Controls.Add(btnActualizar);
             Controls.Add(btnDeserializar);
             Controls.Add(btnSerializar);
@@ -340,7 +340,7 @@
         private TextBox txtNombre;
         private Label lblTelefono;
         private TextBox txtTelefono;
-        private Button btnAplicar;
+        private Button btnFiltrar;
         private GroupBox gbFiltros;
         private Button btnSerializar;
         private Button btnDeserializar;

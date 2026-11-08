@@ -62,14 +62,11 @@
             submenuClientes = new ToolStripMenuItem();
             submenuProveedores = new ToolStripMenuItem();
             submenuAccesoriosCopia = new ToolStripMenuItem();
-            pnlSidebar = new Panel();
-            pnlContenido = new Panel();
-            lblHashCommit = new Label();
-            lblUltimoCommit = new Label();
             lblRama = new Label();
+            lblUltimoCommit = new Label();
+            lblHashCommit = new Label();
             pnlTopbar.SuspendLayout();
             menuStrip1.SuspendLayout();
-            pnlContenido.SuspendLayout();
             SuspendLayout();
             // 
             // pnlTopbar
@@ -84,7 +81,7 @@
             pnlTopbar.Dock = DockStyle.Top;
             pnlTopbar.Location = new Point(0, 0);
             pnlTopbar.Name = "pnlTopbar";
-            pnlTopbar.Size = new Size(960, 81);
+            pnlTopbar.Size = new Size(1013, 83);
             pnlTopbar.TabIndex = 0;
             // 
             // lblRol
@@ -92,7 +89,7 @@
             lblRol.AutoSize = true;
             lblRol.Font = new Font("Segoe UI", 11F);
             lblRol.ForeColor = Color.FromArgb(226, 232, 240);
-            lblRol.Location = new Point(473, 44);
+            lblRol.Location = new Point(503, 44);
             lblRol.Name = "lblRol";
             lblRol.Size = new Size(31, 20);
             lblRol.TabIndex = 5;
@@ -103,7 +100,7 @@
             lblBienvenida.AutoSize = true;
             lblBienvenida.Font = new Font("Segoe UI", 11F);
             lblBienvenida.ForeColor = Color.FromArgb(226, 232, 240);
-            lblBienvenida.Location = new Point(193, 44);
+            lblBienvenida.Location = new Point(185, 44);
             lblBienvenida.Name = "lblBienvenida";
             lblBienvenida.Size = new Size(83, 20);
             lblBienvenida.TabIndex = 3;
@@ -113,9 +110,9 @@
             // 
             cboIdioma.DropDownStyle = ComboBoxStyle.DropDownList;
             cboIdioma.FormattingEnabled = true;
-            cboIdioma.Location = new Point(735, 38);
+            cboIdioma.Location = new Point(779, 43);
             cboIdioma.Name = "cboIdioma";
-            cboIdioma.Size = new Size(213, 25);
+            cboIdioma.Size = new Size(222, 25);
             cboIdioma.TabIndex = 2;
             cboIdioma.SelectedIndexChanged += cboIdioma_SelectedIndexChanged;
             // 
@@ -136,7 +133,7 @@
             lblUsuario.AutoSize = true;
             lblUsuario.Font = new Font("Segoe UI", 9F);
             lblUsuario.ForeColor = Color.FromArgb(148, 163, 184);
-            lblUsuario.Location = new Point(1600, 16);
+            lblUsuario.Location = new Point(1653, 16);
             lblUsuario.Name = "lblUsuario";
             lblUsuario.Size = new Size(53, 15);
             lblUsuario.TabIndex = 1;
@@ -147,7 +144,7 @@
             menuStrip1.Items.AddRange(new ToolStripItem[] { menuAdmin, menuVenta, menuStock, menuReportes, menuAyuda, menuSesion, menuMaestros });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(960, 24);
+            menuStrip1.Size = new Size(1013, 24);
             menuStrip1.TabIndex = 4;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -307,102 +304,81 @@
             // submenuProductos
             // 
             submenuProductos.Name = "submenuProductos";
-            submenuProductos.Size = new Size(180, 22);
+            submenuProductos.Size = new Size(177, 22);
             submenuProductos.Text = "Productos";
             submenuProductos.Click += submenuProductos_Click;
             // 
             // submenuUnidadCelular
             // 
             submenuUnidadCelular.Name = "submenuUnidadCelular";
-            submenuUnidadCelular.Size = new Size(180, 22);
+            submenuUnidadCelular.Size = new Size(177, 22);
             submenuUnidadCelular.Text = "Unidades de celular";
             submenuUnidadCelular.Click += submenuUnidadCelular_Click;
             // 
             // submenuClientes
             // 
             submenuClientes.Name = "submenuClientes";
-            submenuClientes.Size = new Size(180, 22);
+            submenuClientes.Size = new Size(177, 22);
             submenuClientes.Text = "Clientes";
             submenuClientes.Click += submenuClientes_Click;
             // 
             // submenuProveedores
             // 
             submenuProveedores.Name = "submenuProveedores";
-            submenuProveedores.Size = new Size(180, 22);
+            submenuProveedores.Size = new Size(177, 22);
             submenuProveedores.Text = "Proveedores";
             submenuProveedores.Click += submenuProveedores_Click;
             // 
             // submenuAccesoriosCopia
             // 
             submenuAccesoriosCopia.Name = "submenuAccesoriosCopia";
-            submenuAccesoriosCopia.Size = new Size(180, 22);
+            submenuAccesoriosCopia.Size = new Size(177, 22);
             submenuAccesoriosCopia.Text = "Accesorios Copia";
             submenuAccesoriosCopia.Click += accesoriosCopiaToolStripMenuItem_Click;
-            // 
-            // pnlSidebar
-            // 
-            pnlSidebar.BackColor = Color.FromArgb(25, 37, 53);
-            pnlSidebar.Dock = DockStyle.Left;
-            pnlSidebar.Location = new Point(0, 81);
-            pnlSidebar.Name = "pnlSidebar";
-            pnlSidebar.Size = new Size(193, 390);
-            pnlSidebar.TabIndex = 1;
-            // 
-            // pnlContenido
-            // 
-            pnlContenido.BackColor = Color.FromArgb(30, 42, 58);
-            pnlContenido.Controls.Add(lblHashCommit);
-            pnlContenido.Controls.Add(lblUltimoCommit);
-            pnlContenido.Controls.Add(lblRama);
-            pnlContenido.Dock = DockStyle.Fill;
-            pnlContenido.Location = new Point(193, 81);
-            pnlContenido.Name = "pnlContenido";
-            pnlContenido.Padding = new Padding(24);
-            pnlContenido.Size = new Size(767, 390);
-            pnlContenido.TabIndex = 2;
-            // 
-            // lblHashCommit
-            // 
-            lblHashCommit.AutoSize = true;
-            lblHashCommit.Font = new Font("Segoe UI", 11F);
-            lblHashCommit.ForeColor = Color.FromArgb(226, 232, 240);
-            lblHashCommit.Location = new Point(6, 354);
-            lblHashCommit.Name = "lblHashCommit";
-            lblHashCommit.Size = new Size(172, 20);
-            lblHashCommit.TabIndex = 7;
-            lblHashCommit.Text = "Hash del último commit:";
-            // 
-            // lblUltimoCommit
-            // 
-            lblUltimoCommit.AutoSize = true;
-            lblUltimoCommit.Font = new Font("Segoe UI", 11F);
-            lblUltimoCommit.ForeColor = Color.FromArgb(226, 232, 240);
-            lblUltimoCommit.Location = new Point(6, 322);
-            lblUltimoCommit.Name = "lblUltimoCommit";
-            lblUltimoCommit.Size = new Size(112, 20);
-            lblUltimoCommit.TabIndex = 6;
-            lblUltimoCommit.Text = "Último commit:";
             // 
             // lblRama
             // 
             lblRama.AutoSize = true;
             lblRama.Font = new Font("Segoe UI", 11F);
             lblRama.ForeColor = Color.FromArgb(226, 232, 240);
-            lblRama.Location = new Point(6, 288);
+            lblRama.Location = new Point(12, 355);
             lblRama.Name = "lblRama";
             lblRama.Size = new Size(94, 20);
             lblRama.TabIndex = 5;
             lblRama.Text = "Rama actual:";
+            // 
+            // lblUltimoCommit
+            // 
+            lblUltimoCommit.AutoSize = true;
+            lblUltimoCommit.Font = new Font("Segoe UI", 11F);
+            lblUltimoCommit.ForeColor = Color.FromArgb(226, 232, 240);
+            lblUltimoCommit.Location = new Point(12, 389);
+            lblUltimoCommit.Name = "lblUltimoCommit";
+            lblUltimoCommit.Size = new Size(112, 20);
+            lblUltimoCommit.TabIndex = 6;
+            lblUltimoCommit.Text = "Último commit:";
+            // 
+            // lblHashCommit
+            // 
+            lblHashCommit.AutoSize = true;
+            lblHashCommit.Font = new Font("Segoe UI", 11F);
+            lblHashCommit.ForeColor = Color.FromArgb(226, 232, 240);
+            lblHashCommit.Location = new Point(12, 421);
+            lblHashCommit.Name = "lblHashCommit";
+            lblHashCommit.Size = new Size(172, 20);
+            lblHashCommit.TabIndex = 7;
+            lblHashCommit.Text = "Hash del último commit:";
             // 
             // FrmMenu_064RB
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(30, 42, 58);
-            ClientSize = new Size(960, 471);
-            Controls.Add(pnlContenido);
-            Controls.Add(pnlSidebar);
+            ClientSize = new Size(1013, 461);
+            Controls.Add(lblHashCommit);
             Controls.Add(pnlTopbar);
+            Controls.Add(lblUltimoCommit);
+            Controls.Add(lblRama);
             Font = new Font("Segoe UI", 9.5F);
             MinimumSize = new Size(800, 500);
             Name = "FrmMenu_064RB";
@@ -414,9 +390,8 @@
             pnlTopbar.PerformLayout();
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
-            pnlContenido.ResumeLayout(false);
-            pnlContenido.PerformLayout();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -424,8 +399,6 @@
         private System.Windows.Forms.Panel pnlTopbar;
         private System.Windows.Forms.Label lblTituloTopbar;
         private System.Windows.Forms.Label lblUsuario;
-        private System.Windows.Forms.Panel pnlSidebar;
-        private System.Windows.Forms.Panel pnlContenido;
         private Label label1;
         private ComboBox cboIdioma;
         private Label lblBienvenida;
@@ -447,9 +420,6 @@
         private ToolStripMenuItem submenuUnidadCelular;
         private ToolStripMenuItem submenuClientes;
         private ToolStripMenuItem submenuVenta;
-        private Label lblUltimoCommit;
-        private Label lblRama;
-        private Label lblHashCommit;
         private ToolStripMenuItem submenuProveedores;
         private ToolStripMenuItem menuStock;
         private ToolStripMenuItem submenuSolicitarReposicion;
@@ -461,5 +431,8 @@
         private ToolStripMenuItem submenuReporteControlStock;
         private Label lblRol;
         private ToolStripMenuItem submenuAccesoriosCopia;
+        private Label lblRama;
+        private Label lblUltimoCommit;
+        private Label lblHashCommit;
     }
 }
