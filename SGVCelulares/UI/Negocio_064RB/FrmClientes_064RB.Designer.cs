@@ -34,7 +34,23 @@
             btnBorrar = new Button();
             grillaClientes = new DataGridView();
             btnAgregar = new Button();
+            lblCorreo = new Label();
+            txtCorreo = new TextBox();
+            lblDni = new Label();
+            txtDni = new TextBox();
+            lblApellido = new Label();
+            txtApellido = new TextBox();
+            lblNombre = new Label();
+            txtNombre = new TextBox();
+            lblTelefono = new Label();
+            txtTelefono = new TextBox();
+            btnAplicar = new Button();
+            gbFiltros = new GroupBox();
+            btnSerializar = new Button();
+            btnDeserializar = new Button();
+            btnActualizar = new Button();
             ((System.ComponentModel.ISupportInitialize)grillaClientes).BeginInit();
+            gbFiltros.SuspendLayout();
             SuspendLayout();
             // 
             // btnSalir
@@ -95,7 +111,7 @@
             grillaClientes.Location = new Point(12, 51);
             grillaClientes.Name = "grillaClientes";
             grillaClientes.ReadOnly = true;
-            grillaClientes.Size = new Size(715, 267);
+            grillaClientes.Size = new Size(768, 267);
             grillaClientes.TabIndex = 7;
             // 
             // btnAgregar
@@ -111,12 +127,179 @@
             btnAgregar.UseVisualStyleBackColor = false;
             btnAgregar.Click += btnAgregar_Click;
             // 
+            // lblCorreo
+            // 
+            lblCorreo.AutoSize = true;
+            lblCorreo.Font = new Font("Segoe UI", 9F);
+            lblCorreo.ForeColor = SystemColors.Menu;
+            lblCorreo.Location = new Point(217, 37);
+            lblCorreo.Name = "lblCorreo";
+            lblCorreo.Size = new Size(43, 15);
+            lblCorreo.TabIndex = 45;
+            lblCorreo.Text = "Correo";
+            // 
+            // txtCorreo
+            // 
+            txtCorreo.Location = new Point(217, 55);
+            txtCorreo.Name = "txtCorreo";
+            txtCorreo.Size = new Size(151, 23);
+            txtCorreo.TabIndex = 44;
+            // 
+            // lblDni
+            // 
+            lblDni.AutoSize = true;
+            lblDni.Font = new Font("Segoe UI", 9F);
+            lblDni.ForeColor = SystemColors.Menu;
+            lblDni.Location = new Point(30, 37);
+            lblDni.Name = "lblDni";
+            lblDni.Size = new Size(27, 15);
+            lblDni.TabIndex = 43;
+            lblDni.Text = "DNI";
+            // 
+            // txtDni
+            // 
+            txtDni.Location = new Point(30, 55);
+            txtDni.Name = "txtDni";
+            txtDni.Size = new Size(151, 23);
+            txtDni.TabIndex = 42;
+            // 
+            // lblApellido
+            // 
+            lblApellido.AutoSize = true;
+            lblApellido.Font = new Font("Segoe UI", 9F);
+            lblApellido.ForeColor = SystemColors.Menu;
+            lblApellido.Location = new Point(217, 96);
+            lblApellido.Name = "lblApellido";
+            lblApellido.Size = new Size(51, 15);
+            lblApellido.TabIndex = 49;
+            lblApellido.Text = "Apellido";
+            // 
+            // txtApellido
+            // 
+            txtApellido.Location = new Point(217, 114);
+            txtApellido.Name = "txtApellido";
+            txtApellido.Size = new Size(151, 23);
+            txtApellido.TabIndex = 48;
+            // 
+            // lblNombre
+            // 
+            lblNombre.AutoSize = true;
+            lblNombre.Font = new Font("Segoe UI", 9F);
+            lblNombre.ForeColor = SystemColors.Menu;
+            lblNombre.Location = new Point(30, 96);
+            lblNombre.Name = "lblNombre";
+            lblNombre.Size = new Size(51, 15);
+            lblNombre.TabIndex = 47;
+            lblNombre.Text = "Nombre";
+            // 
+            // txtNombre
+            // 
+            txtNombre.Location = new Point(30, 114);
+            txtNombre.Name = "txtNombre";
+            txtNombre.Size = new Size(151, 23);
+            txtNombre.TabIndex = 46;
+            // 
+            // lblTelefono
+            // 
+            lblTelefono.AutoSize = true;
+            lblTelefono.Font = new Font("Segoe UI", 9F);
+            lblTelefono.ForeColor = SystemColors.Menu;
+            lblTelefono.Location = new Point(396, 37);
+            lblTelefono.Name = "lblTelefono";
+            lblTelefono.Size = new Size(53, 15);
+            lblTelefono.TabIndex = 51;
+            lblTelefono.Text = "Teléfono";
+            // 
+            // txtTelefono
+            // 
+            txtTelefono.Location = new Point(396, 55);
+            txtTelefono.Name = "txtTelefono";
+            txtTelefono.Size = new Size(151, 23);
+            txtTelefono.TabIndex = 50;
+            // 
+            // btnAplicar
+            // 
+            btnAplicar.BackColor = Color.FromArgb(45, 60, 82);
+            btnAplicar.FlatStyle = FlatStyle.Popup;
+            btnAplicar.ForeColor = SystemColors.Menu;
+            btnAplicar.Location = new Point(396, 96);
+            btnAplicar.Name = "btnAplicar";
+            btnAplicar.Size = new Size(151, 41);
+            btnAplicar.TabIndex = 52;
+            btnAplicar.Text = "Aplicar filtros";
+            btnAplicar.UseVisualStyleBackColor = false;
+            btnAplicar.Click += btnAplicar_Click;
+            // 
+            // gbFiltros
+            // 
+            gbFiltros.Controls.Add(txtDni);
+            gbFiltros.Controls.Add(btnAplicar);
+            gbFiltros.Controls.Add(lblDni);
+            gbFiltros.Controls.Add(lblTelefono);
+            gbFiltros.Controls.Add(txtCorreo);
+            gbFiltros.Controls.Add(txtTelefono);
+            gbFiltros.Controls.Add(lblCorreo);
+            gbFiltros.Controls.Add(lblApellido);
+            gbFiltros.Controls.Add(txtNombre);
+            gbFiltros.Controls.Add(txtApellido);
+            gbFiltros.Controls.Add(lblNombre);
+            gbFiltros.ForeColor = SystemColors.Menu;
+            gbFiltros.Location = new Point(15, 390);
+            gbFiltros.Name = "gbFiltros";
+            gbFiltros.Size = new Size(582, 176);
+            gbFiltros.TabIndex = 53;
+            gbFiltros.TabStop = false;
+            gbFiltros.Text = "Filtros";
+            // 
+            // btnSerializar
+            // 
+            btnSerializar.BackColor = Color.FromArgb(45, 60, 82);
+            btnSerializar.FlatStyle = FlatStyle.Popup;
+            btnSerializar.ForeColor = SystemColors.Menu;
+            btnSerializar.Location = new Point(625, 460);
+            btnSerializar.Name = "btnSerializar";
+            btnSerializar.Size = new Size(155, 41);
+            btnSerializar.TabIndex = 53;
+            btnSerializar.Text = "Serializar";
+            btnSerializar.UseVisualStyleBackColor = false;
+            btnSerializar.Click += btnSerializar_Click;
+            // 
+            // btnDeserializar
+            // 
+            btnDeserializar.BackColor = Color.FromArgb(45, 60, 82);
+            btnDeserializar.FlatStyle = FlatStyle.Popup;
+            btnDeserializar.ForeColor = SystemColors.Menu;
+            btnDeserializar.Location = new Point(625, 525);
+            btnDeserializar.Name = "btnDeserializar";
+            btnDeserializar.Size = new Size(155, 41);
+            btnDeserializar.TabIndex = 54;
+            btnDeserializar.Text = "Deserializar";
+            btnDeserializar.UseVisualStyleBackColor = false;
+            btnDeserializar.Click += btnDeserializar_Click;
+            // 
+            // btnActualizar
+            // 
+            btnActualizar.BackColor = Color.FromArgb(45, 60, 82);
+            btnActualizar.FlatStyle = FlatStyle.Popup;
+            btnActualizar.ForeColor = SystemColors.Menu;
+            btnActualizar.Location = new Point(625, 390);
+            btnActualizar.Name = "btnActualizar";
+            btnActualizar.Size = new Size(155, 41);
+            btnActualizar.TabIndex = 55;
+            btnActualizar.Text = "Actualizar";
+            btnActualizar.UseVisualStyleBackColor = false;
+            btnActualizar.Click += btnActualizar_Click;
+            // 
             // FrmClientes_064RB
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(30, 42, 58);
-            ClientSize = new Size(740, 395);
+            ClientSize = new Size(814, 599);
+            Controls.Add(btnActualizar);
+            Controls.Add(btnDeserializar);
+            Controls.Add(btnSerializar);
+            Controls.Add(gbFiltros);
             Controls.Add(btnSalir);
             Controls.Add(lblClientes);
             Controls.Add(btnModificar);
@@ -127,6 +310,8 @@
             Text = "FrmClientes_064RB";
             Load += FrmClientes_064RB_Load;
             ((System.ComponentModel.ISupportInitialize)grillaClientes).EndInit();
+            gbFiltros.ResumeLayout(false);
+            gbFiltros.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -139,5 +324,20 @@
         private Button btnBorrar;
         private DataGridView grillaClientes;
         private Button btnAgregar;
+        private Label lblCorreo;
+        private TextBox txtCorreo;
+        private Label lblDni;
+        private TextBox txtDni;
+        private Label lblApellido;
+        private TextBox txtApellido;
+        private Label lblNombre;
+        private TextBox txtNombre;
+        private Label lblTelefono;
+        private TextBox txtTelefono;
+        private Button btnAplicar;
+        private GroupBox gbFiltros;
+        private Button btnSerializar;
+        private Button btnDeserializar;
+        private Button btnActualizar;
     }
 }

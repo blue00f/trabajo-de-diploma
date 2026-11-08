@@ -40,15 +40,6 @@ namespace DAL_064RB
             con.Open();
             return cmd.ExecuteNonQuery();
         }
-        public int EjecutarProcedimiento_064RB(string nombreProcedimiento, List<ParametroBD_064RB> parametros = null)
-        {
-            using SqlConnection con = new SqlConnection(cadenaConexion_064RB);
-            using SqlCommand cmd = new SqlCommand(nombreProcedimiento, con);
-            cmd.CommandType = CommandType.StoredProcedure;
-            ConfigurarComando_064RB(cmd, parametros);
-            con.Open();
-            return cmd.ExecuteNonQuery();
-        }
         public object? Escalar_064RB(string sql, List<ParametroBD_064RB>? parametros = null)
         {
             using SqlConnection con = new SqlConnection(cadenaConexion_064RB);
@@ -104,6 +95,27 @@ namespace DAL_064RB
                 tran.Rollback();
                 throw;
             }
+        }
+        public int EjecutarProcedimiento_064RB(string nombreProcedimiento, List<ParametroBD_064RB> parametros = null)
+        {
+            using SqlConnection con = new SqlConnection(cadenaConexion_064RB);
+            using SqlCommand cmd = new SqlCommand(nombreProcedimiento, con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            ConfigurarComando_064RB(cmd, parametros);
+            con.Open();
+            return cmd.ExecuteNonQuery();
+        }
+        public DataTable ConsultarProcedimiento_064RB(string nombreProcedimiento, List<ParametroBD_064RB> parametros = null)
+        {
+            DataTable dt = new DataTable();
+            using SqlConnection con = new SqlConnection(cadenaConexion_064RB);
+            using SqlCommand cmd = new SqlCommand(nombreProcedimiento, con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            ConfigurarComando_064RB(cmd, parametros);
+            con.Open();
+            using SqlDataReader reader = cmd.ExecuteReader();
+            dt.Load(reader);
+            return dt;
         }
     }
 }

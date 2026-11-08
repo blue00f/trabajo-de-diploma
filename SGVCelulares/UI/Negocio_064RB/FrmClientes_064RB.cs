@@ -29,13 +29,13 @@ namespace UI_064RB
             btnBorrar.Enabled = SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB.Rol_064RB.TienePermiso("Borrar Cliente");
             btnModificar.Enabled = SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB.Rol_064RB.TienePermiso("Modificar Cliente");
 
-            Mostrar(grillaClientes, bll_cliente.Consultar_064RB());
+            Mostrar(bll_cliente.Consultar_064RB());
         }
-        private void Mostrar(DataGridView grilla, object datos)
+        private void Mostrar(object datos)
         {
-            grilla.DataSource = null;
-            grilla.DataSource = datos;
-            TraducirColumnas(grilla);
+            grillaClientes.DataSource = null;
+            grillaClientes.DataSource = datos;
+            TraducirColumnas(grillaClientes);
         }
         private bool ValidarDatos(string texto, string expresionRegular)
         {
@@ -66,7 +66,7 @@ namespace UI_064RB
 
                 BE_Cliente_064RB cliente = new BE_Cliente_064RB(dni, nombre, apellido, telefono, email, fechaNacimiento);
                 bll_cliente.Agregar_064RB(cliente);
-                Mostrar(grillaClientes, bll_cliente.Consultar_064RB());
+                Mostrar(bll_cliente.Consultar_064RB());
             }
             catch (Exception ex)
             {
@@ -81,7 +81,7 @@ namespace UI_064RB
                 if (grillaClientes.Rows.Count == 0) throw new Exception("No hay clientes para borrar!");
                 BE_Cliente_064RB cliente = grillaClientes.SelectedRows[0].DataBoundItem as BE_Cliente_064RB;
                 bll_cliente.Borrar_064RB(cliente);
-                Mostrar(grillaClientes, bll_cliente.Consultar_064RB());
+                Mostrar(bll_cliente.Consultar_064RB());
             }
             catch (Exception ex)
             {
@@ -113,7 +113,7 @@ namespace UI_064RB
 
                 BE_Cliente_064RB clienteNuevo = new BE_Cliente_064RB(clienteViejo.Dni_064RB, nombre, apellido, telefono, email, fechaNacimiento);
                 bll_cliente.Modificar_064RB(clienteNuevo);
-                Mostrar(grillaClientes, bll_cliente.Consultar_064RB());
+                Mostrar(bll_cliente.Consultar_064RB());
             }
             catch (Exception ex)
             {
@@ -142,6 +142,34 @@ namespace UI_064RB
             grilla.Columns["Telefono_064RB"].HeaderText = bll_idioma.Traducir_064RB("FrmClientes.colTelefono");
             grilla.Columns["Email_064RB"].HeaderText = bll_idioma.Traducir_064RB("FrmClientes.colEmail");
             grilla.Columns["FechaNacimiento_064RB"].HeaderText = bll_idioma.Traducir_064RB("FrmClientes.colFechaNacimiento");
+        }
+
+        private void btnAplicar_Click(object sender, EventArgs e)
+        {
+            Mostrar(bll_cliente.ConsultarFiltrado_064RB(txtDni.Text, txtNombre.Text, txtApellido.Text, txtCorreo.Text, txtTelefono.Text));
+        }
+
+        private void btnActualizar_Click(object sender, EventArgs e)
+        {
+            if (txtDni.Text.Length != 0 && txtNombre.Text.Length != 0 && txtApellido.Text.Length != 0 && txtCorreo.Text.Length != 0 && txtTelefono.Text.Length != 0)
+            {
+                txtDni.Text = string.Empty;
+                txtNombre.Text = string.Empty;
+                txtApellido.Text = string.Empty;
+                txtCorreo.Text = string.Empty;
+                txtTelefono.Text = string.Empty;
+                Mostrar(bll_cliente.Consultar_064RB());
+            }
+        }
+
+        private void btnSerializar_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnDeserializar_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

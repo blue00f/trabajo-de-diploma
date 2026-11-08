@@ -2,6 +2,7 @@
 using BLL_064RB.Tecnico_064RB;
 using MAP_064RB.Negocio_064RB;
 using Servicio_064RB;
+using System.Reflection;
 
 namespace BLL_064RB.Negocio_064RB
 {
@@ -41,5 +42,27 @@ namespace BLL_064RB.Negocio_064RB
         }
         public List<BE_Cliente_064RB> Consultar_064RB() => map_cliente.Consultar_064RB();
         public BE_Cliente_064RB ConsultarPorDni_064RB(string dni) => map_cliente.ConsultarPorDni_064RB(dni);
+        public List<BE_Cliente_064RB> ConsultarFiltrado_064RB(string? dni, string? nombre, string? apellido, string? email, string? telefono)
+        {
+            var consulta = from c in Consultar_064RB()
+                           orderby c.Dni_064RB ascending
+                           where
+                           (string.IsNullOrWhiteSpace(dni)
+                           || c.Dni_064RB.Contains(dni, StringComparison.OrdinalIgnoreCase))
+                           &&
+                           (string.IsNullOrWhiteSpace(nombre)
+                           || c.Nombre_064RB.Contains(nombre, StringComparison.OrdinalIgnoreCase))
+                           &&
+                           (string.IsNullOrWhiteSpace(apellido)
+                           || c.Apellido_064RB.Contains(apellido, StringComparison.OrdinalIgnoreCase))
+                           &&
+                           (string.IsNullOrWhiteSpace(email)
+                           || c.Email_064RB.Contains(email, StringComparison.OrdinalIgnoreCase))
+                           &&
+                           (string.IsNullOrWhiteSpace(telefono)
+                           || c.Telefono_064RB.Contains(telefono, StringComparison.OrdinalIgnoreCase))
+                           select c;
+            return consulta.ToList<BE_Cliente_064RB>();
+        }
     }
 }
