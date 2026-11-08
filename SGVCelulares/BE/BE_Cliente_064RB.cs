@@ -20,6 +20,7 @@ namespace BE_064RB
             Email_064RB = email;
             FechaNacimiento_064RB = fechaNacimiento;
         }
+        public BE_Cliente_064RB() { }
         public override string ToString()
         {
             return $"{Dni_064RB} - {Nombre_064RB} {Apellido_064RB} {Telefono_064RB} {Email_064RB} {FechaNacimiento_064RB.ToShortDateString()}";

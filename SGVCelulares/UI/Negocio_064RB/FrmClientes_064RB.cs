@@ -11,6 +11,8 @@ namespace UI_064RB
     {
         BLL_Idioma_064RB bll_idioma = new BLL_Idioma_064RB();
         BLL_Cliente_064RB bll_cliente;
+        BLL_Serializador_064RB bll_serializador;
+        BLL_Deserializador_064RB bll_deserializador;
         public FrmClientes_064RB()
         {
             InitializeComponent();
@@ -21,6 +23,8 @@ namespace UI_064RB
         private void FrmClientes_064RB_Load(object sender, EventArgs e)
         {
             bll_cliente = new();
+            bll_serializador = new();
+            bll_deserializador = new();
             grillaClientes.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             grillaClientes.MultiSelect = false;
             grillaClientes.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
@@ -151,25 +155,63 @@ namespace UI_064RB
 
         private void btnActualizar_Click(object sender, EventArgs e)
         {
-            if (txtDni.Text.Length != 0 && txtNombre.Text.Length != 0 && txtApellido.Text.Length != 0 && txtCorreo.Text.Length != 0 && txtTelefono.Text.Length != 0)
-            {
-                txtDni.Text = string.Empty;
-                txtNombre.Text = string.Empty;
-                txtApellido.Text = string.Empty;
-                txtCorreo.Text = string.Empty;
-                txtTelefono.Text = string.Empty;
-                Mostrar(bll_cliente.Consultar_064RB());
-            }
+            txtDni.Text = string.Empty;
+            txtNombre.Text = string.Empty;
+            txtApellido.Text = string.Empty;
+            txtCorreo.Text = string.Empty;
+            txtTelefono.Text = string.Empty;
+            Mostrar(bll_cliente.Consultar_064RB());
         }
 
         private void btnSerializar_Click(object sender, EventArgs e)
         {
-
+            try
+            {
+                List<BE_Cliente_064RB> clientes = ObtenerClientesGrilla();
+                saveFileDialog.Filter = "Archivos XML (*.xml)|*.xml";
+                saveFileDialog.FileName = "";
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    bll_serializador.SerializarXml_064RB(clientes, saveFileDialog.FileName);
+                    MessageBox.Show("Clientes serializados correctamente.", "SERIALIZACIÓN", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR AL SERIALIZAR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnDeserializar_Click(object sender, EventArgs e)
         {
-
+            try
+            {
+                openFileDialog.Filter = "Archivos XML (*.xml)|*.xml";
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    List<BE_Cliente_064RB> clientes = bll_deserializador.DeserealizarXml_064RB(openFileDialog.FileName);
+                    grillaClientes.DataSource = null;
+                    grillaClientes.DataSource = clientes;
+                    TraducirColumnas(grillaClientes);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR AL DESERIALIZAR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        private List<BE_Cliente_064RB> ObtenerClientesGrilla()
+        {
+            List<BE_Cliente_064RB> clientes = new();
+            foreach (DataGridViewRow fila in grillaClientes.Rows)
+            {
+                if (!fila.IsNewRow && fila.Visible)
+                {
+                    BE_Cliente_064RB cliente = fila.DataBoundItem as BE_Cliente_064RB;
+                    if (cliente != null) clientes.Add(cliente);
+                }
+            }
+            return clientes;
         }
     }
 }

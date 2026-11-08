@@ -49,6 +49,8 @@
             btnSerializar = new Button();
             btnDeserializar = new Button();
             btnActualizar = new Button();
+            saveFileDialog = new SaveFileDialog();
+            openFileDialog = new OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)grillaClientes).BeginInit();
             gbFiltros.SuspendLayout();
             SuspendLayout();
@@ -290,6 +292,10 @@
             btnActualizar.UseVisualStyleBackColor = false;
             btnActualizar.Click += btnActualizar_Click;
             // 
+            // openFileDialog
+            // 
+            openFileDialog.FileName = "openFileDialog1";
+            // 
             // FrmClientes_064RB
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -339,5 +345,7 @@
         private Button btnSerializar;
         private Button btnDeserializar;
         private Button btnActualizar;
+        private SaveFileDialog saveFileDialog;
+        private OpenFileDialog openFileDialog;
     }
 }
