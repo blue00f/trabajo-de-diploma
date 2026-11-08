@@ -3,6 +3,7 @@ using BLL_064RB.Negocio_064RB;
 using BLL_064RB.Tecnico_064RB;
 using Microsoft.VisualBasic;
 using Servicio_064RB;
+using System.Diagnostics;
 using System.Text.RegularExpressions;
 
 namespace UI_064RB
@@ -152,6 +153,7 @@ namespace UI_064RB
                 {
                     bll_serializador.SerializarXml_064RB(clientes, saveFileDialog.FileName);
                     MessageBox.Show("Clientes serializados correctamente.", "SERIALIZACIÓN", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Process.Start(new ProcessStartInfo { FileName = saveFileDialog.FileName, UseShellExecute = true });
                 }
             }
             catch (Exception ex)
