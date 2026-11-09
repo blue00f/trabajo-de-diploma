@@ -249,14 +249,14 @@
             // submenuReporteVentas
             // 
             submenuReporteVentas.Name = "submenuReporteVentas";
-            submenuReporteVentas.Size = new Size(145, 22);
+            submenuReporteVentas.Size = new Size(180, 22);
             submenuReporteVentas.Text = "Ventas";
             submenuReporteVentas.Click += submenuReporteVentas_Click;
             // 
             // submenuReporteControlStock
             // 
             submenuReporteControlStock.Name = "submenuReporteControlStock";
-            submenuReporteControlStock.Size = new Size(145, 22);
+            submenuReporteControlStock.Size = new Size(180, 22);
             submenuReporteControlStock.Text = "Control stock";
             submenuReporteControlStock.Click += submenuReporteControlStock_Click;
             // 
@@ -265,6 +265,7 @@
             menuAyuda.Name = "menuAyuda";
             menuAyuda.Size = new Size(53, 20);
             menuAyuda.Text = "Ayuda";
+            menuAyuda.Click += menuAyuda_Click;
             // 
             // menuSesion
             // 
@@ -276,21 +277,21 @@
             // submenuRelogin
             // 
             submenuRelogin.Name = "submenuRelogin";
-            submenuRelogin.Size = new Size(149, 22);
+            submenuRelogin.Size = new Size(180, 22);
             submenuRelogin.Text = "Re-login";
             submenuRelogin.Click += submenuRelogin_Click;
             // 
             // submenuCambiarClave
             // 
             submenuCambiarClave.Name = "submenuCambiarClave";
-            submenuCambiarClave.Size = new Size(149, 22);
+            submenuCambiarClave.Size = new Size(180, 22);
             submenuCambiarClave.Text = "Cambiar clave";
             submenuCambiarClave.Click += submenuCambiarClave_Click;
             // 
             // submenuCerrarSesion
             // 
             submenuCerrarSesion.Name = "submenuCerrarSesion";
-            submenuCerrarSesion.Size = new Size(149, 22);
+            submenuCerrarSesion.Size = new Size(180, 22);
             submenuCerrarSesion.Text = "Cerrar sesión";
             submenuCerrarSesion.Click += submenuCerrarSesion_Click;
             // 

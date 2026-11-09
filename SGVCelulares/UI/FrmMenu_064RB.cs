@@ -184,6 +184,7 @@ namespace UI
         private void submenuReporteVentas_Click(object sender, EventArgs e) => AbrirOEnfocarFormulario<FrmReporteVentas_064RB>();
         private void submenuReporteControlStock_Click(object sender, EventArgs e) => AbrirOEnfocarFormulario<FrmReporteReposicion_064RB>();
         private void accesoriosCopiaToolStripMenuItem_Click(object sender, EventArgs e) => AbrirOEnfocarFormulario<FrmAccesoriosCopia_064RB>();
+        private void menuAyuda_Click(object sender, EventArgs e) => AbrirOEnfocarFormulario<FrmAyuda_064RB>();
         private void CargarIdiomas()
         {
             cargandoIdiomas = true;
