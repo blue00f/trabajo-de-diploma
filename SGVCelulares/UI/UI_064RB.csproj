@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
+    <ApplicationIcon>iconoSanTsung.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,9 +16,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include=".env">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="BD\bd_santsung_064RB.bak">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="iconoSanTsung.ico" />
     <Content Include="Idiomas\en-US.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
