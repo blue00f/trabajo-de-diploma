@@ -1,5 +1,6 @@
 ﻿using BE_064RB;
 using DAL_064RB.Negocio_064RB;
+using Servicio_064RB;
 using System.Data;
 
 namespace MAP_064RB.Negocio_064RB
@@ -51,14 +52,17 @@ namespace MAP_064RB.Negocio_064RB
         }
         private BE_Cliente_064RB Mapear_064RB(DataRow fila)
         {
-            return new BE_Cliente_064RB(
+            BE_Cliente_064RB cliente;
+            cliente = new BE_Cliente_064RB(
                 Convert.ToString(fila[0]),
                 Convert.ToString(fila[1]),
                 Convert.ToString(fila[2]),
                 Convert.ToString(fila[3]),
                 Convert.ToString(fila[4]),
                 Convert.ToDateTime(fila[5])
-                );
+            );
+            cliente.Email_064RB = SER_Cripto_064RB.DesencriptarAES_064RB(cliente.Email_064RB);
+            return cliente;
         }
     }
 }

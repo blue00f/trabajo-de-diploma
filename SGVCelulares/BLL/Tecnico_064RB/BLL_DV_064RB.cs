@@ -196,7 +196,7 @@ namespace BLL_064RB.Tecnico_064RB
                 {
                     object valor = fila[j];
                     string texto = ValorATexto_064RB(valor);
-                    BigInteger hash = HexANumero_064RB(SER_Cripto_064RB.Encriptar_064RB(texto));
+                    BigInteger hash = HexANumero_064RB(SER_Cripto_064RB.EncriptarSHA256_064RB(texto));
                     dvhRegistro += hash;
                     dvvColumnas[j] += hash;
                     datos[dt.Columns[j].ColumnName] = valor is DBNull ? null : texto;

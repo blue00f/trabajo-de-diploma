@@ -20,6 +20,7 @@ namespace BLL_064RB.Negocio_064RB
         public void Agregar_064RB(BE_Cliente_064RB cliente)
         {
             if (map_cliente.ConsultarTodos_064RB().Any(c => c.Dni_064RB == cliente.Dni_064RB)) throw new Exception("El cliente está repetido!");
+            cliente.Email_064RB = SER_Cripto_064RB.EncriptarAES_064RB(cliente.Email_064RB);
             map_cliente.Agregar_064RB(cliente);
             SER_Usuario_064RB usu = SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB;
             bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(usu, DateTime.Now, "ABM clientes", "Crear cliente", (int)Criticidad_064RB.Media));
@@ -35,6 +36,7 @@ namespace BLL_064RB.Negocio_064RB
         }
         public void Modificar_064RB(BE_Cliente_064RB cliente)
         {
+            cliente.Email_064RB = SER_Cripto_064RB.EncriptarAES_064RB(cliente.Email_064RB);
             map_cliente.Modificar_064RB(cliente);
             SER_Usuario_064RB usu = SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB;
             bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(usu, DateTime.Now, "ABM clientes", "Modificar cliente", (int)Criticidad_064RB.Media));

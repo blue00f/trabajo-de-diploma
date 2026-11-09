@@ -24,8 +24,10 @@ namespace BLL_064RB.Tecnico_064RB
         {
             if (map_usuario.ValidarDniRepetido_064RB(usuario)) throw new Exception("El DNI está repetido!");
             if (map_usuario.ValidarCorreoRepetido_064RB(usuario)) throw new Exception("El correo electrónico está repetido!");
-            string passwordHasheado = SER_Cripto_064RB.Encriptar_064RB(usuario.Password_064RB);
+            string passwordHasheado = SER_Cripto_064RB.EncriptarSHA256_064RB(usuario.Password_064RB);
+            string correoEncriptado = SER_Cripto_064RB.EncriptarAES_064RB(usuario.Correo_064RB);
             usuario.Password_064RB = passwordHasheado;
+            usuario.Correo_064RB = correoEncriptado;
             map_usuario.Agregar_064RB(usuario);
             bll_bitacora.RegistrarBitacora_064RB(new SER_Bitacora_064RB(SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB, DateTime.Now, "Gestión de usuarios", "Crear usuario", (int)Criticidad_064RB.Media));
             bll_dv.ActualizarDV_064RB("Usuario_064RB");
@@ -37,7 +39,6 @@ namespace BLL_064RB.Tecnico_064RB
             if (usuAux != null && usuAux.Dni_064RB != usuario.Dni_064RB) throw new Exception("Ya existe usuario con este nombre de usuario");
             map_usuario.Modificar_064RB(usuario);
             bll_dv.ActualizarDV_064RB("Usuario_064RB");
-
             SER_Bitacora_064RB bitacora = new SER_Bitacora_064RB(SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB, DateTime.Now, "Usuarios", "Modificar usuario", 2);
             bll_bitacora.RegistrarBitacora_064RB(bitacora);
         }
@@ -46,8 +47,8 @@ namespace BLL_064RB.Tecnico_064RB
             if (claveActual == claveNueva) throw new Exception("No puede usar la misma contraseña");
 
             SER_Usuario_064RB usuario = SER_SessionManager_064RB.ObtenerSesion_064RB().Usuario_064RB;
-            if (SER_Cripto_064RB.Encriptar_064RB(claveActual) != usuario.Password_064RB) throw new Exception("Contraseña incorrecta");
-            string claveNuevaHasheada = SER_Cripto_064RB.Encriptar_064RB(claveNueva);
+            if (SER_Cripto_064RB.EncriptarSHA256_064RB(claveActual) != usuario.Password_064RB) throw new Exception("Contraseña incorrecta");
+            string claveNuevaHasheada = SER_Cripto_064RB.EncriptarSHA256_064RB(claveNueva);
             map_usuario.ModificarPassword_064RB(usuario, claveNuevaHasheada);
 
             usuario.Password_064RB = claveNuevaHasheada;
@@ -64,7 +65,7 @@ namespace BLL_064RB.Tecnico_064RB
                                Nombre = u.Nombre_064RB,
                                Apellido = u.Apellido_064RB,
                                Usuario = u.NombreUsuario_064RB,
-                               Correo = u.Correo_064RB,
+                               Correo = SER_Cripto_064RB.DesencriptarAES_064RB(u.Correo_064RB),
                                Activo = u.Activo_064RB,
                                Bloqueado = u.Bloqueo_064RB,
                                Rol = u.Rol_064RB.Nombre_064RB
@@ -97,7 +98,7 @@ namespace BLL_064RB.Tecnico_064RB
                                Nombre = user.Nombre_064RB,
                                Apellido = user.Apellido_064RB,
                                Usuario = user.NombreUsuario_064RB,
-                               Correo = user.Correo_064RB,
+                               Correo = SER_Cripto_064RB.DesencriptarAES_064RB(user.Correo_064RB),
                                Activo = user.Activo_064RB,
                                Bloqueado = user.Bloqueo_064RB,
                                Rol = user.Rol_064RB.Nombre_064RB
@@ -115,7 +116,7 @@ namespace BLL_064RB.Tecnico_064RB
                                Nombre = u.Nombre_064RB,
                                Apellido = u.Apellido_064RB,
                                Usuario = u.NombreUsuario_064RB,
-                               Correo = u.Correo_064RB,
+                               Correo = SER_Cripto_064RB.DesencriptarAES_064RB(u.Correo_064RB),
                                Activo = u.Activo_064RB,
                                Bloqueado = u.Bloqueo_064RB,
                                Rol = u.Rol_064RB.Nombre_064RB
@@ -213,7 +214,7 @@ namespace BLL_064RB.Tecnico_064RB
         private bool CompararPassword_064RB(SER_Usuario_064RB usuario, string password)
         {
             bool rdo = false;
-            string passwordHasheada = SER_Cripto_064RB.Encriptar_064RB(password);
+            string passwordHasheada = SER_Cripto_064RB.EncriptarSHA256_064RB(password);
             if (passwordHasheada == usuario.Password_064RB) rdo = true;
             return rdo;
         }
@@ -237,7 +238,7 @@ namespace BLL_064RB.Tecnico_064RB
             map_usuario.Desbloquear_064RB(usuarioAux);
             usuarioAux.Bloqueo_064RB = false;
 
-            string nuevaPasswordHasheada = SER_Cripto_064RB.Encriptar_064RB(usuarioAux.Dni_064RB + usuarioAux.Apellido_064RB);
+            string nuevaPasswordHasheada = SER_Cripto_064RB.EncriptarSHA256_064RB(usuarioAux.Dni_064RB + usuarioAux.Apellido_064RB);
             map_usuario.ModificarPassword_064RB(usuarioAux, nuevaPasswordHasheada);
             usuarioAux.Password_064RB = nuevaPasswordHasheada;
 
