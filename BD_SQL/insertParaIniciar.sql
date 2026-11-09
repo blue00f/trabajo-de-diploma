@@ -56,6 +56,11 @@ values
 ('Generar Reporte de Stock'),
 ('Modificar Accesorio Copia');
 
+insert into Permiso_064RB (Nombre_064RB)
+values
+('Ver FAQ de negocio'),
+('Ver FAQ de administradores');
+
 insert into Idioma_064RB (IdIdioma_064RB, Nombre_064RB)
 values
 ('es-AR','Español (Argentina)'),
