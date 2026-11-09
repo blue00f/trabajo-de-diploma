@@ -7,6 +7,7 @@ namespace BLL_064RB.Negocio_064RB
     {
         public void SerializarXml_064RB(List<BE_Cliente_064RB> clientes, string ruta)
         {
+            if (clientes.Count == 0) throw new Exception("La lista de clientes está vacía!");
             using(FileStream fs = new FileStream(ruta, FileMode.Create))
             {
                 XmlSerializer serializador = new XmlSerializer(typeof(List<BE_Cliente_064RB>));
