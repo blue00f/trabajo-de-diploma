@@ -1,3 +1,4 @@
+using BLL_064RB.Tecnico_064RB;
 using QuestPDF.Infrastructure;
 
 namespace UI
@@ -14,6 +15,8 @@ namespace UI
             // see https://aka.ms/applicationconfiguration.
             QuestPDF.Settings.License = LicenseType.Community;
             ApplicationConfiguration.Initialize();
+            BLL_Inicializacion_064RB inicializacion = new();
+            inicializacion.InicializarBaseDatos_064RB();
             Application.Run(new FrmLogin_064RB());
         }
     }
