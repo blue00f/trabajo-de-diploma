@@ -257,9 +257,18 @@ namespace UI
                 string hashCommitTexto = bll_idioma.Traducir_064RB("FrmMenu.lblHashCommit");
                 lblBienvenida.Text = $"{saludo} {usuario.Nombre_064RB} {usuario.Apellido_064RB}!";
                 lblRol.Text = $"{rolTexto}: {usuario.Rol_064RB.ToString()}";
-                lblRama.Text = $"{ramaTexto}: {GitInfo_064RB.ObtenerRama_064RB()}";
-                lblUltimoCommit.Text = $"{ultimoCommitTexto}: {GitInfo_064RB.ObtenerFechaCommit_064RB()}";
-                lblHashCommit.Text = $"{hashCommitTexto} {GitInfo_064RB.ObtenerHashCommit_064RB()}";
+                try
+                {
+                    lblRama.Text = $"{ramaTexto}: {GitInfo_064RB.ObtenerRama_064RB()}";
+                    lblUltimoCommit.Text = $"{ultimoCommitTexto}: {GitInfo_064RB.ObtenerFechaCommit_064RB()}";
+                    lblHashCommit.Text = $"{hashCommitTexto} {GitInfo_064RB.ObtenerHashCommit_064RB()}";
+                }
+                catch (Exception)
+                {
+                    lblRama.Text = "";
+                    lblUltimoCommit.Text = "";
+                    lblHashCommit.Text = "";
+                }
             }
         }
         protected override void OnFormClosed(FormClosedEventArgs e)
