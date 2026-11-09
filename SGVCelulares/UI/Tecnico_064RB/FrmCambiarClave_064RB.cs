@@ -3,7 +3,6 @@ using Servicio_064RB;
 using System.Data;
 using System.Text.RegularExpressions;
 
-
 namespace UI
 {
     public partial class FrmCambiarClave_064RB : Form, IObservadorIdioma_064RB

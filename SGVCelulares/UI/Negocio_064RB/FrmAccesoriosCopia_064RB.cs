@@ -1,15 +1,6 @@
 ﻿using BLL_064RB.Negocio_064RB;
 using BLL_064RB.Tecnico_064RB;
 using Servicio_064RB;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace UI_064RB.Negocio_064RB
 {
