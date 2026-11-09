@@ -49,7 +49,8 @@ namespace MAP_064RB.Tecnico_064RB
         public void ModificarPassword_064RB(SER_Usuario_064RB usuario, string claveNueva) => dao_usuario.ModificarPassword_064RB(usuario.Dni_064RB, claveNueva);
         private SER_Usuario_064RB Mapear_064RB(DataRow fila)
         {
-            return new SER_Usuario_064RB(
+            SER_Usuario_064RB usuario;
+            usuario = new SER_Usuario_064RB(
                 Convert.ToString(fila[0]),
                 Convert.ToString(fila[1]),
                 Convert.ToString(fila[2]),
@@ -62,6 +63,8 @@ namespace MAP_064RB.Tecnico_064RB
                 map_rol.ObtenerRolPorId_064RB(Convert.ToInt16(fila[9])),
                 Convert.ToString(fila[10])
             );
+            usuario.Correo_064RB = SER_Cripto_064RB.DesencriptarAES_064RB(usuario.Correo_064RB);
+            return usuario;
         }
     }
 }

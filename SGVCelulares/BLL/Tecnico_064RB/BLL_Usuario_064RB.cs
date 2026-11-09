@@ -65,7 +65,7 @@ namespace BLL_064RB.Tecnico_064RB
                                Nombre = u.Nombre_064RB,
                                Apellido = u.Apellido_064RB,
                                Usuario = u.NombreUsuario_064RB,
-                               Correo = SER_Cripto_064RB.DesencriptarAES_064RB(u.Correo_064RB),
+                               Correo = u.Correo_064RB,
                                Activo = u.Activo_064RB,
                                Bloqueado = u.Bloqueo_064RB,
                                Rol = u.Rol_064RB.Nombre_064RB
@@ -98,7 +98,7 @@ namespace BLL_064RB.Tecnico_064RB
                                Nombre = user.Nombre_064RB,
                                Apellido = user.Apellido_064RB,
                                Usuario = user.NombreUsuario_064RB,
-                               Correo = SER_Cripto_064RB.DesencriptarAES_064RB(user.Correo_064RB),
+                               Correo = user.Correo_064RB,
                                Activo = user.Activo_064RB,
                                Bloqueado = user.Bloqueo_064RB,
                                Rol = user.Rol_064RB.Nombre_064RB
@@ -116,7 +116,7 @@ namespace BLL_064RB.Tecnico_064RB
                                Nombre = u.Nombre_064RB,
                                Apellido = u.Apellido_064RB,
                                Usuario = u.NombreUsuario_064RB,
-                               Correo = SER_Cripto_064RB.DesencriptarAES_064RB(u.Correo_064RB),
+                               Correo = u.Correo_064RB,
                                Activo = u.Activo_064RB,
                                Bloqueado = u.Bloqueo_064RB,
                                Rol = u.Rol_064RB.Nombre_064RB
